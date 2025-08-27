@@ -16,7 +16,7 @@ const DEFAULT_COMPASS_BASE_URL = 'https://public.compass.poap.tech/v1/graphql';
  */
 export class PoapCompass implements CompassProvider {
   /**
-   * Maximum number of request to do at the time in a batch.
+   * Maximum number of requests to do at a time in a batch.
    */
   protected batchSize = 5;
 
@@ -87,7 +87,7 @@ export class PoapCompass implements CompassProvider {
    *
    * @private
    * @function
-   * @name PoapCompass#handleHttpStatus
+   * @name PoapCompass#handleResponseStatus
    * @param {Response} response - The response from the fetch call.
    * @throws {CompassUnauthorizedError} for 401 Unauthorized status codes.
    * @throws {CompassBadRequestError} for 400 Bad Request status codes.

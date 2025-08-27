@@ -45,7 +45,7 @@ yarn add @poap-xyz/poap-sdk
 - Fetch one or multiple POAP tokens at once.
 - Search for minted POAPs by their collector or the drop they belong to.
 - Mint POAPs using synchronous or asynchronous processes.
-- Reserve a POAP to an email address.
+- Reserve a POAP for an email address.
 - Obtain mint status, POAP indexed status, and more.
 
 ### Drops 
