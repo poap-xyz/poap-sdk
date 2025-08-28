@@ -16,13 +16,19 @@ library provides a set of classes and methods to simplify working with it.
 
 ## Installation
 
-### NPM
+### npm
 
 ```bash
 npm install @poap-xyz/poap-sdk
 ```
 
-### Yarn
+### pnpm
+
+```bash
+pnpm add @poap-xyz/poap-sdk
+```
+
+### yarn
 
 ```bash
 yarn add @poap-xyz/poap-sdk
@@ -82,7 +88,7 @@ To start developing the POAP Package Library, follow these steps:
 git clone https://github.com/poap-xyz/poap.js.git
 ```
 
-2. Use node and yarn:
+2. Use node and pnpm:
 
 ```bash
 nvm use
@@ -92,19 +98,19 @@ corepack enable
 3. Install dependencies:
 
 ```bash
-yarn install
+pnpm install
 ```
 
 4. Build the packages:
 
 ```bash
-yarn build
+pnpm build
 ```
 
 5. Run the tests:
 
 ```bash
-yarn test
+pnpm test
 ```
 
 ## Documentation

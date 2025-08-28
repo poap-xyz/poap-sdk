@@ -3,7 +3,6 @@ dist
 coverage
 scripts
 .env
-.yarn
 src
 test
 rollup.config.js

@@ -6,11 +6,13 @@ in JavaScript applications.
 ## Getting Started
 
 To get started with this website, you'll need to install its dependencies and start the development
-server. You can do this using yarn:
+server. You can do this using pnpm:
 
 ```bash
-yarn install
-yarn dev
+nvm use
+corepack enable
+pnpm install
+pnpm dev
 ```
 
 Once the development server is running, you can view the website in your web browser by navigating

@@ -1,4 +1,4 @@
-name: Publish Beta Package
+name: Publish beta release to npm registry
 
 on:
   push:
@@ -21,18 +21,22 @@ jobs:
         with:
           node-version: '22.x'
           registry-url: 'https://registry.npmjs.org'
+          cache: 'pnpm'
 
-      - name: Enable yarn
-        run: corepack enable
+      - name: Set up PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.15.0
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: pnpm install --frozen-lockfile
 
-      - name: Authentication
+      - name: Configure npm auth
         run: |
-          echo npmAuthToken: "$NODE_AUTH_TOKEN" >> ./.yarnrc.yml
+          npm config set //registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}
+          npm whoami
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Check package versions and publish
-        run: yarn publish-beta-package $GITHUB_REF_NAME
+      - name: Publish beta release
+        run: pnpm publish.beta $GITHUB_REF_NAME

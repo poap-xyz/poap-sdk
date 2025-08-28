@@ -5,11 +5,11 @@ pkg_name="@poap-xyz/poap-sdk"
 echo "Package $pkg_name.."
 
 local_version=$(jq -r '.version' package.json)
-remote_version=$(yarn npm info "$pkg_name" --fields version --json 2>/dev/null | jq -r '.version')
+remote_version=$(pnpm info "$pkg_name" --fields version --json 2>/dev/null | jq -r '.version')
 
 echo
 echo "Building package $pkg_name@$local_version.."
-if ! yarn build; then
+if ! pnpm build; then
   echo "Error: Failed to build $pkg_name@$local_version" 1>&2
   exit 1
 fi
@@ -22,7 +22,7 @@ if [ -z "$remote_version" ] || [ "$local_version" != "$remote_version" ]; then
     echo "Detected version change in $pkg_name: $remote_version -> $local_version"
   fi
 
-  if ! yarn npm publish --access public; then
+  if ! pnpm publish --access public; then
     echo "Error: Failed publish $pkg_name"
     exit 1
   fi
