@@ -48,7 +48,7 @@
     "@rollup/plugin-terser": "^0.4.4",
     "@types/jest": "^29.5.11",
     "@types/lodash.chunk": "^4.2.0",
-    "@types/node": "^20.11.10",
+    "@types/node": "^22.18.0",
     "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "^8.16.0",
     "@typescript-eslint/parser": "^8.16.0",
@@ -70,7 +70,7 @@
     "typescript": "^5.8.3"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22"
   },
   "packageManager": "yarn@4.1.0"
 }
