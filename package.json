@@ -1,6 +1,6 @@
 {
   "name": "@poap-xyz/poap-sdk",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "description": "SDK for everything POAP",
   "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.mjs",
@@ -29,11 +29,11 @@
   },
   "homepage": "https://github.com/poap-xyz/poap.js#readme",
   "scripts": {
-    "build": "yarn run rollup -c --bundleConfigAsCjs",
+    "build": "rollup -c --bundleConfigAsCjs",
     "lint": "eslint './src/**/*.ts' --fix",
     "format": "prettier --write './src/**/*.ts'",
-    "publish": "bash ./scripts/publish.sh",
-    "publish-beta": "bash ./scripts/publish-beta.sh",
+    "publish.sdk": "./scripts/publish-sdk",
+    "publish.beta": "./scripts/publish-beta",
     "test": "jest"
   },
   "dependencies": {
@@ -43,6 +43,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.15.0",
+    "@jest/globals": "^30.1.1",
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-terser": "^0.4.4",
@@ -72,5 +73,5 @@
   "engines": {
     "node": ">=22"
   },
-  "packageManager": "yarn@4.1.0"
+  "packageManager": "pnpm@10.15.0+sha512.486ebc259d3e999a4e8691ce03b5cac4a71cbeca39372a9b762cb500cfdf0873e2cb16abe3d951b1ee2cf012503f027b98b6584e4df22524e0c7450d9ec7aa7b"
 }

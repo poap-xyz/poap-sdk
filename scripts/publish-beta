@@ -16,22 +16,22 @@ fi
 echo "New BETA package $pkg_name@$pkg_version.."
 
 echo
-echo "Updating $pkg_name to version $pkg_version.."
-if ! yarn version "$pkg_version"; then
-  echo "Error: Failed to update version for $pkg_name@$pkg_version" 1>&2
+echo "Setting version $pkg_version for $pkg_name.."
+if ! pnpm pkg set version="$pkg_version"; then
+  echo "Error: Failed to set version $pkg_version for $pkg_name" 1
   exit 1
 fi
 
 echo
 echo "Building package $pkg_name@$pkg_version.."
-if ! yarn build; then
+if ! pnpm build; then
   echo "Error: Failed to build $pkg_name@$pkg_version" 1>&2
   exit 1
 fi
 
 echo
 echo "Publishing package $pkg_name@$pkg_version.."
-if ! yarn npm publish --tag beta --access public; then
+if ! pnpm publish --no-git-checks --tag beta --access public; then
   echo "Error: Failed to publish $pkg_name@$pkg_version" 1>&2
   exit 1
 fi
