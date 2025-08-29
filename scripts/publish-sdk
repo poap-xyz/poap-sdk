@@ -6,7 +6,21 @@ pkg_name="@poap-xyz/poap-sdk"
 echo "Package $pkg_name.."
 
 local_version=$(jq -r '.version' package.json)
-remote_version=$(pnpm info "$pkg_name" version --json 2>/dev/null | jq -r '.[0] // .')
+remote_version=$(pnpm info "$pkg_name" --fields version --json 2>/dev/null | jq -r .)
+
+if [ -z "$local_version" ]; then
+  echo "Error: Could not determine local version from package.json" 1>&2
+  exit 1
+fi
+
+echo "Local version: $local_version"
+echo "Remote version: ${remote_version:-"not found"}"
+
+# check if local version is different from remote version
+if [ "$local_version" == "$remote_version" ]; then
+  echo "Local version is the same as remote version. No need to publish."
+  exit 0
+fi
 
 echo
 echo "Building package $pkg_name@$local_version.."
