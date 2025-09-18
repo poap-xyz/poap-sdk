@@ -4,5 +4,8 @@ coverage
 .idea
 .vscode
 
+# Ignore Typescript build info files
+tsconfig.tsbuildinfo
+
 # Ignore Typescript definitions file extension
 *.d.ts
