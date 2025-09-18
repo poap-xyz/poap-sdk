@@ -47,7 +47,7 @@ export class CollectionsClient {
   async list(
     input: ListCollectionsInput,
     options?: RequestInit,
-  ): Promise<PaginatedResult<Collection>> {
+  ): Promise<PaginatedResult<Collection, number>> {
     const variables: PaginatedCollectionsVariables = {
       limit: input.limit,
       offset: input.offset,
@@ -64,7 +64,7 @@ export class CollectionsClient {
       Collection.fromResponse(collection),
     );
 
-    return new PaginatedResult<Collection>(
+    return new PaginatedResult<Collection, number>(
       collections,
       nextCursor(collections.length, input.limit, input.offset),
     );
@@ -82,9 +82,9 @@ export class CollectionsClient {
   async search(
     input: SearchCollectionsInput,
     options?: RequestInit,
-  ): Promise<PaginatedResult<Collection>> {
+  ): Promise<PaginatedResult<Collection, number>> {
     if (!input.query.trim()) {
-      return new PaginatedResult<Collection>([], null);
+      return new PaginatedResult<Collection, number>([], null);
     }
 
     const variables: SearchCollectionsVariables = {
@@ -101,7 +101,7 @@ export class CollectionsClient {
       (collection: CollectionResponse) => Collection.fromResponse(collection),
     );
 
-    return new PaginatedResult<Collection>(
+    return new PaginatedResult<Collection, number>(
       collections,
       nextCursor(collections.length, input.limit, input.offset),
     );
