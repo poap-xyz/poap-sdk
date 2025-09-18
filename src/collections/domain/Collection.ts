@@ -41,6 +41,11 @@ export class Collection {
     this._dropIds = dropIds || null;
   }
 
+  /**
+   * The list of drop IDs in the collection.
+   * @throws Will throw an error if the collection was not fetched individually using `CollectionsClient.get`.
+   * @returns An array of drop IDs.
+   */
   public get dropIds(): number[] {
     if (this._dropIds === null) {
       throw new Error(
