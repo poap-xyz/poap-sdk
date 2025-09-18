@@ -55,7 +55,7 @@ export class DropsClient {
   async fetch(
     input: FetchDropsInput,
     options?: RequestInit,
-  ): Promise<PaginatedResult<Drop>> {
+  ): Promise<PaginatedResult<Drop, number>> {
     const { limit, offset, sortField, sortDir, from, to, ids } = input;
 
     const isDateRangeDefined =
@@ -85,7 +85,7 @@ export class DropsClient {
       (drop: DropResponse): Drop => Drop.fromCompass(drop),
     );
 
-    return new PaginatedResult<Drop>(
+    return new PaginatedResult<Drop, number>(
       drops,
       nextCursor(drops.length, limit, offset),
     );
@@ -103,11 +103,11 @@ export class DropsClient {
   async search(
     input: SearchDropsInput,
     options?: RequestInit,
-  ): Promise<PaginatedResult<Drop>> {
+  ): Promise<PaginatedResult<Drop, number>> {
     const { search, offset, limit } = input;
 
-    if (!search) {
-      return new PaginatedResult<Drop>([], null);
+    if (!search.trim()) {
+      return new PaginatedResult<Drop, number>([], null);
     }
 
     const variables: SearchDropsVariables = {
@@ -128,7 +128,7 @@ export class DropsClient {
       (drop: DropResponse): Drop => Drop.fromCompass(drop),
     );
 
-    return new PaginatedResult<Drop>(
+    return new PaginatedResult<Drop, number>(
       drops,
       nextCursor(drops.length, limit, offset),
     );

@@ -19,7 +19,7 @@ export interface PaginationInput {
  * @class PaginatedResult
  * @template T
  */
-export class PaginatedResult<T> {
+export class PaginatedResult<T, C extends string | number = string | number> {
   /**
    * An array of items in the current page of the result.
    *
@@ -34,7 +34,7 @@ export class PaginatedResult<T> {
    * @member {string|number|null}
    * @name PaginatedResult#nextCursor
    */
-  nextCursor: string | number | null;
+  nextCursor: C | null;
 
   /**
    * Creates a new PaginatedResult object.
@@ -43,7 +43,7 @@ export class PaginatedResult<T> {
    * @param {T[]} items - The items in the current page of the result.
    * @param {string|number|null} nextCursor - The cursor for the next page of the result, or null if there are no more pages.
    */
-  constructor(items: T[], nextCursor: string | number | null) {
+  constructor(items: T[], nextCursor: C | null) {
     this.items = items;
     this.nextCursor = nextCursor;
   }
