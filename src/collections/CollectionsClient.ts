@@ -25,12 +25,12 @@ import {
   COLLECTION_DROP_IDS_QUERY,
   CollectionDropIdsResponse,
   CollectionDropIdsVariables,
-} from 'src/collections/queries/CollectionDropIds';
+} from './queries/CollectionDropIds';
 import {
   COLLECTION_QUERY,
   CollectionQueryResponse,
   CollectionQueryVariables,
-} from 'src/collections/queries/Collection';
+} from './queries/Collection';
 
 export class CollectionsClient {
   constructor(private compassProvider: CompassProvider) {}

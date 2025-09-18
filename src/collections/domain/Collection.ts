@@ -1,5 +1,5 @@
-import { CollectionType } from 'src/collections/domain/CollectionType';
-import { CollectionResponse } from 'src/collections/types/CollectionResponse';
+import { CollectionResponse } from '../types/CollectionResponse';
+import { CollectionType } from './CollectionType';
 
 export class Collection {
   private static COLLECTIONS_URL_PREFIX = 'https://collections.poap.xyz';
@@ -22,7 +22,7 @@ export class Collection {
   /** When fetched individually using `CollectionsClient.get`, contains the list of all drop IDs in the collection. */
   private _dropIds: number[] | null;
 
-  // eslint-disable-next-line complexity,max-statements
+  // eslint-disable-next-line max-statements
   constructor(properties: CollectionProperties, dropIds: number[] | null) {
     this.id = properties.id;
     this.url = properties.url;
