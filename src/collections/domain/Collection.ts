@@ -20,7 +20,7 @@ export class Collection {
   dropsCount: number;
 
   /** When fetched individually using `CollectionsClient.get`, contains the list of all drop IDs in the collection. */
-  dropIds: number[] | null;
+  private _dropIds: number[] | null;
 
   // eslint-disable-next-line complexity,max-statements
   constructor(properties: CollectionProperties, dropIds?: number[]) {
@@ -38,7 +38,17 @@ export class Collection {
     this.createdOn = properties.createdOn;
     this.updatedOn = properties.updatedOn;
     this.dropsCount = properties.dropsCount;
-    this.dropIds = dropIds || null;
+    this._dropIds = dropIds || null;
+  }
+
+  public get dropIds(): number[] {
+    if (this._dropIds === null) {
+      throw new Error(
+        'Drop IDs are not available. use `client.get(collectionId) to fetch the collection with drop IDs.`',
+      );
+    }
+
+    return this._dropIds;
   }
 
   public static fromResponse(
