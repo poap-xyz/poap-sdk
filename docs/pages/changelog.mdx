@@ -2,222 +2,202 @@
 
 ## 0.17.0
 
-### Features
+**Features**
 
 - [Drops] Add dedicated `DropsClient.get` method to get a single drop by ID.
 
-### Breaking Changes ⚠️
+**Breaking Changes ⚠️**
 
 - [Drops] `DropsClient.fetch` has been renamed to `DropsClient.list`.
 
----
-
 ## 0.16.0
 
-### Features
+**Features**
 
 - [Collections] Add Collections module. See [Collections docs](https://sdk.poap.tech/modules/collections/GetCollection).
 
----
-
 ## 0.15.0
 
-### Maintenance
+**Maintenance**
 
 - Upgrade to node LTS (22).
 - Upgrade GitHub Action checkout to v5.
 - Migrate from `yarn` to `pnpm`.
 
----
-
 ## 0.14.0
 
-### Features
+**Features**
 
 - [POAPs] Add `PoapsClient.fetchCount` method to get the total number of POAPs matching given filters.
 
----
-
 ## 0.13.0
 
-### Breaking Changes ⚠️
+**Breaking Changes ⚠️**
 
 - Subpath imports such as `@poap-xyz/poap-sdk/utils` are no longer supported. Use `@poap-xyz/poap-sdk` instead.
 
-### Maintenance
+**Maintenance**
 
 - Remove multi-package build configuration and file architecture. The SDK is now built as a single package.
 - Remove `@poap-xyz/frames` package (still published standalone on npm, but no longer part of SDK monorepo).
 
----
-
 ## 0.12.0
 
-### Features
+**Features**
 
 - [Profiles] Add errors in the response of bulk profile fetching (supports retry strategy).
 
-### Breaking Changes ⚠️
+**Breaking Changes ⚠️**
 
 - [Profiles] `ProfilesClient.fetchBulk` now returns an object with `profiles` and `errors` maps.
 
-### Maintenance
+**Maintenance**
 
 - Upgrade to yarn 4.
 - [Moments] Use `Uint8Array` instead of `Buffer` for Moments media upload and remove node polyfill.
 
----
-
 ## 0.11.0
 
-### Breaking Changes ⚠️
+**Breaking Changes ⚠️**
 
 - [Drops] `DropsClient.fetch` property changes:
   - `name` filter removed (use `DropsClient.search` instead).
   - `isPrivate` filter removed.
   - `from`/`to` now filter by drop **event** dates instead of creation date.
 
----
-
 ## 0.10.6
 
-### Features
+**Features**
 
 - Add `nulls_first` and `nulls_last` options to the `Order` enum.
 
 ## 0.10.5
 
-### Features
+**Features**
 
 - [Profiles] Add serializable profile type and related methods to make a profile response serializable and vice versa.
 
 ## 0.10.4
 
-### Features
+**Features**
 
 - [Profiles] Keep only 1 profile when multiple are returned for the same query.
 
 ## 0.10.3
 
-### Features
+**Features**
 
 - [Drops] Add HTTP request options to `DropsClient.fetch`.
 
 ## 0.10.2
 
-### Features
+**Features**
 
 - [Profiles] Reduce Profiles API bulk request limit from 100 to 50.
 
 ## 0.10.1
 
-### Features
+**Features**
 
 - [Profiles] Add HTTP request options to `ProfilesClient.fetch`.
 
 ## 0.10.0
 
-### Features
+**Features**
 
 - [Profiles] Add Profiles API client. See [Profiles docs](https://sdk.poap.tech/modules/profiles/FetchProfile).
 
----
-
 ## 0.9.3
 
-### Maintenance
+**Maintenance**
 
 - Avoid subpackage imports to preserve CommonJS compatibility.
 
 ## 0.9.2
 
-### Maintenance
+**Maintenance**
 
 - Keep entrypoint file in package export.
 
-### Documentation
+**Documentation**
 
 - Update import style examples.
 
 ## 0.9.1
 
-### Maintenance
+**Maintenance**
 
 - Support alias imports in declaration files.
 
 ## 0.9.0
 
-### Breaking Changes ⚠️
+**Breaking Changes ⚠️**
 
 - Merge SDK packages into single `@poap-xyz/poap-sdk`:
   - `@poap-xyz/drops`, `@poap-xyz/moments`, `@poap-xyz/providers`, `@poap-xyz/utils`, `@poap-xyz/poaps`.
 
----
-
 ## 0.8.4
 
-### Maintenance
+**Maintenance**
 
 - [Moments] Remove `axios` dependency from Moments client.
 
 ## 0.8.3
 
-### Features
+**Features**
 
 - Relax query util value validations. E.g. allow empty strings in `createEqFilter`.
 
 ## 0.8.2
 
-### Maintenance
+**Maintenance**
 
 - Fix typos and grammar in docs.
 - Standardize camelCase usage.
 
 ## 0.8.1
 
-### Maintenance
+**Maintenance**
 
 - Minify builds, preserve JSDoc in declarations.
 
 ## 0.8.0
 
-### Breaking Changes ⚠️
+**Breaking Changes ⚠️**
 
 - `createBoolFilter` removed. Use `createEqFilter('...', true | false)` instead.
 
----
-
 ## 0.7.5
 
-### Maintenance
+**Maintenance**
 
 - Specify type declaration file in exports.
 
 ## 0.7.4
 
-### Features
+**Features**
 
 - Add `_is_null` filter in query helpers.
 
-### Bug Fixes
+**Bug Fixes**
 
 - [Drops] Add missing image from drop compass response
 
 ## 0.7.2
 
-### Features
+**Features**
 
 - [Moments] Make `dropIds` optional in Moment creation.
 
 ## 0.7.1
 
-### Features
+**Features**
 
 - [Drops] Add method to transform Serializable Drop into Drop.
 
 ## 0.7.0
 
-### Breaking Changes ⚠️
+**Breaking Changes ⚠️**
 
 - [Moments] Adapt Moments package to POAP Moments API v2.  
 - [Moments] Drop type: `dropId` → `dropIds` array.  
@@ -225,99 +205,89 @@
 - [Moments] Removed `patchMoment`.  
 - [Moments] Removed ordering by tokenId/dropId.
 
----
-
 ## 0.6.0
 
-### Breaking Changes ⚠️
+**Breaking Changes ⚠️**
 
 - [Moments] `createMoment` no longer uploads media automatically → use `createMomentAndUploadMedia`.  
 - [Compass] `signal` was moved into the `options` param.
 
----
-
 ## 0.5.5
 
-### Features
+**Features**
 
 - [POAPs] Exclude minted email reservations in count.
 - [Drops] Keep special characters in Drops search.
 
-### Maintenance
+**Maintenance**
 
 - Docs improvements, refactor exports.
 
 ## 0.5.0
 
-### Breaking Changes ⚠️
+**Breaking Changes ⚠️**
 
 - Packages do not export input types anymore.
 - [Drops] Drop properties are not exported.
 
----
-
 ## 0.4.0
 
-### Breaking Changes ⚠️
+**Breaking Changes ⚠️**
 
 - [Moments] Rename `medias` → `media`.
 
----
-
 ## 0.3.0
 
-### Maintenance
+**Maintenance**
 
 - Add `.d.cts` and `.d.mts` compilation outputs.
 
----
-
 ## 0.2.8
 
-### Maintenance
+**Maintenance**
 
 - Bump `axios` version.
 
 ## 0.2.7
 
-### Features
+**Features**
 
 - [Moments] Add `cid` field and patch request support.
 
 ## 0.2.6
 
-### Features
+**Features**
 
 - Add `MomentsClientFactory`.
 
 ## 0.2.5
 
-### Features
+**Features**
 
 - Implement Compass batch.
 
 ## 0.2.4
 
-### Features
+**Features**
 
 - Add field expand support.
 
 ## 0.2.3
 
-### Features
+**Features**
 
 - Make `OrderBy` recursive.
 - Add provider for Collections API.
 
 ## 0.2.2
 
-### Bug Fixes
+**Bug Fixes**
 
 - [POAPs] Fix POAPs fetch with collector filter when null-address not applied.
 
 ## 0.2.1
 
-### Features
+**Features**
 
 - Export `CompassRequestError`.
 - Organize provider exports.
@@ -328,7 +298,7 @@
 
 ## 0.2.0
 
-### Breaking Changes ⚠️
+**Breaking Changes ⚠️**
 
 - Replace `any` types with strict ones.
 - Remove `HttpProvider`.
@@ -339,60 +309,56 @@
 - Fetch moments `order` must be enum.
 - Rename `filterByZeroAddress` → `filterZeroAddress`.
 
----
-
 ## 0.1.7
 
-### Maintenance
+**Maintenance**
 
 - Remove `queue-message`, replace with `transactions`.
 
 ## 0.1.6
 
-### Features
+**Features**
 
 - Add fetch drop image object method (added then reverted).
 
-### Maintenance
+**Maintenance**
 
 - Improve Compass types and errors.
 
 ## 0.1.3
 
-### Features
+**Features**
 
 - Add original image URL to Drop.
 
-### Maintenance
+**Maintenance**
 
 - Lint/test fixes.
 - Update badges, docs.
 
 ## 0.1.2
 
-### Maintenance
+**Maintenance**
 
 - Remove `performance` dependency
 
 ## 0.1.1
 
-### Features
+**Features**
 
 - Prefer browser built-ins over node built-ins.
 
 ## 0.1.0
 
-### Features
+**Features**
 
 - Initial release.
 - Update Axios / form-data requirements.
 - Set Node.js minimum version.
 
----
-
 ## 0.0.37 → 0.0.13 (early betas)
 
-### Features
+**Features**
 
 - Added Moments upload & authentication.
 - Added multiple media creation.
@@ -401,24 +367,22 @@
 - Added filtering options (null address, private events).
 - Progress reporting for uploads.
 
-### Bug Fixes
+**Bug Fixes**
 
 - Fixes to "minted on" date, typos, attributes.
 
-### Maintenance
+**Maintenance**
 
 - Refactored utils/providers dependencies.
 
----
-
 ## 0.0.11
 
-### Features
+**Features**
 
 - Initial SDK structure.
 - Add Axios, example files, contributors.
 - Added Moments basics.
 
-### Maintenance
+**Maintenance**
 
 - Tests, docs, CI pipeline.
