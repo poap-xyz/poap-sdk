@@ -19,6 +19,7 @@ import { SearchDropsInput } from './types/SearchDropsInput';
 import { CompassProvider, DropApiProvider } from '../providers';
 import {
   createBetweenFilter,
+  createEqFilter,
   createInFilter,
   createOrderBy,
   isNumeric,

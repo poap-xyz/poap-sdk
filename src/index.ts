@@ -1,3 +1,4 @@
+export * from './collections';
 export * from './drops';
 export * from './moments';
 export * from './poaps';

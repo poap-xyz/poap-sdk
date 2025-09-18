@@ -1,0 +1,36 @@
+# Get Collection
+
+Fetch a single POAP Collections using its ID.
+
+```typescript
+import { Collection } from '@poap-xyz/poap-sdk';
+
+const id = 1;
+
+const collection: Collection = await client.get(id);
+```
+
+# Get Drops of the Collection
+
+When fetched individually using `client.get`, the Collection contains the full list of drop IDs. Fetch them using the dropsClient to get the full details of each drop.
+
+```typescript
+import { Collection } from '@poap-xyz/poap-sdk';
+
+const id = 1;
+
+const collection: Collection = await collectionsClient.get(id);
+
+let allDrops = [];
+let cursor: number | null = 0;
+
+while (cursor !== null) {
+  const { drops, nextCursor } = await dropsClient.fetch({
+    offset: cursor,
+    limit: 100,
+    ids: collection.dropIds,
+  });
+  allDrops.push(...drops);
+  cursor = nextCursor;
+}
+```

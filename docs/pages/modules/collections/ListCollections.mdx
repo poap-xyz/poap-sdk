@@ -1,0 +1,42 @@
+# List all Collections
+
+Fetch POAP Collections, paginated using `offset` and `limit`.
+
+```typescript
+import { Collection, Order, PaginatedResult } from '@poap-xyz/poap-sdk';
+
+const allCollections: Collection[] = [];
+let cursor: number | null = 0;
+
+while (nextCursor !== null) {
+  const { collections, nextCursor }: PaginatedResult<Collection> = await client.list({
+    offset: cursor,
+    limit: 10,
+  });
+  allCollections.push(...collections);
+  cursor = nextCursor;
+}
+```
+
+# List Collections by ID
+
+Fetch multiple Collections by their IDs.
+
+```typescript
+import { Collection, Order, PaginatedResult } from '@poap-xyz/poap-sdk';
+
+const collectionIds = [1, 2, 3];
+
+const allCollections: Collection[] = [];
+let cursor: number | null = 0;
+
+while (nextCursor !== null) {
+  const { collections, nextCursor }: PaginatedResult<Collection> = await client.list({
+    offset: cursor,
+    limit: 10,
+    ids: collectionIds,
+  });
+  allCollections.push(...collections);
+  cursor = nextCursor;
+}
+```
