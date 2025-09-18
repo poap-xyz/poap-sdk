@@ -11,7 +11,7 @@ const allCollections: Collection[] = [];
 let cursor: number | null = 0;
 
 while (nextCursor !== null) {
-  const { collections, nextCursor }: PaginatedResult<Collection> = await client.search({
+  const { items: collections, nextCursor }: PaginatedResult<Collection> = await client.search({
     offset: cursor,
     limit: 10,
     query: searchTerm,

@@ -9,7 +9,7 @@ const allCollections: Collection[] = [];
 let cursor: number | null = 0;
 
 while (nextCursor !== null) {
-  const { collections, nextCursor }: PaginatedResult<Collection> = await client.list({
+  const { items: collections, nextCursor }: PaginatedResult<Collection> = await client.list({
     offset: cursor,
     limit: 10,
   });
@@ -31,7 +31,7 @@ const allCollections: Collection[] = [];
 let cursor: number | null = 0;
 
 while (nextCursor !== null) {
-  const { collections, nextCursor }: PaginatedResult<Collection> = await client.list({
+  const { items: collections, nextCursor }: PaginatedResult<Collection> = await client.list({
     offset: cursor,
     limit: 10,
     ids: collectionIds,
