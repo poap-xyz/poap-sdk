@@ -23,7 +23,7 @@ export class Collection {
   private _dropIds: number[] | null;
 
   // eslint-disable-next-line complexity,max-statements
-  constructor(properties: CollectionProperties, dropIds?: number[]) {
+  constructor(properties: CollectionProperties, dropIds: number[] | null) {
     this.id = properties.id;
     this.url = properties.url;
     this.type = properties.type;
@@ -38,7 +38,7 @@ export class Collection {
     this.createdOn = properties.createdOn;
     this.updatedOn = properties.updatedOn;
     this.dropsCount = properties.dropsCount;
-    this._dropIds = dropIds || null;
+    this._dropIds = dropIds;
   }
 
   /**
@@ -79,7 +79,7 @@ export class Collection {
         updatedOn: response.updated_on,
         dropsCount: response.collections_items_aggregate.aggregate.count,
       },
-      dropIds,
+      dropIds || null,
     );
   }
 
