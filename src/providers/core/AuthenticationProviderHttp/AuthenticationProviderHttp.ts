@@ -33,7 +33,7 @@ export class AuthenticationProviderHttp implements AuthenticationProvider {
     this.clientSecret = clientSecret;
     this.oAuthServerDomain = oAuthServerDomain || DEFAULT_OAUTH_SERVER;
 
-    if (this.oAuthServerDomain.startsWith('http')) {
+    if (this.oAuthServerDomain.toLowerCase().startsWith('http')) {
       throw new Error('OAuth server domain must not start with HTTP');
     }
   }

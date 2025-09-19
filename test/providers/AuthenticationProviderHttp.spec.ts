@@ -17,6 +17,15 @@ describe('AuthenticationProviderHttp', () => {
   const AUDIENCE = 'audience.test';
   const AUTH_SERVER = 'auth.test';
 
+  it('should throw Error when given an oAuthServerDomain that starts with http', () => {
+    expect(() => {
+      new AuthenticationProviderHttp(CLIENT_ID, CLIENT_SECRET, 'https://accounts.poap.tech');
+    }).toThrow(new Error('OAuth server domain must not start with HTTP'));
+    expect(() => {
+      new AuthenticationProviderHttp(CLIENT_ID, CLIENT_SECRET, 'HTTPS://ACCOUNTS.POAP.TECH');
+    }).toThrow(new Error('OAuth server domain must not start with HTTP'));
+  });
+
   it('should return an Access Token', async () => {
     const provider = new AuthenticationProviderHttp(
       CLIENT_ID,
