@@ -1,5 +1,6 @@
 import { AuthToken } from '../../ports/AuthenticationProvider/types/AuthToken';
 import { AuthenticationProvider } from '../../ports/AuthenticationProvider/AuthenticationProvider';
+import { UnauthorizedClientError } from '../../ports/AuthenticationProvider/errors/UnauthorizedClientError';
 
 const DEFAULT_OAUTH_SERVER = 'auth.accounts.poap.xyz';
 
@@ -12,6 +13,19 @@ type AuthTokenResponse = {
   expires_in?: number;
   refresh_token?: string;
   scope?: string;
+};
+
+/**
+ * @see https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
+ */
+type ErrorResponse = {
+  error:
+    | 'invalid_request'
+    | 'invalid_client'
+    | 'invalid_grant'
+    | 'unauthorized_client'
+    | 'unsupported_grant_type'
+    | 'invalid_scope';
 };
 
 export class AuthenticationProviderHttp implements AuthenticationProvider {
@@ -62,28 +76,29 @@ export class AuthenticationProviderHttp implements AuthenticationProvider {
       },
     );
 
+    if (response.status === 401) {
+      throw new UnauthorizedClientError(audience, this.clientId);
+    }
+
     if (!response.ok) {
-      let responseData: unknown;
-      try {
-        responseData = await response.text();
-      } catch {}
+      const errorResponse = await this.parseErrorResponse(audience, response);
+
+      if (errorResponse.error === 'unauthorized_client') {
+        throw new UnauthorizedClientError(audience, this.clientId);
+      }
 
       throw new Error(
         `Could not authenticate to ${audience}: ` +
-          `Network response was not ok: ${response.statusText} ${responseData}`,
+          `Network response was not ok: ${response.statusText} ${errorResponse.error}`,
       );
     }
 
-    const responseData: unknown = await response.json();
+    const authTokenResponse = await this.parseSuccessResponse(
+      audience,
+      response,
+    );
 
-    if (!this.isAuthTokenResponse(responseData)) {
-      throw new Error(
-        `Could not authenticate to ${audience}: ` +
-          `Invalid response: ${JSON.stringify(responseData)}`,
-      );
-    }
-
-    const authToken = this.transformResponseToAuthToken(responseData);
+    const authToken = this.transformResponseToAuthToken(authTokenResponse);
 
     this.setCachedToken(audience, authToken);
 
@@ -109,42 +124,116 @@ export class AuthenticationProviderHttp implements AuthenticationProvider {
     return authToken.expiresAt != undefined && authToken.expiresAt < new Date();
   }
 
+  private async parseErrorResponse(
+    audience: string,
+    response: Response,
+  ): Promise<ErrorResponse> {
+    let responseData: unknown;
+    try {
+      responseData = await response.json();
+    } catch (error: unknown) {
+      throw new Error(
+        `Could not autenticate to ${audience}: Cannot parse response`,
+        { cause: error },
+      );
+    }
+
+    if (!this.isErrorResponse(responseData)) {
+      throw new Error(
+        `Could not authenticate to ${audience}: ` +
+          `Invalid response: ${JSON.stringify(responseData)}`,
+      );
+    }
+
+    return responseData;
+  }
+
+  // eslint-disable-next-line complexity
+  private isErrorResponse(
+    responseData: unknown,
+  ): responseData is ErrorResponse {
+    if (
+      responseData == undefined ||
+      typeof responseData !== 'object' ||
+      !('error' in responseData) ||
+      responseData.error == undefined ||
+      typeof responseData.error !== 'string' ||
+      ![
+        'invalid_request',
+        'invalid_client',
+        'invalid_grant',
+        'unauthorized_client',
+        'unsupported_grant_type',
+        'invalid_scope',
+      ].includes(responseData.error)
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+
+  private async parseSuccessResponse(
+    audience: string,
+    response: Response,
+  ): Promise<AuthTokenResponse> {
+    let responseData: unknown;
+    try {
+      responseData = await response.json();
+    } catch (error: unknown) {
+      throw new Error(
+        `Could not autenticate to ${audience}: Cannot parse response`,
+        { cause: error },
+      );
+    }
+
+    if (!this.isAuthTokenResponse(responseData)) {
+      throw new Error(
+        `Could not authenticate to ${audience}: ` +
+          `Invalid response: ${JSON.stringify(responseData)}`,
+      );
+    }
+
+    return responseData;
+  }
+
   // eslint-disable-next-line complexity
   private isAuthTokenResponse(
-    authToken: unknown,
-  ): authToken is AuthTokenResponse {
+    responseData: unknown,
+  ): responseData is AuthTokenResponse {
     if (
-      authToken == undefined ||
-      typeof authToken !== 'object' ||
-      !('access_token' in authToken) ||
-      authToken.access_token == undefined ||
-      typeof authToken.access_token !== 'string' ||
-      !('token_type' in authToken) ||
-      authToken.token_type == undefined ||
-      typeof authToken.token_type !== 'string'
+      responseData == undefined ||
+      typeof responseData !== 'object' ||
+      !('access_token' in responseData) ||
+      responseData.access_token == undefined ||
+      typeof responseData.access_token !== 'string' ||
+      !('token_type' in responseData) ||
+      responseData.token_type == undefined ||
+      typeof responseData.token_type !== 'string'
     ) {
       return false;
     }
 
     if (
-      'expires_in' in authToken &&
-      (authToken.expires_in == undefined ||
-        typeof authToken.expires_in !== 'number')
+      'expires_in' in responseData &&
+      (responseData.expires_in == undefined ||
+        typeof responseData.expires_in !== 'number')
     ) {
       return false;
     }
 
     if (
-      'refresh_token' in authToken &&
-      (authToken.refresh_token == undefined ||
-        typeof authToken.refresh_token !== 'string')
+      'refresh_token' in responseData &&
+      (responseData.refresh_token == undefined ||
+        typeof responseData.refresh_token !== 'string')
     ) {
       return false;
     }
 
     if (
-      'scope' in authToken &&
-      (authToken.scope == undefined || typeof authToken.scope !== 'string')
+      'scope' in responseData &&
+      (responseData.scope == undefined ||
+        typeof responseData.scope !== 'string')
     ) {
       return false;
     }

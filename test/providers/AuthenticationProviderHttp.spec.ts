@@ -1,6 +1,7 @@
 import { mock } from 'node:test';
-import { AuthenticationProviderHttp } from '../../src/providers/core/AuthenticationProviderHttp/AuthenticationProviderHttp';
 import { jest } from '@jest/globals';
+import { AuthenticationProviderHttp } from '../../src/providers/core/AuthenticationProviderHttp/AuthenticationProviderHttp';
+import { UnauthorizedClientError } from '../../src/providers/ports/AuthenticationProvider/errors/UnauthorizedClientError';
 
 const DATETIME = new Date('2026-09-19 18:00:00');
 
@@ -26,6 +27,35 @@ describe('AuthenticationProviderHttp', () => {
     }).toThrow(new Error('OAuth server domain must not start with HTTP'));
   });
 
+  it('should throw UnauthorizedClientError when response is 401', async () => {
+    const provider = new AuthenticationProviderHttp(
+      CLIENT_ID,
+      CLIENT_SECRET,
+      AUTH_SERVER,
+    );
+
+    mock.method(global, 'fetch', () => {
+      return Promise.resolve({
+        ok: false,
+        status: 401,
+        statusText: 'Unauthorized',
+        json: () =>
+          Promise.resolve({
+            'error': 'unauthorized_client',
+          }),
+      });
+    });
+
+    await expect(async () => {
+      await provider.getAuthToken(AUDIENCE);
+    }).rejects.toThrow(
+      new UnauthorizedClientError(
+        'CLIENT_ID',
+        'audience.test',
+      ),
+    );
+  });
+
   it('should throw Error when response is not 200', async () => {
     const provider = new AuthenticationProviderHttp(
       CLIENT_ID,
@@ -36,15 +66,20 @@ describe('AuthenticationProviderHttp', () => {
     mock.method(global, 'fetch', () => {
       return Promise.resolve({
         ok: false,
+        status: 400,
         statusText: 'Bad Request',
-        text: () =>
-          Promise.resolve('{"message":"Bad Request"}'),
+        json: () =>
+          Promise.resolve({
+            'error': 'invalid_request',
+          }),
       });
     });
 
     await expect(async () => {
       await provider.getAuthToken(AUDIENCE);
-    }).rejects.toThrow(new Error('Could not authenticate to audience.test: Network response was not ok: Bad Request {"message":"Bad Request"}'));
+    }).rejects.toThrow(
+      new Error('Could not authenticate to audience.test: Network response was not ok: Bad Request invalid_request'),
+    );
   });
 
   it('should throw Error when response has no access_token', async () => {
@@ -57,6 +92,8 @@ describe('AuthenticationProviderHttp', () => {
     mock.method(global, 'fetch', () => {
       return Promise.resolve({
         ok: true,
+        status: 200,
+        statusText: 'OK',
         json: () =>
           Promise.resolve({
             bad: 'response',
@@ -66,7 +103,9 @@ describe('AuthenticationProviderHttp', () => {
 
     await expect(async () => {
       await provider.getAuthToken(AUDIENCE);
-    }).rejects.toThrow(new Error('Could not authenticate to audience.test: Invalid response: {"bad":"response"}'));
+    }).rejects.toThrow(
+      new Error('Could not authenticate to audience.test: Invalid response: {"bad":"response"}'),
+    );
   });
 
   it('should throw Error when response has no expires_in is set but not numeric', async () => {
@@ -79,6 +118,8 @@ describe('AuthenticationProviderHttp', () => {
     mock.method(global, 'fetch', () => {
       return Promise.resolve({
         ok: true,
+        status: 200,
+        statusText: 'OK',
         json: () =>
           Promise.resolve({
             access_token: ACCESS_TOKEN,
@@ -103,6 +144,8 @@ describe('AuthenticationProviderHttp', () => {
     mock.method(global, 'fetch', () => {
       return Promise.resolve({
         ok: true,
+        status: 200,
+        statusText: 'OK',
         json: () =>
           Promise.resolve({
             access_token: ACCESS_TOKEN,
@@ -133,6 +176,8 @@ describe('AuthenticationProviderHttp', () => {
     mock.method(global, 'fetch', () => {
       return Promise.resolve({
         ok: true,
+        status: 200,
+        statusText: 'OK',
         json: () =>
           Promise.resolve({
             access_token: ACCESS_TOKEN,
@@ -161,6 +206,8 @@ describe('AuthenticationProviderHttp', () => {
     mock.method(global, 'fetch', () => {
       return Promise.resolve({
         ok: true,
+        status: 200,
+        statusText: 'OK',
         json: () =>
           Promise.resolve({
             access_token: ACCESS_TOKEN,
@@ -179,6 +226,8 @@ describe('AuthenticationProviderHttp', () => {
     mock.method(global, 'fetch', () => {
       return Promise.resolve({
         ok: true,
+        status: 200,
+        statusText: 'OK',
         json: () =>
           Promise.resolve({
             access_token: ACCESS_TOKEN_2,
