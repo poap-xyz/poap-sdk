@@ -146,7 +146,12 @@ export class PoapTokenApi implements TokensApiProvider {
     if (!this.authenticationProvider) {
       throw new MissingAuthenticationProviderError();
     }
-    return `Bearer ${await this.authenticationProvider.getJWT(this.baseUrl)}`;
+
+    const authToken = await this.authenticationProvider.getAuthToken(
+      this.baseUrl,
+    );
+
+    return `Bearer ${authToken.accessToken}`;
   }
 }
 

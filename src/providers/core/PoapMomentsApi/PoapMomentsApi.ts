@@ -159,6 +159,10 @@ export class PoapMomentsApi implements MomentsApiProvider {
       );
     }
 
-    return `Bearer ${await this.authenticationProvider.getJWT(this.baseUrl)}`;
+    const authToken = await this.authenticationProvider.getAuthToken(
+      this.baseUrl,
+    );
+
+    return `Bearer ${authToken.accessToken}`;
   }
 }
