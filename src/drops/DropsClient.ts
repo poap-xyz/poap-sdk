@@ -14,11 +14,12 @@ import { DropResponse } from './types/DropResponse';
 import { DropsSortFields } from './types/DropsSortFields';
 import { CreateDropsInput } from './types/CreateDropsInput';
 import { UpdateDropsInput } from './types/UpdateDropsInput';
-import { FetchDropsInput } from './types/FetchDropsInput';
+import { ListDropsInput } from './types/ListDropsInput';
 import { SearchDropsInput } from './types/SearchDropsInput';
 import { CompassProvider, DropApiProvider } from '../providers';
 import {
   createBetweenFilter,
+  createEqFilter,
   createInFilter,
   createOrderBy,
   isNumeric,
@@ -48,12 +49,20 @@ export class DropsClient {
 
   /**
    * Fetches drops based on the specified input.
-   * @param input The input for fetching drops.
+   *
+   * @param input.sortField The field to sort the drops by.
+   * @param input.sortDir The direction to sort the drops (ascending or descending).
+   * @param input.from The start date to filter drops from.
+   * @param input.to The end date to filter drops to.
+   * @param input.ids An array of drop IDs to filter by.
+   * @param input.limit The maximum number of drops to return.
+   * @param input.offset The number of drops to skip before starting to collect the result set.
    * @param options Additional options to pass to the fetch call.
+   *
    * @returns A paginated result of drops.
    */
-  async fetch(
-    input: FetchDropsInput,
+  async list(
+    input: ListDropsInput,
     options?: RequestInit,
   ): Promise<PaginatedResult<Drop, number>> {
     const { limit, offset, sortField, sortDir, from, to, ids } = input;
@@ -89,6 +98,35 @@ export class DropsClient {
       drops,
       nextCursor(drops.length, limit, offset),
     );
+  }
+
+  /**
+   * Fetches a single drop by ID.
+   * @param id The ID of the drop to fetch.
+   * @param options Additional options to pass to the fetch call.
+   * @returns The drop with the specified ID, or null if not found.
+   *
+   */
+  async get(id: number, options?: RequestInit): Promise<Drop | null> {
+    const { data } = await this.compassProvider.request<
+      PaginatedDropsResponse,
+      PaginatedDropsVariables
+    >(
+      PAGINATED_DROPS_QUERY,
+      {
+        offset: 0,
+        limit: 1,
+        orderBy: createOrderBy<DropsSortFields>(DropsSortFields.Id, Order.DESC),
+        where: createEqFilter('id', id),
+      },
+      options,
+    );
+
+    if (!data.drops.length) {
+      return null;
+    }
+
+    return Drop.fromCompass(data.drops[0]);
   }
 
   /**

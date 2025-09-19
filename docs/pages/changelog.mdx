@@ -4,7 +4,7 @@ All notable changes to this project are documented in this file.
 
 ## 0.17.0
 
-{<h3>Features 🚀</h3>}
+{<h3>Features</h3>}
 
 * **[Drops]** Introduce a dedicated `DropsClient.get` method to retrieve a single drop by its ID.
 
@@ -16,7 +16,7 @@ All notable changes to this project are documented in this file.
 
 ## 0.16.0
 
-{<h3>Features 🚀</h3>}
+{<h3>Features</h3>}
 
 * **[Collections]** New Collections module added. See the [Collections documentation](https://sdk.poap.tech/modules/collections/GetCollection) for details.
 
@@ -24,7 +24,7 @@ All notable changes to this project are documented in this file.
 
 ## 0.15.0
 
-{<h3>Maintenance 🔧</h3>}
+{<h3>Maintenance</h3>}
 
 * Upgraded to Node.js LTS (v22).
 * Upgraded GitHub Action `checkout` to v5.
@@ -34,7 +34,7 @@ All notable changes to this project are documented in this file.
 
 ## 0.14.0
 
-{<h3>Features 🚀</h3>}
+{<h3>Features</h3>}
 
 * **[POAPs]** Added `PoapsClient.fetchCount` method to get the total count of POAPs based on provided filters.
 
@@ -46,7 +46,7 @@ All notable changes to this project are documented in this file.
 
 * Subpath imports (e.g., `@poap-xyz/poap-sdk/utils`) are no longer supported. Import directly from `@poap-xyz/poap-sdk` instead.
 
-{<h3>Maintenance 🔧</h3>}
+{<h3>Maintenance</h3>}
 
 * Removed multi-package build configuration; the SDK is now built as a single, monolithic package.
 * Removed the `@poap-xyz/frames` package from this monorepo (still available as a standalone package on npm).
@@ -55,7 +55,7 @@ All notable changes to this project are documented in this file.
 
 ## 0.12.0
 
-{<h3>Features 🚀</h3>}
+{<h3>Features</h3>}
 
 * **[Profiles]** Bulk profile fetching now includes errors in its response to support robust retry strategies.
 
@@ -63,7 +63,7 @@ All notable changes to this project are documented in this file.
 
 * **[Profiles]** The `ProfilesClient.fetchBulk` method now returns an object containing `profiles` and `errors` maps instead of a simple array.
 
-{<h3>Maintenance 🔧</h3>}
+{<h3>Maintenance</h3>}
 
 * Upgraded to Yarn 4.
 * **[Moments]** Replaced `Buffer` with `Uint8Array` for media uploads and removed Node.js polyfills for better browser compatibility.
@@ -83,7 +83,7 @@ All notable changes to this project are documented in this file.
 
 ## Versions 0.10.6 - 0.10.0
 
-{<h3>Features 🚀</h3>}
+{<h3>Features</h3>}
 
 * Added `nulls_first` and `nulls_last` options to the `Order` enum. **(0.10.6)**
 * **[Profiles]** Added serializable profile types and related conversion methods. **(0.10.5)**
@@ -97,7 +97,7 @@ All notable changes to this project are documented in this file.
 
 ## Versions 0.9.3 - 0.9.0
 
-{<h3>Maintenance 🔧</h3>}
+{<h3>Maintenance</h3>}
 
 * Avoided subpackage imports to preserve CommonJS compatibility. **(0.9.3)**
 * Ensured entrypoint file is included in package exports. **(0.9.2)**
@@ -112,7 +112,7 @@ All notable changes to this project are documented in this file.
 
 ## Earlier Versions (0.8.4 - 0.1.0)
 
-{<h3>Notable Features 🚀</h3>}
+{<h3>Notable Features</h3>}
 
 * **[Moments]** Removed `axios` dependency. **(0.8.4)**
 * Relaxed query utility value validations. **(0.8.3)**
@@ -128,7 +128,7 @@ All notable changes to this project are documented in this file.
 * Removed `createBoolFilter`; use `createEqFilter` instead. **(0.8.0)**
 * Replaced loose `any` types with strict definitions and refactored provider architecture. **(0.2.0)**
 
-{<h3>Maintenance 🔧</h3>}
+{<h3>Maintenance</h3>}
 
 * Ongoing improvements to documentation, type declarations, export patterns, and dependency management.
 * Enhanced error handling and validation across all Compass API interactions.
