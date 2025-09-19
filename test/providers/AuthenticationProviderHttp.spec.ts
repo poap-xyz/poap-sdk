@@ -47,6 +47,28 @@ describe('AuthenticationProviderHttp', () => {
     }).rejects.toThrow(new Error('Could not authenticate to audience.test: Network response was not ok: Bad Request {"message":"Bad Request"}'));
   });
 
+  it('should throw Error when response has no access_token', async () => {
+    const provider = new AuthenticationProviderHttp(
+      CLIENT_ID,
+      CLIENT_SECRET,
+      AUTH_SERVER,
+    );
+
+    mock.method(global, 'fetch', () => {
+      return Promise.resolve({
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            bad: 'response',
+          }),
+      });
+    });
+
+    await expect(async () => {
+      await provider.getAuthToken(AUDIENCE);
+    }).rejects.toThrow(new Error('Could not authenticate to audience.test: Invalid response: {"bad":"response"}'));
+  });
+
   it('should return an Access Token', async () => {
     const provider = new AuthenticationProviderHttp(
       CLIENT_ID,

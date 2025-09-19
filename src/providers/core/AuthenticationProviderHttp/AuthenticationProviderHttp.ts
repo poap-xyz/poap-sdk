@@ -79,7 +79,7 @@ export class AuthenticationProviderHttp implements AuthenticationProvider {
     if (!this.isAuthTokenResponse(responseData)) {
       throw new Error(
         `Could not authenticate to ${audience}: ` +
-          `Invalid response: ${responseData}`,
+          `Invalid response: ${JSON.stringify(responseData)}`,
       );
     }
 
