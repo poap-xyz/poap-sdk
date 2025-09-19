@@ -6,7 +6,7 @@ All notable changes to this project are documented in this file.
 
 {<h3>Breaking Changes ⚠️</h3>}
 
-* **[Providers]** `AuthenticationProvider.getJWT` has been changed for `getAuthToken` that returns an object with the whole OAuth token information. It is now cached by audience so many clients could share the same provider.
+* **[Providers]** `AuthenticationProvider.getJWT` has been changed for `getAuthToken` that returns an object with the whole OAuth token information, throws `UnauthorizedClientError`. It is now cached by audience so many clients could share the same provider.
 
 ## 0.17.0
 
