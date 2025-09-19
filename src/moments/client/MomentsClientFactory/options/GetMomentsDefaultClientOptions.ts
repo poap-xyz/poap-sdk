@@ -30,7 +30,7 @@ export interface MomentsWithOAuthCredentials extends MomentsBaseOptions {
     clientSecret: string;
     /**
      * The domain of the OAuth server.
-     * @default https://accounts.poap.tech
+     * @default auth.accounts.poap.xyz
      */
     oAuthServerDomain?: string;
   };

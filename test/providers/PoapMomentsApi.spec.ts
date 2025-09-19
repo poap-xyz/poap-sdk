@@ -17,6 +17,10 @@ describe('PoapMomentsApi', () => {
 
   beforeEach(() => {
     authenticationProviderMocked = mock();
+    authenticationProviderMocked.getAuthToken.mockResolvedValue({
+      accessToken: 'mockAccessToken',
+      tokenType: 'mockTokenType',
+    });
     fetchMock.resetMocks();
     api = new PoapMomentsApi({
       baseUrl: BASE_URL,

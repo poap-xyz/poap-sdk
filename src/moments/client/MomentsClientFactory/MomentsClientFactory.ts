@@ -8,8 +8,6 @@ import { MomentsClient } from '../MomentsClient';
 import { GetMomentsDefaultClientOptions } from './options/GetMomentsDefaultClientOptions';
 
 export class MomentsClientFactory {
-  private static readonly DEFAULT_OAUTH_SERVER = 'https://accounts.poap.tech';
-
   public static getMomentsDefaultClient(
     params: GetMomentsDefaultClientOptions,
   ): MomentsClient {
@@ -45,8 +43,7 @@ export class MomentsClientFactory {
     return new AuthenticationProviderHttp(
       params.moments.oAuthCredentials.clientId,
       params.moments.oAuthCredentials.clientSecret,
-      params.moments.oAuthCredentials.oAuthServerDomain ??
-        MomentsClientFactory.DEFAULT_OAUTH_SERVER,
+      params.moments.oAuthCredentials.oAuthServerDomain,
     );
   }
 }

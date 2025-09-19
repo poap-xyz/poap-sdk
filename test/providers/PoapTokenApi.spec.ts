@@ -8,16 +8,20 @@ import {
   PostMintCodeResponse,
 } from '../../src/providers/ports/TokensApiProvider/types/MintCodeResponse';
 import { PoapTokenApi } from '../../src/providers/core/PoapTokenApi/PoapTokenApi';
+import { AuthToken } from '../../src/providers/ports/AuthenticationProvider/types/AuthToken';
 import { mock } from 'node:test';
 
 describe('PoapTokenApi', () => {
   let api: PoapTokenApi;
   const apiKey = 'test-api-key';
   const baseUrl = 'https://api.poap.tech';
-  const mockJwt = 'mockJwtToken';
+  const mockAuthToken: AuthToken = {
+    accessToken: 'mockAccessToken',
+    tokenType: 'Bearer',
+  };
 
   const mockAuthenticationProvider = {
-    getJWT: jest.fn().mockResolvedValue(mockJwt),
+    getAuthToken: jest.fn().mockResolvedValue(mockAuthToken),
   };
 
   beforeEach(() => {
