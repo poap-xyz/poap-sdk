@@ -1,14 +1,14 @@
 import { AuthToken } from './types/AuthToken';
 
 /**
- * Authentication provider port
- *
- * @Interface AuthenticationProvider
+ * An authentication providers implements a way to connect to an API.
  */
 export interface AuthenticationProvider {
   /**
-   * Get a JWT from the authentication provider
-   * @param audience The audience of the JWT
+   * Ask for a new authentication token that can be used to communicate with
+   * the API given in the `audience` argument.
+   *
+   * @param audience The audience of the API
    * @throws {UnauthorizedClientError}
    */
   getAuthToken(audience: string): Promise<AuthToken>;
