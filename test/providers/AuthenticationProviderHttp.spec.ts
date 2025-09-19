@@ -3,20 +3,15 @@ import { jest } from '@jest/globals';
 import { AuthenticationProviderHttp } from '../../src/providers/core/AuthenticationProviderHttp/AuthenticationProviderHttp';
 import { UnauthorizedClientError } from '../../src/providers/ports/AuthenticationProvider/errors/UnauthorizedClientError';
 
-const DATETIME = new Date('2026-09-19 18:00:00');
-
-jest
-  .useFakeTimers()
-  .setSystemTime(DATETIME);
-
 describe('AuthenticationProviderHttp', () => {
-  const CLIENT_ID = 'CLIENT_ID';
-  const CLIENT_SECRET = 'CLIENT_SECRET';
-  const ACCESS_TOKEN = 'ACCESS_TOKEN';
-  const ACCESS_TOKEN_2 = 'ACCESS_TOKEN_2';
+  const CLIENT_ID = 'client_id';
+  const CLIENT_SECRET = 'client_secret';
+  const ACCESS_TOKEN = 'access_token';
+  const ACCESS_TOKEN_2 = 'access_token_2';
   const EXPIRES_IN = 3600;
   const AUDIENCE = 'audience.test';
   const AUTH_SERVER = 'auth.test';
+  const DATETIME = new Date('2026-09-19 18:00:00');
 
   it('should throw Error when given an oAuthServerDomain that starts with http', () => {
     expect(() => {
@@ -131,7 +126,7 @@ describe('AuthenticationProviderHttp', () => {
 
     await expect(async () => {
       await provider.getAuthToken(AUDIENCE);
-    }).rejects.toThrow(new Error('Could not authenticate to audience.test: Invalid response: {"access_token":"ACCESS_TOKEN","token_type":"Bearer","expires_in":"3600"}'));
+    }).rejects.toThrow(new Error('Could not authenticate to audience.test: Invalid response: {"access_token":"access_token","token_type":"Bearer","expires_in":"3600"}'));
   });
 
   it('should return an Access Token', async () => {
@@ -155,15 +150,19 @@ describe('AuthenticationProviderHttp', () => {
       });
     });
 
-    const result = await provider.getAuthToken(AUDIENCE);
+    jest.useFakeTimers().setSystemTime(DATETIME);
+
+    const result = await provider.getAuthToken('audience.test');
 
     expect(result).toEqual({
-      accessToken: ACCESS_TOKEN,
+      accessToken: 'access_token',
       tokenType: 'Bearer',
-      expiresAt: new Date(DATETIME.getTime() + EXPIRES_IN * 1000),
+      expiresAt: new Date('2026-09-19 19:00:00'),
     });
 
     mock.reset();
+
+    jest.useRealTimers();
   });
 
   it('should request only one Access Token when Token is still valid', async () => {
@@ -187,11 +186,11 @@ describe('AuthenticationProviderHttp', () => {
       });
     });
 
-    const result1 = await provider.getAuthToken(AUDIENCE);
-    const result2 = await provider.getAuthToken(AUDIENCE);
+    const result1 = await provider.getAuthToken('audience.test');
+    const result2 = await provider.getAuthToken('audience.test');
 
-    expect(result1.accessToken).toEqual(ACCESS_TOKEN);
-    expect(result2.accessToken).toEqual(ACCESS_TOKEN);
+    expect(result1.accessToken).toEqual('access_token');
+    expect(result2.accessToken).toEqual('access_token');
 
     mock.reset();
   });
@@ -219,9 +218,9 @@ describe('AuthenticationProviderHttp', () => {
 
     jest.useFakeTimers();
 
-    const result1 = await provider.getAuthToken(AUDIENCE);
+    const result1 = await provider.getAuthToken('audience.test');
 
-    jest.advanceTimersByTime(EXPIRES_IN * 1000 + 1);
+    jest.advanceTimersByTime(3600 * 1000 + 1);
 
     mock.method(global, 'fetch', () => {
       return Promise.resolve({
@@ -237,12 +236,13 @@ describe('AuthenticationProviderHttp', () => {
       });
     });
 
-    const result2 = await provider.getAuthToken(AUDIENCE);
+    const result2 = await provider.getAuthToken('audience.test');
 
-    expect(result1.accessToken).toEqual(ACCESS_TOKEN);
-    expect(result2.accessToken).toEqual(ACCESS_TOKEN_2);
+    expect(result1.accessToken).toEqual('access_token');
+    expect(result2.accessToken).toEqual('access_token_2');
 
     jest.useRealTimers();
+
     mock.reset();
   });
 });
