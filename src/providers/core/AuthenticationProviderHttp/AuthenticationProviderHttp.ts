@@ -38,7 +38,7 @@ export class AuthenticationProviderHttp implements AuthenticationProvider {
     }
   }
 
-  // eslint-disable-next-line max-statements, complexity
+  // eslint-disable-next-line max-statements
   public async getAuthToken(audience: string): Promise<AuthToken> {
     const cachedToken = this.getCachedToken(audience);
 
@@ -65,12 +65,9 @@ export class AuthenticationProviderHttp implements AuthenticationProvider {
     if (!response.ok) {
       let responseData: unknown;
       try {
-        responseData = await response.json();
-      } catch {
-        try {
-          responseData = await response.text();
-        } catch {}
-      }
+        responseData = await response.text();
+      } catch {}
+
       throw new Error(
         `Could not authenticate to ${audience}: ` +
           `Network response was not ok: ${response.statusText} ${responseData}`,

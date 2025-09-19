@@ -26,6 +26,27 @@ describe('AuthenticationProviderHttp', () => {
     }).toThrow(new Error('OAuth server domain must not start with HTTP'));
   });
 
+  it('should throw Error when response is not 200', async () => {
+    const provider = new AuthenticationProviderHttp(
+      CLIENT_ID,
+      CLIENT_SECRET,
+      AUTH_SERVER,
+    );
+
+    mock.method(global, 'fetch', () => {
+      return Promise.resolve({
+        ok: false,
+        statusText: 'Bad Request',
+        text: () =>
+          Promise.resolve('{"message":"Bad Request"}'),
+      });
+    });
+
+    await expect(async () => {
+      await provider.getAuthToken(AUDIENCE);
+    }).rejects.toThrow(new Error('Could not authenticate to audience.test: Network response was not ok: Bad Request {"message":"Bad Request"}'));
+  });
+
   it('should return an Access Token', async () => {
     const provider = new AuthenticationProviderHttp(
       CLIENT_ID,
