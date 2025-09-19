@@ -69,6 +69,30 @@ describe('AuthenticationProviderHttp', () => {
     }).rejects.toThrow(new Error('Could not authenticate to audience.test: Invalid response: {"bad":"response"}'));
   });
 
+  it('should throw Error when response has no expires_in is set but not numeric', async () => {
+    const provider = new AuthenticationProviderHttp(
+      CLIENT_ID,
+      CLIENT_SECRET,
+      AUTH_SERVER,
+    );
+
+    mock.method(global, 'fetch', () => {
+      return Promise.resolve({
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            access_token: ACCESS_TOKEN,
+            token_type: 'Bearer',
+            expires_in: String(EXPIRES_IN),
+          }),
+      });
+    });
+
+    await expect(async () => {
+      await provider.getAuthToken(AUDIENCE);
+    }).rejects.toThrow(new Error('Could not authenticate to audience.test: Invalid response: {"access_token":"ACCESS_TOKEN","token_type":"Bearer","expires_in":"3600"}'));
+  });
+
   it('should return an Access Token', async () => {
     const provider = new AuthenticationProviderHttp(
       CLIENT_ID,
