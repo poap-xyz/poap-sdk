@@ -1,58 +1,134 @@
 # Changelog
 
-## 0.2.0
+All notable changes to this project are documented in this file.
 
-- Change types where before there was `any` to be strict.
-- Removes `HttpProvider`.
-- Rename query utils to create filters and order by.
-- Compass response type must not include `data` anymore.
-- Compass variables can be typed.
-- Compass throws errors on malformed requests/queries.
-- Fetch moments order must be value from enum `Order` instead of string.
-- Rename POAP client fetch prop `filterByZeroAddress` to `filterZeroAddress`.
+## 0.17.0
 
-## 0.5.0
+{<h3>Features 🚀</h3>}
 
-- Packages do not export input types anymore.
-- Drop properties are not exported anymore.
+* **[Drops]** Introduce a dedicated `DropsClient.get` method to retrieve a single drop by its ID.
 
-## 0.6.0
+{<h3>Breaking Changes ⚠️</h3>}
 
-- `createMoment` does not upload media beforehand anymore. Use `createMomentAndUploadMedia` instead.
-- For compass requests, the fetch signal is not a parameter of the `PoapCompass.request` method anymore, it must be given through the new `options` parameter: `compass.request(url, { variables }, { signal })`.
+* **[Drops]** The `DropsClient.fetch` method has been renamed to `DropsClient.list` to better reflect its functionality.
 
-## 0.7.0
+---
 
-- `dropId` has been changed to `dropIds` on the Moment type. It is now an array of 0 to multiple numerical IDs.
-  - This change is reflected in both the Moment creation input and the Moment response during creation or fetching.
-- The CID is no longer a property of the Moment type.
-- The token ID is no longer a property of the Moment type.
-- `patchMoment` is no longer a method of the Moments client.
-- It is no longer possible to order fetched Moments by token ID or drop ID.
+## 0.16.0
 
-## 0.8.0
+{<h3>Features 🚀</h3>}
 
-- `createBoolFilter` in `@poap-xyz/utils` has been removed. Use `createEqFilter('...', true | false)` instead.
+* **[Collections]** New Collections module added. See the [Collections documentation](https://sdk.poap.tech/modules/collections/GetCollection) for details.
 
-## 0.8.2
+---
 
-- Standardized camelCase usage across the codebase:
-  - Changed `drop_ids` to `dropIds` in `FetchMomentsInput` interface.
-  - Updated `MomentsClient.fetch` method to use the camelCase `dropIds` parameter.
-  - GraphQL field names still use snake_case (e.g., `drop_id`) for backend compatibility.
+## 0.15.0
 
-## 0.11.0
+{<h3>Maintenance 🔧</h3>}
 
-- `DropsClient.fetch` property changes:
-	- `name` is removed as a filter. Use `DropsClient.search` instead.
-	- `isPrivate` is removed as a filter.
-	- `from` and `to` date range now filters based on the drop event start and
-	end dates, instead of the drop creation date.
+* Upgraded to Node.js LTS (v22).
+* Upgraded GitHub Action `checkout` to v5.
+* Migrated package management from `yarn` to `pnpm`.
 
-## 0.12.0
+---
 
-- **BREAKING CHANGE**: `ProfilesClient.fetchBulk` now returns an object with `profiles` and `errors` maps instead of just a map of profiles. This enables a retry strategy for unresolved profiles.
+## 0.14.0
+
+{<h3>Features 🚀</h3>}
+
+* **[POAPs]** Added `PoapsClient.fetchCount` method to get the total count of POAPs based on provided filters.
+
+---
 
 ## 0.13.0
 
-- **BREAKING CHANGE**: Subpath imports such as `@poap-xyz/poap-sdk/utils` are no longer supported. Use `@poap-xyz/poap-sdk` instead.
+{<h3>Breaking Changes ⚠️</h3>}
+
+* Subpath imports (e.g., `@poap-xyz/poap-sdk/utils`) are no longer supported. Import directly from `@poap-xyz/poap-sdk` instead.
+
+{<h3>Maintenance 🔧</h3>}
+
+* Removed multi-package build configuration; the SDK is now built as a single, monolithic package.
+* Removed the `@poap-xyz/frames` package from this monorepo (still available as a standalone package on npm).
+
+---
+
+## 0.12.0
+
+{<h3>Features 🚀</h3>}
+
+* **[Profiles]** Bulk profile fetching now includes errors in its response to support robust retry strategies.
+
+{<h3>Breaking Changes ⚠️</h3>}
+
+* **[Profiles]** The `ProfilesClient.fetchBulk` method now returns an object containing `profiles` and `errors` maps instead of a simple array.
+
+{<h3>Maintenance 🔧</h3>}
+
+* Upgraded to Yarn 4.
+* **[Moments]** Replaced `Buffer` with `Uint8Array` for media uploads and removed Node.js polyfills for better browser compatibility.
+
+---
+
+## 0.11.0
+
+{<h3>Breaking Changes ⚠️</h3>}
+
+* **[Drops]** The `DropsClient.fetch` method has been updated:
+    *   Removed the `name` filter (use `DropsClient.search` instead).
+    *   Removed the `isPrivate` filter.
+    *   The `from` and `to` parameters now filter by the drop's **event date**, not its creation date.
+
+---
+
+## Versions 0.10.6 - 0.10.0
+
+{<h3>Features 🚀</h3>}
+
+* Added `nulls_first` and `nulls_last` options to the `Order` enum. **(0.10.6)**
+* **[Profiles]** Added serializable profile types and related conversion methods. **(0.10.5)**
+* **[Profiles]** Enhanced deduplication to return only one profile per query. **(0.10.4)**
+* **[Drops]** Added HTTP request options parameter to `DropsClient.fetch`. **(0.10.3)**
+* **[Profiles]** Reduced the bulk request limit from 100 to 50 addresses. **(0.10.2)**
+* **[Profiles]** Added HTTP request options to `ProfilesClient.fetch`. **(0.10.1)**
+* **[Profiles]** Introduced the new Profiles API client. See [Profiles docs](https://sdk.poap.tech/modules/profiles/FetchProfile). **(0.10.0)**
+
+---
+
+## Versions 0.9.3 - 0.9.0
+
+{<h3>Maintenance 🔧</h3>}
+
+* Avoided subpackage imports to preserve CommonJS compatibility. **(0.9.3)**
+* Ensured entrypoint file is included in package exports. **(0.9.2)**
+* Updated import style examples in documentation. **(0.9.2)**
+* Supported alias imports in declaration files. **(0.9.1)**
+
+{<h3>Breaking Changes ⚠️</h3>}
+
+* Merged all SDK packages into a single NPM package: `@poap-xyz/poap-sdk`. **(0.9.0)**
+
+---
+
+## Earlier Versions (0.8.4 - 0.1.0)
+
+{<h3>Notable Features 🚀</h3>}
+
+* **[Moments]** Removed `axios` dependency. **(0.8.4)**
+* Relaxed query utility value validations. **(0.8.3)**
+* Added `_is_null` filter to query helpers. **(0.7.4)**
+* **[Drops]** Added missing image field to the Drop Compass response. **(0.7.4)**
+* **[Moments]** Made `dropIds` optional when creating a Moment. **(0.7.2)**
+* **[Drops]** Added method to transform a Serializable Drop into a Drop. **(0.7.1)**
+
+{<h3>Significant Breaking Changes ⚠️</h3>}
+
+* **[Moments]** Adapted to the POAP Moments API v2, changing `dropId` to `dropIds[]` and removing several fields and methods. **(0.7.0)**
+* **[Moments]** Separated media upload from moment creation. **(0.6.0)**
+* Removed `createBoolFilter`; use `createEqFilter` instead. **(0.8.0)**
+* Replaced loose `any` types with strict definitions and refactored provider architecture. **(0.2.0)**
+
+{<h3>Maintenance 🔧</h3>}
+
+* Ongoing improvements to documentation, type declarations, export patterns, and dependency management.
+* Enhanced error handling and validation across all Compass API interactions.
