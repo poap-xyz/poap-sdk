@@ -165,7 +165,7 @@ export class Drop {
     this.endDate = properties.endDate;
   }
 
-  public getTotalMinted(): number {
+  get collectorsCount(): number {
     return this.poapCount + this.emailReservationCount;
   }
 
