@@ -5,13 +5,8 @@ pkg_name="@poap-xyz/poap-sdk"
 
 echo "Package $pkg_name.."
 
-local_version=$(jq -r '.version' package.json)
-remote_version=$(pnpm info "$pkg_name" --fields version --json 2>/dev/null | jq -r .)
-
-if [ -z "$local_version" ]; then
-  echo "Error: Could not determine local version from package.json" 1>&2
-  exit 1
-fi
+local_version=$(jq -r '.version' package.json || { echo "Error: Could not determine local version from package.json" 1>&2; exit 1; })
+remote_version=$(pnpm info "$pkg_name" --fields version --json 2>/dev/null | jq -r . || echo "")
 
 echo "Local version: $local_version"
 echo "Remote version: ${remote_version:-"not found"}"
@@ -24,10 +19,7 @@ fi
 
 echo
 echo "Building package $pkg_name@$local_version.."
-if ! pnpm build; then
-  echo "Error: Failed to build $pkg_name@$local_version" 1>&2
-  exit 1
-fi
+pnpm build || { echo "Error: Failed to build $pkg_name@$local_version" 1>&2; exit 1; }
 
 # Check if the package exists remotely or if the version has changed
 if [ -z "$remote_version" ] || [ "$local_version" != "$remote_version" ]; then
@@ -37,10 +29,7 @@ if [ -z "$remote_version" ] || [ "$local_version" != "$remote_version" ]; then
     echo "Detected version change in $pkg_name: $remote_version -> $local_version"
   fi
 
-  if ! pnpm publish --access public; then
-    echo "Error: Failed publish $pkg_name"
-    exit 1
-  fi
+  pnpm publish --access public || { echo "Error: Failed publish $pkg_name"; exit 1; }
 else
   echo "No version change detected for $pkg_name"
 fi
