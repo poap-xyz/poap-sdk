@@ -190,7 +190,6 @@ export class PoapsClient {
     return {
       minted: getMintCodeRaw.claimed,
       isActive: getMintCodeRaw.is_active,
-      secretCode: getMintCodeRaw.secret,
       poapId: getMintCodeRaw.result?.token,
     };
   }
@@ -240,12 +239,11 @@ export class PoapsClient {
    * @param {WalletMintInput} input - Details required for the mint.
    */
   public async mintAsync(input: WalletMintInput): Promise<void> {
-    const secretCode = await this.getSecretCode(input.mintCode);
+    await this.checkMintCode(input.mintCode);
 
     await this.tokensApiProvider.postMintCode({
       address: input.address,
       qr_hash: input.mintCode,
-      secret: secretCode,
       sendEmail: false,
     });
   }
@@ -286,12 +284,11 @@ export class PoapsClient {
   public async emailReservation(
     input: EmailReservationInput,
   ): Promise<POAPReservation> {
-    const secretCode = await this.getSecretCode(input.mintCode);
+    await this.checkMintCode(input.mintCode);
 
     const response = await this.tokensApiProvider.postMintCode({
       address: input.email,
       qr_hash: input.mintCode,
-      secret: secretCode,
       sendEmail: input.sendEmail || true,
     });
 
@@ -309,24 +306,22 @@ export class PoapsClient {
   }
 
   /**
-   * Retrieves the secret code associated with a POAP code.
+   * Check the minting status of the mint code.
    *
    * @async
    * @param {string} mintCode - The POAP code for which to get the secret.
-   * @returns {Promise<string>} The associated secret code.
    * @throws {CodeAlreadyMintedError} Thrown when the POAP code has already been minted.
    * @throws {CodeExpiredError} Thrown when the POAP code is expired.
    */
-  private async getSecretCode(mintCode: string): Promise<string> {
+  private async checkMintCode(mintCode: string): Promise<void> {
     const getCodeResponse = await this.getMintCode(mintCode);
 
     if (getCodeResponse.minted) {
       throw new CodeAlreadyMintedError(mintCode);
     }
+
     if (!getCodeResponse.isActive) {
       throw new CodeExpiredError(mintCode);
     }
-
-    return getCodeResponse.secretCode;
   }
 }
