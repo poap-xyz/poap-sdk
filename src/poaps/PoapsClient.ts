@@ -90,7 +90,7 @@ export class PoapsClient {
    * @param options Additional options to pass to the fetch call.
    * @returns A paginated list of POAP tokens.
    */
-  async fetch(
+  async list(
     input: FetchPoapsPaginatedInput,
     options?: RequestInit,
   ): Promise<PaginatedResult<POAPWithStats>> {
@@ -135,10 +135,7 @@ export class PoapsClient {
    * @param options Additional options to pass to the fetch call.
    * @returns The number of POAPs matching the criteria.
    */
-  async fetchCount(
-    input?: FetchPoapsInput,
-    options?: RequestInit,
-  ): Promise<number> {
+  async count(input?: FetchPoapsInput, options?: RequestInit): Promise<number> {
     const variables: PoapsCountVariables = this.buildPoapsQueryVariables(input);
 
     const { data } = await this.compassProvider.request<
