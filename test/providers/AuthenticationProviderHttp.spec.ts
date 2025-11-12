@@ -45,7 +45,7 @@ describe('AuthenticationProviderHttp', () => {
       await provider.getAuthToken(AUDIENCE);
     }).rejects.toThrow(
       new UnauthorizedClientError(
-        'CLIENT_ID',
+        'client_id',
         'audience.test',
       ),
     );

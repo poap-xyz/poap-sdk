@@ -4,7 +4,7 @@ export class UnauthorizedClientError extends Error {
     public readonly audience: string,
   ) {
     super(
-      'Could not authenticate to ${audience}: Unauthorized client: ${clientId}',
+      `Could not authenticate to ${audience}: Unauthorized client: ${clientId}`,
     );
   }
 }
