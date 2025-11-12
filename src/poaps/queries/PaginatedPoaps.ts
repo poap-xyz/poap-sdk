@@ -63,8 +63,8 @@ export function buildPaginatedPoapsQuery({
           end_date
           name
         }
-        ${withMintingStats ? 'collector { poaps_owned }' : ''}
-        ${withCollectorStats ? 'minting_stats { mint_order }' : ''}
+        ${withMintingStats ? 'minting_stats { mint_order }' : ''}
+        ${withCollectorStats ? 'collector { poaps_owned }' : ''}
         ${withDropStats ? `drop_stats_by_chain_aggregate { aggregate { sum { poap_count } } }` : ''}
       }
     }
