@@ -89,7 +89,6 @@ describe('PoapTokenApi', () => {
       const mockInput: MintCodeInput = {
         address: '0xAddress1',
         qr_hash: 'mockQrHash1',
-        secret: 'secretCode2',
         sendEmail: true,
       };
       const mockResponse: PostMintCodeResponse = {
