@@ -1,5 +1,3 @@
-import { TokensApiProvider } from '../../providers';
-
 const MAX_RETRIES = 20;
 const INITIAL_DELAY = 1000;
 const BACKOFF_FACTOR = 1.2;
@@ -10,16 +8,6 @@ const BACKOFF_FACTOR = 1.2;
 export abstract class RetryableTask {
   protected retries = 0;
   protected delay: number = INITIAL_DELAY;
-  protected tokensApiProvider: TokensApiProvider;
-
-  /**
-   * Constructs a new RetryableTask instance.
-   *
-   * @param {TokensApiProvider} tokensApiProvider - The provider used to perform operations that might be retried.
-   */
-  constructor(tokensApiProvider: TokensApiProvider) {
-    this.tokensApiProvider = tokensApiProvider;
-  }
 
   /**
    * Attempts to perform a given task. If the task fails, it retries with an increasing delay until

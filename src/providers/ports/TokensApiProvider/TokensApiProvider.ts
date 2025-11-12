@@ -7,11 +7,9 @@ import { Transaction } from './types/Transaction';
 
 /**
  * Provides methods for interacting with a Tokens API.
- *
- * @interface TokensApiProvider
  */
 export interface TokensApiProvider {
-  getMintCode(code: string): Promise<GetMintCodeResponse>;
+  getMintCode(qrHash: string): Promise<GetMintCodeResponse>;
 
   postMintCode(input: MintCodeInput): Promise<PostMintCodeResponse>;
 

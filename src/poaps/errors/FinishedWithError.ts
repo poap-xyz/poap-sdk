@@ -1,7 +1,10 @@
 export class FinishedWithError extends Error {
-  constructor(error: string, code: string) {
+  constructor(
+    public readonly reason: string,
+    public readonly mintCode: string,
+  ) {
     super(
-      `Code: '${code}', finished with error: '${error}', please try again later `,
+      `Code: '${mintCode}', finished with error: '${reason}', please try again later `,
     );
   }
 }

@@ -7,21 +7,11 @@ Once POAPs have been minted they can be fetched with `PoapsClient`.
 To retrieve one POAP it can be done with its ID.
 
 ```typescript
-import { POAP, PaginatedResult } from '@poap-xyz/poap-sdk';
+import { POAP } from '@poap-xyz/poap-sdk';
 
 const poapId = 999;
 
-const paginatedPOAPs: PaginatedResult<POAP> = await client.fetch({
-  offset: 0,
-  limit: 1,
-  ids: [poapId],
-});
-
-if (paginatedPOAPs.items.length === 0) {
-  throw new Error('My POAP was not found');
-}
-
-const poap: POAP = paginatedPOAPs.items[0];
+const poap: POAP = await client.get(poapId);
 ```
 
 ## List POAPs
@@ -30,17 +20,18 @@ Paginated POAPs are fetched using `offset` and `limit`. They can also be sorted.
 
 ```typescript
 import {
-  POAP,
+  POAPWithStats,
   PoapsSortFields,
   Order,
   PaginatedResult,
 } from '@poap-xyz/poap-sdk';
 
-const paginatedPOAPs: PaginatedResult<POAP> = await client.fetch({
+const paginatedPOAPs: PaginatedResult<POAPWithStats> = await client.list({
   offset: 0,
   limit: 10,
   sortField: PoapsSortFields.MintedOn,
   sortDir: Order.DESC,
+  withMintingStats: true,
 });
 ```
 
@@ -51,7 +42,7 @@ fetched.
 
 ```typescript
 import {
-  POAP,
+  POAPWithStats,
   PoapsSortFields,
   Order,
   PaginatedResult,
@@ -60,12 +51,13 @@ import {
 // The address of the collector.
 const collectorAddress = '0xf6B6F07862A02C85628B3A9688beae07fEA9C863';
 
-const collectorPOAPs: PaginatedResult<POAP> = await client.fetch({
+const collectorPOAPs: PaginatedResult<POAPWithStats> = await client.list({
   offset: 0,
   limit: 10,
   sortField: PoapsSortFields.MintedOn,
   sortDir: Order.ASC,
   collectorAddress,
+  withCollectorStats: true,
 });
 ```
 
@@ -76,7 +68,7 @@ the zero and dead addresses.
 
 ```typescript
 import {
-  POAP,
+  POAPWithStats,
   PoapsSortFields,
   Order,
   PaginatedResult,
@@ -84,7 +76,7 @@ import {
 
 const dropId = 14;
 
-const dropPOAPs: PaginatedResult<POAP> = await client.fetch({
+const dropPOAPs: PaginatedResult<POAPWithStats> = await client.list({
   offset: 0,
   limit: 10,
   sortField: PoapsSortFields.MintedOn,
@@ -92,5 +84,6 @@ const dropPOAPs: PaginatedResult<POAP> = await client.fetch({
   filterZeroAddress: true,
   filterDeadAddress: true,
   dropId,
+  withDropStats: true,
 });
 ```

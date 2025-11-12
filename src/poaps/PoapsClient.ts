@@ -1,14 +1,19 @@
-import { POAP } from './domain/POAP';
+import { POAP, POAPWithStats } from './domain/POAP';
 import { POAPReservation } from './domain/POAPReservation';
 import {
+  buildPaginatedPoapsQuery,
   PAGINATED_POAPS_QUERY,
   PaginatedPoapsResponse,
   PaginatedPoapsVariables,
+  PaginatedPoapsWithStatsesponse,
   POAPS_COUNT_QUERY,
   PoapsCountResponse,
   PoapsCountVariables,
 } from './queries/PaginatedPoaps';
-import { BaseFetchPoapsInput, FetchPoapsInput } from './types/FetchPoapsInput';
+import {
+  FetchPoapsInput,
+  FetchPoapsPaginatedInput,
+} from './types/FetchPoapsInput';
 import { PoapsSortFields } from './types/PoapsSortFields';
 import { PoapMintStatus } from './types/PoapMintStatus';
 import { WalletMintInput } from './types/WalletMintInput';
@@ -17,6 +22,7 @@ import { CodeAlreadyMintedError } from './errors/CodeAlreadyMintedError';
 import { CodeExpiredError } from './errors/CodeExpiredError';
 import { MintChecker } from './utils/MintChecker';
 import { PoapIndexed } from './utils/PoapIndexed';
+import { FinishedWithError } from './errors/FinishedWithError';
 import { CompassProvider, TokensApiProvider, Transaction } from '../providers';
 import {
   createAddressFilter,
@@ -27,8 +33,8 @@ import {
   createOrderBy,
   FilterVariables,
   nextCursor,
+  Order,
   PaginatedResult,
-  PaginationInput,
 } from '../utils';
 
 /**
@@ -49,16 +55,60 @@ export class PoapsClient {
   ) {}
 
   /**
+   * Retrieves a single POAP token by ID.
+   *
+   * @param id The token ID.
+   * @param options Additional options to pass to the fetch call.
+   * @returns A single token or null when not found.
+   */
+  async get(id: number, options?: RequestInit): Promise<POAP | null> {
+    const { data } = await this.compassProvider.request<
+      PaginatedPoapsResponse,
+      PaginatedPoapsVariables
+    >(
+      PAGINATED_POAPS_QUERY,
+      {
+        offset: 0,
+        limit: 1,
+        orderBy: createOrderBy<PoapsSortFields>(PoapsSortFields.Id, Order.DESC),
+        where: createEqFilter('id', id),
+      },
+      options,
+    );
+
+    if (!data.poaps.length) {
+      return null;
+    }
+
+    return POAP.fromCompass(data.poaps[0]);
+  }
+
+  /**
    * Fetches a list of POAP tokens based on the given input criteria.
    *
-   * @async
-   * @param {FetchPoapsInput} input - Criteria for fetching POAP tokens.
-   * @returns {Promise<PaginatedResult<POAP>>} A paginated list of POAP tokens.
+   * @param input Criteria for fetching POAP tokens.
+   * @param options Additional options to pass to the fetch call.
+   * @returns A paginated list of POAP tokens.
    */
   async fetch(
-    input: FetchPoapsInput & PaginationInput,
-  ): Promise<PaginatedResult<POAP>> {
-    const { limit, offset, sortField, sortDir } = input;
+    input: FetchPoapsPaginatedInput,
+    options?: RequestInit,
+  ): Promise<PaginatedResult<POAPWithStats>> {
+    const {
+      limit,
+      offset,
+      sortField,
+      sortDir,
+      withMintingStats,
+      withCollectorStats,
+      withDropStats,
+    } = input;
+
+    const query = buildPaginatedPoapsQuery({
+      withMintingStats: withMintingStats ?? false,
+      withCollectorStats: withCollectorStats ?? false,
+      withDropStats: withDropStats ?? false,
+    });
 
     const variables: PaginatedPoapsVariables = {
       ...this.buildPoapsQueryVariables(input),
@@ -68,13 +118,13 @@ export class PoapsClient {
     };
 
     const { data } = await this.compassProvider.request<
-      PaginatedPoapsResponse,
+      PaginatedPoapsWithStatsesponse,
       PaginatedPoapsVariables
-    >(PAGINATED_POAPS_QUERY, variables);
+    >(query, variables, options);
 
-    const poaps = data.poaps.map((poap) => POAP.fromCompass(poap));
+    const poaps = data.poaps.map((poap) => POAPWithStats.fromCompass(poap));
 
-    return new PaginatedResult<POAP>(
+    return new PaginatedResult<POAPWithStats>(
       poaps,
       nextCursor(poaps.length, limit, offset),
     );
@@ -82,22 +132,24 @@ export class PoapsClient {
 
   /**
    * @param input Criteria for fetching the number of POAPs.
+   * @param options Additional options to pass to the fetch call.
    * @returns The number of POAPs matching the criteria.
    */
-  async fetchCount(input?: BaseFetchPoapsInput): Promise<number> {
+  async fetchCount(
+    input?: FetchPoapsInput,
+    options?: RequestInit,
+  ): Promise<number> {
     const variables: PoapsCountVariables = this.buildPoapsQueryVariables(input);
 
     const { data } = await this.compassProvider.request<
       PoapsCountResponse,
       PoapsCountVariables
-    >(POAPS_COUNT_QUERY, variables);
+    >(POAPS_COUNT_QUERY, variables, options);
 
     return data.poaps_aggregate.aggregate.count;
   }
 
-  private buildPoapsQueryVariables(
-    input?: BaseFetchPoapsInput,
-  ): FilterVariables {
+  private buildPoapsQueryVariables(input?: FetchPoapsInput): FilterVariables {
     const {
       chain,
       collectorAddress,
@@ -148,11 +200,13 @@ export class PoapsClient {
    * The transaction could change in case of a bump.
    * It returns null if the mint has no transaction associated.
    *
-   * @param {string} qrHash - The qrHash of the mint.
+   * @param {string} mintCode - The qrHash of the mint.
    * @returns {Promise<Transaction> | null} Returns the transaction associated with the mint. Null if no transaction is found.
    */
-  public async getMintTransaction(qrHash: string): Promise<Transaction | null> {
-    return await this.tokensApiProvider.getMintTransaction(qrHash);
+  public async getMintTransaction(
+    mintCode: string,
+  ): Promise<Transaction | null> {
+    return await this.tokensApiProvider.getMintTransaction(mintCode);
   }
 
   /**
@@ -213,13 +267,13 @@ export class PoapsClient {
 
     const getCodeResponse = await this.waitPoapIndexed(input.mintCode);
 
-    return (
-      await this.fetch({
-        limit: 1,
-        offset: 0,
-        ids: [getCodeResponse.poapId],
-      })
-    ).items[0];
+    const poap = await this.get(getCodeResponse.poapId);
+
+    if (!poap) {
+      throw new FinishedWithError('Token is not yet available', input.mintCode);
+    }
+
+    return poap;
   }
 
   /**

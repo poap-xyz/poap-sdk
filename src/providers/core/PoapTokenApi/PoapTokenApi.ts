@@ -47,12 +47,12 @@ export class PoapTokenApi implements TokensApiProvider {
   /**
    * Retrieves the mint code details.
    *
-   * @param {string} code - The unique Mint Code for the mint.
+   * @param {string} qrHash - The unique Mint Code for the mint.
    * @returns {Promise<GetMintCodeResponse>} Details of the mint code.
    */
-  async getMintCode(code: string): Promise<GetMintCodeResponse> {
+  async getMintCode(qrHash: string): Promise<GetMintCodeResponse> {
     return await this.secureFetch<GetMintCodeResponse>(
-      `${this.baseUrl}/actions/claim-qr?qr_hash=${code}`,
+      `${this.baseUrl}/actions/claim-qr?qr_hash=${qrHash}`,
       {
         method: 'GET',
         headers: {},
@@ -158,8 +158,6 @@ export class PoapTokenApi implements TokensApiProvider {
 /**
  * Represents the configuration options required when instantiating the `PoapTokenApi` class.
  *
- * @export
- * @interface PoapTokenApiOptions
  * @property {string} apiKey - The API key to use for authenticating requests.
  * @property {string} [baseUrl] - The base URL for the API. Defaults to 'https://api.poap.tech'.
  * @property {AuthenticationProvider} [authenticationProvider] - Optional provider for JWT authentication.

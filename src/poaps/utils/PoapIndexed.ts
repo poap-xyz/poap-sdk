@@ -10,24 +10,24 @@ import { TokensApiProvider } from '../../providers';
  * This class extends `RetryableTask` to utilize its backoff retry mechanism in case the token hasn't been indexed yet.
  */
 export class PoapIndexed extends RetryableTask {
-  private mintCode: string;
-
   /**
    * Creates an instance of the PoapIndexed class.
    *
-   * @param {TokensApiProvider} tokensApiProvider - An instance of the TokensApiProvider used to check the indexing status of the token.
-   * @param {string} mintCode - A unique Mint Code representing the token.
+   * @param tokensApiProvider - An instance of the TokensApiProvider used to check the indexing status of the token.
+   * @param mintCode - A unique Mint Code representing the token.
    */
-  constructor(tokensApiProvider: TokensApiProvider, mintCode: string) {
-    super(tokensApiProvider);
-    this.mintCode = mintCode;
+  constructor(
+    private readonly tokensApiProvider: TokensApiProvider,
+    private readonly mintCode: string,
+  ) {
+    super();
   }
 
   /**
    * Periodically checks if the POAP token, represented by its Mint Code, is indexed on our database.
    * This method will continue retrying with an increasing delay until either the token is indexed or it reaches the maximum allowed retries.
    *
-   * @returns {Promise<GetClaimCodeResponse>} A promise that either resolves with the indexed token's mint code response or rejects due to reaching the max retry limit.
+   * @returns A promise that either resolves with the indexed token's mint code response or rejects due to reaching the max retry limit.
    */
   public async waitPoapIndexed(): Promise<PoapMintStatus> {
     let response = await this.tokensApiProvider.getMintCode(this.mintCode);

@@ -1,5 +1,5 @@
 export class CodeExpiredError extends Error {
-  constructor(code: string) {
-    super(`Code: '${code}', has been expired`);
+  constructor(public readonly mintCode: string) {
+    super(`Code: '${mintCode}', has been expired`);
   }
 }

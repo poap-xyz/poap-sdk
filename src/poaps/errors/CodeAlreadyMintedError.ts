@@ -1,5 +1,5 @@
 export class CodeAlreadyMintedError extends Error {
-  constructor(code: string) {
-    super(`Code: '${code}' already minted `);
+  constructor(public readonly mintCode: string) {
+    super(`Code: '${mintCode}' already minted `);
   }
 }
