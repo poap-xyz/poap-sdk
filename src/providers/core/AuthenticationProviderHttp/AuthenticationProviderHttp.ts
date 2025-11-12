@@ -77,14 +77,14 @@ export class AuthenticationProviderHttp implements AuthenticationProvider {
     );
 
     if (response.status === 401) {
-      throw new UnauthorizedClientError(audience, this.clientId);
+      throw new UnauthorizedClientError(this.clientId, audience);
     }
 
     if (!response.ok) {
       const errorResponse = await this.parseErrorResponse(audience, response);
 
       if (errorResponse.error === 'unauthorized_client') {
-        throw new UnauthorizedClientError(audience, this.clientId);
+        throw new UnauthorizedClientError(this.clientId, audience);
       }
 
       throw new Error(
