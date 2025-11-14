@@ -24,7 +24,7 @@ interface PoapProperties {
   description: string;
   startDate: Date;
   endDate: Date;
-  timezone: string;
+  timezone: string | null;
   name: string;
   mintingStats?: POAPMintingStats;
   collectorStats?: POAPCollectorStats;
@@ -62,7 +62,7 @@ export class POAP {
     this.description = properties.description;
     this.startDate = properties.startDate;
     this.endDate = properties.endDate;
-    this.timezone = properties.timezone;
+    this.timezone = properties.timezone ?? 'UTC';
     this.name = properties.name;
     this.mintingStats = properties.mintingStats;
     this.collectorStats = properties.collectorStats;

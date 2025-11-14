@@ -58,7 +58,7 @@ export interface PoapsResponse {
     description: string;
     start_date: string;
     end_date: string;
-    timezone: string;
+    timezone: string | null;
     name: string;
   };
   minting_stats?: { mint_order?: number };
