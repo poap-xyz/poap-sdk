@@ -20,10 +20,10 @@ export class PoapIndexed extends RetryableTask {
     private readonly tokensApiProvider: TokensApiProvider,
     private readonly mintCode: string,
     maxRetries?: number,
-    intiialDelay?: number,
+    initialDelay?: number,
     backoffFactor?: number,
   ) {
-    super(maxRetries, intiialDelay, backoffFactor);
+    super(maxRetries, initialDelay, backoffFactor);
   }
 
   /**
