@@ -7,11 +7,11 @@ Once POAPs have been minted they can be fetched with `PoapsClient`.
 To retrieve one POAP it can be done with its ID.
 
 ```typescript
-import { POAP } from '@poap-xyz/poap-sdk';
+import { POAPWithStats } from '@poap-xyz/poap-sdk';
 
 const poapId = 999;
 
-const poap: POAP = await client.get(poapId);
+const poap: POAPWithStats = await client.get(poapId);
 ```
 
 ## List POAPs
