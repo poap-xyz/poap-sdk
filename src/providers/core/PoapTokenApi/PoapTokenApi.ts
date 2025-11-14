@@ -16,7 +16,7 @@ import { MintCodeExpiredError } from '../../ports/TokensApiProvider/errors/MintC
 import { MintCodeNotFoundError } from '../../ports/TokensApiProvider/errors/MintCodeNotFoundError';
 import { InvalidAddressError } from '../../ports/TokensApiProvider/errors/InvalidAddressError';
 
-const DEFAULT_DROP_BASE_URL = 'https://api.poap.tech';
+const DEFAULT_POAPS_BASE_URL = 'https://api.poap.tech';
 
 /**
  * Represents the main interface to interact with the POAP Drop API.
@@ -36,7 +36,7 @@ export class PoapTokenApi implements TokensApiProvider {
    */
   constructor({
     apiKey,
-    baseUrl = DEFAULT_DROP_BASE_URL,
+    baseUrl = DEFAULT_POAPS_BASE_URL,
     authenticationProvider,
   }: PoapTokenApiOptions) {
     this.apiKey = apiKey;
