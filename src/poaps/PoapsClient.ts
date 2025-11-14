@@ -18,12 +18,10 @@ import { PoapsSortFields } from './types/PoapsSortFields';
 import { PoapMintStatus } from './types/PoapMintStatus';
 import { WalletMintInput } from './types/WalletMintInput';
 import { EmailReservationInput } from './types/EmailReservationInput';
-import { CodeAlreadyMintedError } from './errors/CodeAlreadyMintedError';
-import { CodeExpiredError } from './errors/CodeExpiredError';
 import { MintChecker } from './utils/MintChecker';
 import { PoapIndexed } from './utils/PoapIndexed';
 import { FinishedWithError } from './errors/FinishedWithError';
-import { CompassProvider, TokensApiProvider, Transaction } from '../providers';
+import { CompassProvider, TokensApiProvider } from '../providers';
 import {
   createAddressFilter,
   createBetweenFilter,
@@ -192,20 +190,6 @@ export class PoapsClient {
   }
 
   /**
-   * Gets the transaction associated with the mint.
-   * The transaction could change in case of a bump.
-   * It returns null if the mint has no transaction associated.
-   *
-   * @param {string} mintCode - The qrHash of the mint.
-   * @returns {Promise<Transaction> | null} Returns the transaction associated with the mint. Null if no transaction is found.
-   */
-  public async getMintTransaction(
-    mintCode: string,
-  ): Promise<Transaction | null> {
-    return await this.tokensApiProvider.getMintTransaction(mintCode);
-  }
-
-  /**
    * Awaits until we have a final Transaction status for a specific Mint Code.
    *
    * @async
@@ -236,7 +220,7 @@ export class PoapsClient {
    * @param {WalletMintInput} input - Details required for the mint.
    */
   public async mintAsync(input: WalletMintInput): Promise<void> {
-    await this.checkMintCode(input.mintCode);
+    await this.tokensApiProvider.checkMintCode(input.mintCode);
 
     await this.tokensApiProvider.postMintCode({
       address: input.address,
@@ -281,7 +265,7 @@ export class PoapsClient {
   public async emailReservation(
     input: EmailReservationInput,
   ): Promise<POAPReservation> {
-    await this.checkMintCode(input.mintCode);
+    await this.tokensApiProvider.checkMintCode(input.mintCode);
 
     const response = await this.tokensApiProvider.postMintCode({
       address: input.email,
@@ -300,25 +284,5 @@ export class PoapsClient {
       endDate: new Date(response.event.end_date),
       name: response.event.name,
     });
-  }
-
-  /**
-   * Check the minting status of the mint code.
-   *
-   * @async
-   * @param {string} mintCode - The POAP code for which to get the secret.
-   * @throws {CodeAlreadyMintedError} Thrown when the POAP code has already been minted.
-   * @throws {CodeExpiredError} Thrown when the POAP code is expired.
-   */
-  private async checkMintCode(mintCode: string): Promise<void> {
-    const getCodeResponse = await this.getMintCode(mintCode);
-
-    if (getCodeResponse.minted) {
-      throw new CodeAlreadyMintedError(mintCode);
-    }
-
-    if (!getCodeResponse.isActive) {
-      throw new CodeExpiredError(mintCode);
-    }
   }
 }

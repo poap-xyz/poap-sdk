@@ -10,6 +10,11 @@ import {
   Transaction,
   TransactionStatus,
 } from '../../ports/TokensApiProvider/types/Transaction';
+import { AddressAlreadyMintDropError } from '../../ports/TokensApiProvider/errors/AddressAlreadyMintDropError';
+import { MintCodeAlreadyUsedError } from '../../ports/TokensApiProvider/errors/MintCodeAlreadyUsedError';
+import { MintCodeExpiredError } from '../../ports/TokensApiProvider/errors/MintCodeExpiredError';
+import { MintCodeNotFoundError } from '../../ports/TokensApiProvider/errors/MintCodeNotFoundError';
+import { InvalidAddressError } from '../../ports/TokensApiProvider/errors/InvalidAddressError';
 
 const DEFAULT_DROP_BASE_URL = 'https://api.poap.tech';
 
@@ -44,6 +49,18 @@ export class PoapTokenApi implements TokensApiProvider {
     this.authenticationProvider = authenticationProvider;
   }
 
+  async checkMintCode(qrHash: string): Promise<void> {
+    const getMintCodeResponse = await this.getMintCode(qrHash);
+
+    if (getMintCodeResponse.claimed) {
+      throw new MintCodeAlreadyUsedError(qrHash);
+    }
+
+    if (!getMintCodeResponse.is_active) {
+      throw new MintCodeExpiredError(qrHash);
+    }
+  }
+
   /**
    * Retrieves the mint code details.
    *
@@ -56,6 +73,15 @@ export class PoapTokenApi implements TokensApiProvider {
       {
         method: 'GET',
         headers: {},
+      },
+      async (response: Response): Promise<never> => {
+        if (response.status === 400 || response.status === 404) {
+          throw new MintCodeNotFoundError(qrHash);
+        }
+
+        throw new Error(
+          `Unexpected response ${response.status} while scanning`,
+        );
       },
     );
   }
@@ -75,6 +101,37 @@ export class PoapTokenApi implements TokensApiProvider {
         headers: {
           'Content-Type': 'application/json',
         },
+      },
+      // eslint-disable-next-line max-statements, complexity
+      async (response: Response): Promise<never> => {
+        const message = await this.getResponseMessage(
+          response,
+          'Unexpected error',
+        );
+
+        if (response.status === 400) {
+          if (message.includes('Address is not valid')) {
+            throw new InvalidAddressError(input.address);
+          }
+
+          if (message.includes('QR Claim expired')) {
+            throw new MintCodeExpiredError(input.qr_hash);
+          }
+
+          if (message.includes('QR Claim already claimed')) {
+            throw new MintCodeAlreadyUsedError(input.qr_hash);
+          }
+
+          if (message.includes('You already minted a POAP for this drop.')) {
+            throw new AddressAlreadyMintDropError(input.address);
+          }
+        }
+
+        if (response.status === 404) {
+          throw new MintCodeNotFoundError(input.qr_hash);
+        }
+
+        throw new Error(`Unexpected response ${response.status} while minting`);
       },
     );
   }
@@ -117,7 +174,11 @@ export class PoapTokenApi implements TokensApiProvider {
    * @param {RequestInit} options - Configuration options for the HTTP request.
    * @returns {Promise<R>} A promise that resolves with the parsed API response.
    */
-  private async secureFetch<R>(url: string, options: RequestInit): Promise<R> {
+  private async secureFetch<R>(
+    url: string,
+    options: RequestInit,
+    handleError?: (response: Response) => Promise<never>,
+  ): Promise<R> {
     const headersWithApiKey = {
       ...options.headers,
       'x-api-key': this.apiKey,
@@ -132,7 +193,28 @@ export class PoapTokenApi implements TokensApiProvider {
       signal: AbortSignal.timeout(10000),
     });
 
+    if (!response.ok) {
+      await (handleError ?? this.handleError)(response);
+    }
+
     return await response.json();
+  }
+
+  private async getResponseMessage(
+    response: Response,
+    defaultMessage: string,
+  ): Promise<string> {
+    try {
+      const body = await response.json();
+      return body?.message || defaultMessage;
+    } catch {
+      return defaultMessage;
+    }
+  }
+
+  private async handleError(response: Response): Promise<never> {
+    const message = await this.getResponseMessage(response, 'Unexpected error');
+    throw new Error(`Failed to fetch ${response.url} | ${message}`);
   }
 
   /**
