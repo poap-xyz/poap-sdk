@@ -15,6 +15,7 @@ interface PoapProperties {
   description: string;
   startDate: Date;
   endDate: Date;
+  timezone: string;
   name: string;
 }
 
@@ -48,6 +49,7 @@ export class POAP {
       description: response.drop.description,
       startDate: new Date(response.drop.start_date),
       endDate: new Date(response.drop.end_date),
+      timezone: response.drop.timezone,
       name: response.drop.name,
     });
   }
@@ -117,13 +119,15 @@ export class POAPWithStats extends POAP {
       description: response.drop.description,
       startDate: new Date(response.drop.start_date),
       endDate: new Date(response.drop.end_date),
+      timezone: response.drop.timezone,
       name: response.drop.name,
       mintingStats: response.minting_stats?.mint_order
         ? { mintOrder: response.minting_stats.mint_order }
         : undefined,
-      collectorStats: response.collector?.poaps_owned != null
-        ? { power: response.collector.poaps_owned }
-        : undefined,
+      collectorStats:
+        response.collector?.poaps_owned != null
+          ? { power: response.collector.poaps_owned }
+          : undefined,
       dropStats: response.drop_stats_by_chain_aggregate
         ? {
             poapCount:

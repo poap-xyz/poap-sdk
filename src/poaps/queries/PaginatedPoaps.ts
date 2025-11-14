@@ -25,6 +25,7 @@ export const PAGINATED_POAPS_QUERY = /* GraphQL */ `
         description
         start_date
         end_date
+        timezone
         name
       }
     }
@@ -85,6 +86,7 @@ export interface PoapsResponse {
     description: string;
     start_date: string;
     end_date: string;
+    timezone: string;
     name: string;
   };
 }
