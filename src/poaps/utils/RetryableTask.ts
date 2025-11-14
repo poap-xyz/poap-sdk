@@ -1,13 +1,17 @@
-const MAX_RETRIES = 20;
-const INITIAL_DELAY = 1000;
-const BACKOFF_FACTOR = 1.2;
-
 /**
  * Abstract class representing a task that can be retried with an increasing delay.
  */
 export abstract class RetryableTask {
   protected retries = 0;
-  protected delay: number = INITIAL_DELAY;
+  protected delay: number;
+
+  constructor(
+    protected readonly maxRetries = 20,
+    initialDelay = 1000,
+    protected readonly backoffFactor = 1.2,
+  ) {
+    this.delay = initialDelay;
+  }
 
   /**
    * Attempts to perform a given task. If the task fails, it retries with an increasing delay until
@@ -20,11 +24,11 @@ export abstract class RetryableTask {
    * @throws {Error} Throws an error if maximum retries are reached.
    */
   protected backoffAndRetry<T>(callback: () => Promise<T>): Promise<T> {
-    if (this.retries >= MAX_RETRIES) {
+    if (this.retries >= this.maxRetries) {
       throw new Error('Max retries reached');
     }
     this.retries++;
-    this.delay *= BACKOFF_FACTOR;
+    this.delay *= this.backoffFactor;
 
     return new Promise<T>((resolve, reject) => {
       setTimeout(() => {

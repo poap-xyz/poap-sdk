@@ -19,6 +19,7 @@ import { PoapMintStatus } from './types/PoapMintStatus';
 import { WalletMintInput } from './types/WalletMintInput';
 import { EmailReservationInput } from './types/EmailReservationInput';
 import { PoapMintTransaction } from './types/PoapMintTransaction';
+import { PoapsClientOptions } from './types/PoapsClientOptions';
 import { MintChecker } from './utils/MintChecker';
 import { PoapIndexed } from './utils/PoapIndexed';
 import { PoapMintFinishedWithError } from './errors/PoapMintFinishedWithError';
@@ -49,8 +50,9 @@ export class PoapsClient {
    * @param {TokensApiProvider} tokensApiProvider - The provider for the Tokens API.
    */
   constructor(
-    private compassProvider: CompassProvider,
-    private tokensApiProvider: TokensApiProvider,
+    private readonly compassProvider: CompassProvider,
+    private readonly tokensApiProvider: TokensApiProvider,
+    private readonly options?: PoapsClientOptions,
   ) {}
 
   /**
@@ -197,7 +199,13 @@ export class PoapsClient {
    * @param mintCode - The Mint Code
    */
   public async waitMintStatus(mintCode: string): Promise<PoapMintTransaction> {
-    const checker = new MintChecker(this.tokensApiProvider, mintCode);
+    const checker = new MintChecker(
+      this.tokensApiProvider,
+      mintCode,
+      this.options?.maxRetries,
+      this.options?.initialDelay,
+      this.options?.backoffFactor,
+    );
     return await checker.checkMintStatus();
   }
 
@@ -209,7 +217,13 @@ export class PoapsClient {
    * @returns {Promise<PoapMintStatus>} - The status of the POAP mint.
    */
   public async waitPoapIndexed(mintCode: string): Promise<PoapMintStatus> {
-    const checker = new PoapIndexed(this.tokensApiProvider, mintCode);
+    const checker = new PoapIndexed(
+      this.tokensApiProvider,
+      mintCode,
+      this.options?.maxRetries,
+      this.options?.initialDelay,
+      this.options?.backoffFactor,
+    );
     return await checker.waitPoapIndexed();
   }
 
