@@ -1,10 +1,9 @@
-import { POAP, POAPWithStats } from './domain/POAP';
+import { POAP } from './domain/POAP';
 import { POAPReservation } from './domain/POAPReservation';
 import {
   buildPaginatedPoapsQuery,
-  PaginatedPoapsResponse,
   PaginatedPoapsVariables,
-  PaginatedPoapsWithStatsResponse,
+  PaginatedPoapsResponse,
   POAPS_COUNT_QUERY,
   PoapsCountResponse,
   PoapsCountVariables,
@@ -53,7 +52,7 @@ export class PoapsClient {
    * @param options Additional options to pass to the fetch call.
    * @returns A single token or null when not found.
    */
-  async get(id: number, options?: RequestInit): Promise<POAPWithStats | null> {
+  async get(id: number, options?: RequestInit): Promise<POAP | null> {
     const { data } = await this.compassProvider.request<
       PaginatedPoapsResponse,
       PaginatedPoapsVariables
@@ -76,7 +75,7 @@ export class PoapsClient {
       return null;
     }
 
-    return POAPWithStats.fromCompass(data.poaps[0]);
+    return POAP.fromCompass(data.poaps[0]);
   }
 
   /**
@@ -89,7 +88,7 @@ export class PoapsClient {
   async list(
     input: FetchPoapsPaginatedInput,
     options?: RequestInit,
-  ): Promise<PaginatedResult<POAPWithStats>> {
+  ): Promise<PaginatedResult<POAP>> {
     const {
       limit,
       offset,
@@ -114,13 +113,13 @@ export class PoapsClient {
     };
 
     const { data } = await this.compassProvider.request<
-      PaginatedPoapsWithStatsResponse,
+      PaginatedPoapsResponse,
       PaginatedPoapsVariables
     >(query, variables, options);
 
-    const poaps = data.poaps.map((poap) => POAPWithStats.fromCompass(poap));
+    const poaps = data.poaps.map((poap) => POAP.fromCompass(poap));
 
-    return new PaginatedResult<POAPWithStats>(
+    return new PaginatedResult<POAP>(
       poaps,
       nextCursor(poaps.length, limit, offset),
     );

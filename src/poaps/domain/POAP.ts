@@ -1,7 +1,16 @@
-import {
-  PoapsResponse,
-  PoapsWithStatsResponse,
-} from '../queries/PaginatedPoaps';
+import { PoapsResponse } from '../queries/PaginatedPoaps';
+
+export interface POAPMintingStats {
+  mintOrder: number;
+}
+
+export interface POAPCollectorStats {
+  power: number;
+}
+
+export interface POAPDropStats {
+  poapCount: number;
+}
 
 interface PoapProperties {
   id: number;
@@ -17,6 +26,9 @@ interface PoapProperties {
   endDate: Date;
   timezone: string;
   name: string;
+  mintingStats?: POAPMintingStats;
+  collectorStats?: POAPCollectorStats;
+  dropStats?: POAPDropStats;
 }
 
 export class POAP {
@@ -31,83 +43,38 @@ export class POAP {
   readonly description: string;
   readonly startDate: Date;
   readonly endDate: Date;
+  readonly timezone: string;
   readonly name: string;
-
-  public static fromCompass(response: PoapsResponse): POAP {
-    const mintedOn = new Date(0);
-    mintedOn.setUTCSeconds(response.minted_on);
-
-    return new POAP({
-      id: Number(response.id),
-      collectorAddress: response.collector_address,
-      transferCount: response.transfer_count,
-      mintedOn,
-      dropId: Number(response.drop_id),
-      imageUrl: response.drop.image_url,
-      city: response.drop.city,
-      country: response.drop.country,
-      description: response.drop.description,
-      startDate: new Date(response.drop.start_date),
-      endDate: new Date(response.drop.end_date),
-      timezone: response.drop.timezone,
-      name: response.drop.name,
-    });
-  }
+  readonly mintingStats?: POAPMintingStats;
+  readonly collectorStats?: POAPCollectorStats;
+  readonly dropStats?: POAPDropStats;
 
   // eslint-disable-next-line max-statements
   constructor(properties: PoapProperties) {
     this.id = properties.id;
     this.collectorAddress = properties.collectorAddress;
+    this.transferCount = properties.transferCount;
     this.mintedOn = properties.mintedOn;
     this.dropId = properties.dropId;
-    this.transferCount = properties.transferCount;
     this.imageUrl = properties.imageUrl;
     this.city = properties.city;
     this.country = properties.country;
     this.description = properties.description;
     this.startDate = properties.startDate;
     this.endDate = properties.endDate;
+    this.timezone = properties.timezone;
     this.name = properties.name;
-  }
-}
-
-export interface POAPMintingStats {
-  mintOrder: number;
-}
-
-export interface POAPCollectorStats {
-  power: number;
-}
-
-export interface POAPDropStats {
-  poapCount: number;
-}
-
-interface PoapWithStatsProperties extends PoapProperties {
-  mintingStats?: POAPMintingStats;
-  collectorStats?: POAPCollectorStats;
-  dropStats?: POAPDropStats;
-}
-
-export class POAPWithStats extends POAP {
-  readonly mintingStats?: POAPMintingStats;
-  readonly collectorStats?: POAPCollectorStats;
-  readonly dropStats?: POAPDropStats;
-
-  constructor(properties: PoapWithStatsProperties) {
-    super(properties);
-
     this.mintingStats = properties.mintingStats;
     this.collectorStats = properties.collectorStats;
     this.dropStats = properties.dropStats;
   }
 
   // eslint-disable-next-line complexity
-  public static fromCompass(response: PoapsWithStatsResponse): POAPWithStats {
+  public static fromCompass(response: PoapsResponse): POAP {
     const mintedOn = new Date(0);
     mintedOn.setUTCSeconds(response.minted_on);
 
-    return new POAPWithStats({
+    return new POAP({
       id: Number(response.id),
       collectorAddress: response.collector_address,
       transferCount: response.transfer_count,

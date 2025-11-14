@@ -61,13 +61,6 @@ export interface PoapsResponse {
     timezone: string;
     name: string;
   };
-}
-
-export interface PaginatedPoapsResponse {
-  poaps: PoapsResponse[];
-}
-
-export interface PoapsWithStatsResponse extends PoapsResponse {
   minting_stats?: { mint_order?: number };
   collector?: { poaps_owned?: number };
   drop_stats_by_chain_aggregate?: {
@@ -75,8 +68,8 @@ export interface PoapsWithStatsResponse extends PoapsResponse {
   };
 }
 
-export interface PaginatedPoapsWithStatsResponse {
-  poaps: PoapsWithStatsResponse[];
+export interface PaginatedPoapsResponse {
+  poaps: PoapsResponse[];
 }
 
 export type PaginatedPoapsVariables = FilterVariables &
