@@ -121,7 +121,7 @@ export class POAPWithStats extends POAP {
       mintingStats: response.minting_stats?.mint_order
         ? { mintOrder: response.minting_stats.mint_order }
         : undefined,
-      collectorStats: response.collector?.poaps_owned
+      collectorStats: response.collector?.poaps_owned != null
         ? { power: response.collector.poaps_owned }
         : undefined,
       dropStats: response.drop_stats_by_chain_aggregate

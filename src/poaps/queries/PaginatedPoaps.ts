@@ -61,6 +61,7 @@ export function buildPaginatedPoapsQuery({
           description
           start_date
           end_date
+          timezone
           name
         }
         ${withMintingStats ? 'minting_stats { mint_order }' : ''}
