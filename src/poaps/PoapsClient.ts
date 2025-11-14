@@ -39,16 +39,8 @@ import {
 
 /**
  * Represents a client for interacting with POAPs.
- *
- * @class
  */
 export class PoapsClient {
-  /**
-   * Initializes a new instance of the PoapsClient.
-   *
-   * @param {CompassProvider} compassProvider - The provider for the POAP compass API.
-   * @param {TokensApiProvider} tokensApiProvider - The provider for the Tokens API.
-   */
   constructor(
     private readonly compassProvider: CompassProvider,
     private readonly tokensApiProvider: TokensApiProvider,
@@ -213,8 +205,8 @@ export class PoapsClient {
    * Awaits until a specific POAP, identified by its Mint Code, is indexed on our database.
    *
    * @async
-   * @param {string} mintCode - The Mint Code identifying the POAP to be indexed.
-   * @returns {Promise<PoapMintStatus>} - The status of the POAP mint.
+   * @param mintCode - The Mint Code identifying the POAP to be indexed.
+   * @returns The status of the POAP mint.
    */
   public async waitPoapIndexed(mintCode: string): Promise<PoapMintStatus> {
     const checker = new PoapIndexed(
@@ -230,8 +222,7 @@ export class PoapsClient {
   /**
    * Begins an asynchronous mint process and provides a unique queue ID in return.
    *
-   * @async
-   * @param {WalletMintInput} input - Details required for the mint.
+   * @param input - Details required for the mint.
    */
   public async mintAsync(input: WalletMintInput): Promise<void> {
     await this.tokensApiProvider.checkMintCode(input.mintCode);
@@ -248,9 +239,8 @@ export class PoapsClient {
    * fetches the associated POAP. It combines the asynchronous mint and subsequent status checking
    * into a synchronous process for ease of use.
    *
-   * @async
-   * @param {WalletMintInput} input - Details needed for the mint.
-   * @returns {Promise<POAP>} The associated POAP upon successful mint completion.
+   * @param input - Details needed for the mint.
+   * @returns The associated POAP upon successful mint completion.
    * @throws {PoapMintFinishedWithError} If there's an error concluding the mint process.
    */
   async mintSync(input: WalletMintInput): Promise<POAP> {
@@ -275,9 +265,8 @@ export class PoapsClient {
   /**
    * Reserves a POAP to an email address and provides reservation details.
    *
-   * @async
-   * @param {EmailReservationInput} input - Information for the reservation.
-   * @returns {Promise<POAPReservation>} The reservation details of the POAP.
+   * @param input - Information for the reservation.
+   * @returns The reservation details of the POAP.
    */
   public async emailReservation(
     input: EmailReservationInput,
