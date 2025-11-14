@@ -15,6 +15,9 @@ export class PoapIndexed extends RetryableTask {
    *
    * @param tokensApiProvider - An instance of the TokensApiProvider used to check the indexing status of the token.
    * @param mintCode - A unique Mint Code representing the token.
+   * @param maxRetries - Optional number of retries.
+   * @param initialDelay - Optional how much ms to wait on the first try.
+   * @param backoffFactor - Optional number greater than one on how the waiting grows.
    */
   constructor(
     private readonly tokensApiProvider: TokensApiProvider,

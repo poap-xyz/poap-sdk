@@ -5,6 +5,11 @@ export abstract class RetryableTask {
   protected retries = 0;
   protected delay: number;
 
+  /**
+   * @param maxRetries - Optional number of retries.
+   * @param initialDelay - Optional how much ms to wait on the first try.
+   * @param backoffFactor - Optional number greater than one on how the waiting grows.
+   */
   constructor(
     protected readonly maxRetries = 20,
     initialDelay = 1000,
