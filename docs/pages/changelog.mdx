@@ -10,6 +10,7 @@ All notable changes to this project are documented in this file.
 * **[POAPs]** Now `PoapsClient.list` can include stats about the minting, collector or drop.
 * **[POAPs]** `PoapsClient.mintAsync`, `mintSync` and `emailReservation` will throw different errors for mint codes
   already used or expired, and a new error for mint codes not found. See [POAPs errors](./poaps/Errors).
+* **[POAPs]** Now `PoapsClient.checkMintStatus` can throw `PoapMintPendingError` when the maximum retries as exahusted.
 
 {<h3>Breaking Changes ⚠️</h3>}
 
@@ -17,7 +18,7 @@ All notable changes to this project are documented in this file.
 * **[POAPs]** `PoapsClient.fetchCount` was renamed to `PoapsClient.count`.
 * **[POAPs]** `PoapsClient.waitPoapIndexed` and `PoapsClient.getMintCode` do not return `secretCode` anymore.
 * **[POAPs]** Error `CodeAlreadyMintedError` has been renamed to `MintCodeAlreadyUsedError`, and `CodeExpiredError`
-  to `MintCodeExpiredError`.
+  to `MintCodeExpiredError`, and `FinishedWithError` to `PoapMintFinishedWithError`.
 * **[POAPs]** Removes `PoapsClient.getMintTransaction`.
 
 ## 0.19.0

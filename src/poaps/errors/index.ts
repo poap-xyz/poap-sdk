@@ -1,1 +1,2 @@
-export * from './FinishedWithError';
+export * from './PoapMintFinishedWithError';
+export * from './PoapMintPendingError';

@@ -18,9 +18,10 @@ import { PoapsSortFields } from './types/PoapsSortFields';
 import { PoapMintStatus } from './types/PoapMintStatus';
 import { WalletMintInput } from './types/WalletMintInput';
 import { EmailReservationInput } from './types/EmailReservationInput';
+import { PoapMintTransaction } from './types/PoapMintTransaction';
 import { MintChecker } from './utils/MintChecker';
 import { PoapIndexed } from './utils/PoapIndexed';
-import { FinishedWithError } from './errors/FinishedWithError';
+import { PoapMintFinishedWithError } from './errors/PoapMintFinishedWithError';
 import { CompassProvider, TokensApiProvider } from '../providers';
 import {
   createAddressFilter,
@@ -192,13 +193,12 @@ export class PoapsClient {
   /**
    * Awaits until we have a final Transaction status for a specific Mint Code.
    *
-   * @async
-   * @returns {Promise<void>}
+   * @returns The final transaction.
    * @param mintCode - The Mint Code
    */
-  public async waitMintStatus(mintCode: string): Promise<void> {
+  public async waitMintStatus(mintCode: string): Promise<PoapMintTransaction> {
     const checker = new MintChecker(this.tokensApiProvider, mintCode);
-    await checker.checkMintStatus();
+    return await checker.checkMintStatus();
   }
 
   /**
@@ -237,7 +237,7 @@ export class PoapsClient {
    * @async
    * @param {WalletMintInput} input - Details needed for the mint.
    * @returns {Promise<POAP>} The associated POAP upon successful mint completion.
-   * @throws {FinishedWithError} If there's an error concluding the mint process.
+   * @throws {PoapMintFinishedWithError} If there's an error concluding the mint process.
    */
   async mintSync(input: WalletMintInput): Promise<POAP> {
     await this.mintAsync(input);
@@ -249,7 +249,10 @@ export class PoapsClient {
     const poap = await this.get(getCodeResponse.poapId);
 
     if (!poap) {
-      throw new FinishedWithError('Token is not yet available', input.mintCode);
+      throw new PoapMintFinishedWithError(
+        'Token is not yet available',
+        input.mintCode,
+      );
     }
 
     return poap;

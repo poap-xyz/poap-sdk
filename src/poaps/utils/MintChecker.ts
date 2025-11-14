@@ -3,7 +3,9 @@ import {
   Transaction,
   TransactionStatus,
 } from '../../providers';
-import { FinishedWithError } from '../errors/FinishedWithError';
+import { PoapMintFinishedWithError } from '../errors/PoapMintFinishedWithError';
+import { PoapMintPendingError } from '../errors/PoapMintPendingError';
+import { PoapMintTransaction } from '../types/PoapMintTransaction';
 import { RetryableTask } from './RetryableTask';
 
 /**
@@ -29,25 +31,33 @@ export class MintChecker extends RetryableTask {
    * If the mint is still pending or in process, it will retry the check with an increased delay.
    *
    * @returns A promise that resolves once the status has been checked.
-   * @throws {FinishedWithError} Throws an error if the minting process finished with an error.
+   * @throws {PoapMintFinishedWithError} Throws an error if the minting process finished with an error.
+   * @throws {PoapMintPendingError} Throws when the maximum retries has been elapsed and the mint is not yet finished.
    */
-  public async checkMintStatus(): Promise<void> {
+  // eslint-disable-next-line complexity, max-statements
+  public async checkMintStatus(): Promise<PoapMintTransaction> {
     try {
       const transaction = await this.tokensApiProvider.getMintTransaction(
         this.mintCode,
       );
 
       if (this.shouldRetry(transaction)) {
-        await this.backoffAndRetry(() => this.checkMintStatus());
-      } else {
-        this.handleErrorStatus(transaction);
+        return await this.backoffAndRetry(() => this.checkMintStatus());
       }
+
+      if (transaction?.status === TransactionStatus.passed) {
+        return { txHash: transaction.tx_hash };
+      }
+
+      this.handleErrorStatus(transaction);
+
+      throw new PoapMintPendingError(this.mintCode);
     } catch (error: unknown) {
-      if (error instanceof FinishedWithError) {
+      if (error instanceof PoapMintFinishedWithError) {
         throw error;
       }
 
-      await this.backoffAndRetry(() => this.checkMintStatus());
+      return await this.backoffAndRetry(() => this.checkMintStatus());
     }
   }
 
@@ -66,11 +76,11 @@ export class MintChecker extends RetryableTask {
    * If the minting process finishes with an error, an exception will be thrown.
    *
    * @param transaction The transaction to check for errors.
-   * @throws {FinishedWithError} Throws an error if the minting process finished with an error.
+   * @throws {PoapMintFinishedWithError} Throws an error if the minting process finished with an error.
    */
   private handleErrorStatus(transaction: Transaction | null): void {
     if (transaction?.status === TransactionStatus.failed) {
-      throw new FinishedWithError(
+      throw new PoapMintFinishedWithError(
         'The Transaction associated with this mint failed',
         this.mintCode,
       );

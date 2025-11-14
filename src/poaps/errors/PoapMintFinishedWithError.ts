@@ -1,4 +1,4 @@
-export class FinishedWithError extends Error {
+export class PoapMintFinishedWithError extends Error {
   constructor(
     public readonly reason: string,
     public readonly mintCode: string,
