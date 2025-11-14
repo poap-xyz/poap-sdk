@@ -17,7 +17,6 @@ export abstract class RetryableTask {
    * Attempts to perform a given task. If the task fails, it retries with an increasing delay until
    * maximum retries are reached.
    *
-   * @protected
    * @template T - The type of value that the callback returns.
    * @param {() => Promise<T>} callback - The asynchronous function representing the task to be retried.
    * @returns {Promise<T>} A promise that resolves to the result of the task or rejects with an error.

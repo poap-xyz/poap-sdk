@@ -204,7 +204,6 @@ export class PoapsClient {
   /**
    * Awaits until a specific POAP, identified by its Mint Code, is indexed on our database.
    *
-   * @async
    * @param mintCode - The Mint Code identifying the POAP to be indexed.
    * @returns The status of the POAP mint.
    */
