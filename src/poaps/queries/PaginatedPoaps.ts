@@ -101,7 +101,7 @@ export interface PoapsWithStatsResponse extends PoapsResponse {
   };
 }
 
-export interface PaginatedPoapsWithStatsesponse {
+export interface PaginatedPoapsWithStatsResponse {
   poaps: PoapsWithStatsResponse[];
 }
 

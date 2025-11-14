@@ -5,7 +5,7 @@ import {
   PAGINATED_POAPS_QUERY,
   PaginatedPoapsResponse,
   PaginatedPoapsVariables,
-  PaginatedPoapsWithStatsesponse,
+  PaginatedPoapsWithStatsResponse,
   POAPS_COUNT_QUERY,
   PoapsCountResponse,
   PoapsCountVariables,
@@ -111,7 +111,7 @@ export class PoapsClient {
     };
 
     const { data } = await this.compassProvider.request<
-      PaginatedPoapsWithStatsesponse,
+      PaginatedPoapsWithStatsResponse,
       PaginatedPoapsVariables
     >(query, variables, options);
 
