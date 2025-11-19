@@ -1,3 +1,3 @@
-export * from './MintCodeInput';
-export * from './MintCodeResponse';
-export * from './Transaction';
+export * from './MintCodeInput.js';
+export * from './MintCodeResponse.js';
+export * from './Transaction.js';

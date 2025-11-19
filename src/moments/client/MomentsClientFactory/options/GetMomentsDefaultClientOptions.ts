@@ -1,4 +1,4 @@
-import { AuthenticationProvider } from '../../../../providers';
+import { AuthenticationProvider } from '../../../../providers/index.js';
 
 interface MomentsBaseOptions {
   /**

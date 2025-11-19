@@ -1,4 +1,4 @@
-import { ItemResponse } from './ItemResponse';
+import { ItemResponse } from './ItemResponse.js';
 
 /**
  * Represents the structure for a section within a collection.

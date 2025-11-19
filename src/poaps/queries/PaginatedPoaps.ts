@@ -2,7 +2,7 @@ import {
   FilterVariables,
   OrderByVariables,
   PaginatedVariables,
-} from '../../utils';
+} from '../../utils/index.js';
 
 export const PAGINATED_POAPS_QUERY = /* GraphQL */ `
   query PaginatedPoaps(

@@ -1,9 +1,9 @@
-import { DropApiProvider } from '../../ports/DropApiProvider/DropApiProvider';
-import { DropResponse } from '../../ports/DropApiProvider/types/DropResponse';
+import { DropApiProvider } from '../../ports/DropApiProvider/DropApiProvider.js';
+import { DropResponse } from '../../ports/DropApiProvider/types/DropResponse.js';
 import {
   CreateDropInput,
   UpdateDropInput,
-} from '../../ports/DropApiProvider/types/DropInput';
+} from '../../ports/DropApiProvider/types/DropInput.js';
 
 const DEFAULT_DROP_BASE_URL = 'https://api.poap.tech';
 

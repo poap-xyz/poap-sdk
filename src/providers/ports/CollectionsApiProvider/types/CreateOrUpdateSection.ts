@@ -1,4 +1,4 @@
-import { CreateOrUpdateItem } from './CreateOrUpdateItem';
+import { CreateOrUpdateItem } from './CreateOrUpdateItem.js';
 
 /**
  * Describes the structure for creating or updating a section within a collection.

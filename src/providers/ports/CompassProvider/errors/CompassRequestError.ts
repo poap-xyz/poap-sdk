@@ -1,5 +1,5 @@
-import { CompassErrors } from '../types/CompassErrors';
-import { CompassError } from '../types/CompassError';
+import { CompassErrors } from '../types/CompassErrors.js';
+import { CompassError } from '../types/CompassError.js';
 
 export class CompassRequestError extends Error {
   public errors: CompassError[];

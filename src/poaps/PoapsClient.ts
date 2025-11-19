@@ -1,5 +1,5 @@
-import { POAP } from './domain/POAP';
-import { POAPReservation } from './domain/POAPReservation';
+import { POAP } from './domain/POAP.js';
+import { POAPReservation } from './domain/POAPReservation.js';
 import {
   PAGINATED_POAPS_QUERY,
   PaginatedPoapsResponse,
@@ -7,17 +7,24 @@ import {
   POAPS_COUNT_QUERY,
   PoapsCountResponse,
   PoapsCountVariables,
-} from './queries/PaginatedPoaps';
-import { BaseFetchPoapsInput, FetchPoapsInput } from './types/FetchPoapsInput';
-import { PoapsSortFields } from './types/PoapsSortFields';
-import { PoapMintStatus } from './types/PoapMintStatus';
-import { WalletMintInput } from './types/WalletMintInput';
-import { EmailReservationInput } from './types/EmailReservationInput';
-import { CodeAlreadyMintedError } from './errors/CodeAlreadyMintedError';
-import { CodeExpiredError } from './errors/CodeExpiredError';
-import { MintChecker } from './utils/MintChecker';
-import { PoapIndexed } from './utils/PoapIndexed';
-import { CompassProvider, TokensApiProvider, Transaction } from '../providers';
+} from './queries/PaginatedPoaps.js';
+import {
+  BaseFetchPoapsInput,
+  FetchPoapsInput,
+} from './types/FetchPoapsInput.js';
+import { PoapsSortFields } from './types/PoapsSortFields.js';
+import { PoapMintStatus } from './types/PoapMintStatus.js';
+import { WalletMintInput } from './types/WalletMintInput.js';
+import { EmailReservationInput } from './types/EmailReservationInput.js';
+import { CodeAlreadyMintedError } from './errors/CodeAlreadyMintedError.js';
+import { CodeExpiredError } from './errors/CodeExpiredError.js';
+import { MintChecker } from './utils/MintChecker.js';
+import { PoapIndexed } from './utils/PoapIndexed.js';
+import {
+  CompassProvider,
+  TokensApiProvider,
+  Transaction,
+} from '../providers/index.js';
 import {
   createAddressFilter,
   createBetweenFilter,
@@ -29,7 +36,7 @@ import {
   nextCursor,
   PaginatedResult,
   PaginationInput,
-} from '../utils';
+} from '../utils/index.js';
 
 /**
  * Represents a client for interacting with POAPs.

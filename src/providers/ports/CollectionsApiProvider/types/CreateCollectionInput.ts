@@ -1,4 +1,4 @@
-import { CollectionBase } from './CollectionBase';
+import { CollectionBase } from './CollectionBase.js';
 
 /**
  * Describes the input structure for creating a new collection.

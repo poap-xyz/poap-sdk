@@ -1,3 +1,3 @@
-export { DropsClient } from './DropsClient';
-export { Drop, SerializableDrop } from './domain/Drop';
-export { DropsSortFields } from './types/DropsSortFields';
+export { DropsClient } from './DropsClient.js';
+export { Drop, SerializableDrop } from './domain/Drop.js';
+export { DropsSortFields } from './types/DropsSortFields.js';

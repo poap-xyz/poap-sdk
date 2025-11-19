@@ -1,4 +1,4 @@
-import { createField } from './field';
+import { createField } from './field.js';
 import {
   EqFilter,
   FieldFilter,
@@ -12,9 +12,9 @@ import {
   NinFilter,
   IsNullFilter,
   Value,
-} from '../types/filter';
-import { ZERO_ADDRESS, DEAD_ADDRESS } from '../constants';
-import { isFilterValueDefined } from '../validation/isFilterValueDefined';
+} from '../types/filter.js';
+import { ZERO_ADDRESS, DEAD_ADDRESS } from '../constants/index.js';
+import { isFilterValueDefined } from '../validation/isFilterValueDefined.js';
 
 export function createLikeFilter(
   key: string,

@@ -1,4 +1,4 @@
-import { PoapsResponse } from '../queries/PaginatedPoaps';
+import { PoapsResponse } from '../queries/PaginatedPoaps.js';
 
 export class POAP {
   id: number;

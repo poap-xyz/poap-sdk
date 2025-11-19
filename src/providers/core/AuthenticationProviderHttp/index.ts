@@ -1,1 +1,1 @@
-export * from './AuthenticationProviderHttp';
+export * from './AuthenticationProviderHttp.js';

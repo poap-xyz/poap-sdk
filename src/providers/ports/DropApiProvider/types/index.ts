@@ -1,2 +1,2 @@
-export * from './DropInput';
-export * from './DropResponse';
+export * from './DropInput.js';
+export * from './DropResponse.js';

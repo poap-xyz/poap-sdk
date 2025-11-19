@@ -1,5 +1,5 @@
-import { CollectionResponse } from '../types/CollectionResponse';
-import { OrderByVariables, PaginatedVariables } from '../../utils';
+import { CollectionResponse } from '../types/CollectionResponse.js';
+import { OrderByVariables, PaginatedVariables } from '../../utils/index.js';
 
 export const SEARCH_COLLECTIONS_QUERY = /* GraphQL */ `
   query SearchCollections(

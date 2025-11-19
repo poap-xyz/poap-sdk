@@ -1,4 +1,4 @@
-import { TokensApiProvider } from '../../providers';
+import { TokensApiProvider } from '../../providers/index.js';
 
 const MAX_RETRIES = 20;
 const INITIAL_DELAY = 1000;

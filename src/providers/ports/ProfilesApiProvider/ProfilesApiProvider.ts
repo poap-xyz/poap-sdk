@@ -1,5 +1,5 @@
-import { BulkProfilesResponse } from './types/BulkProfilesResponse';
-import { ProfileResponse } from './types/ProfileResponse';
+import { BulkProfilesResponse } from './types/BulkProfilesResponse.js';
+import { ProfileResponse } from './types/ProfileResponse.js';
 
 export interface ProfilesApiProvider {
   readonly apiUrl: string;

@@ -1,4 +1,4 @@
-import { SectionResponse } from './SectionResponse';
+import { SectionResponse } from './SectionResponse.js';
 
 /**
  * Represents the response structure for a collection entity.

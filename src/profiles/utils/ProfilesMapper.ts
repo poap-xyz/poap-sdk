@@ -1,9 +1,9 @@
-import { Profile } from '../domain/Profile';
-import { ProfileError } from '../domain/ProfileError';
+import { Profile } from '../domain/Profile.js';
+import { ProfileError } from '../domain/ProfileError.js';
 import {
   ProfileResponse,
   ProfilesBulkError,
-} from '../../providers/ports/ProfilesApiProvider/types';
+} from '../../providers/ports/ProfilesApiProvider/types/index.js';
 
 export class ProfilesMapper {
   static createProfilesMap(

@@ -1,1 +1,1 @@
-export * from './PoapCompass';
+export * from './PoapCompass.js';

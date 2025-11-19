@@ -1,3 +1,3 @@
-export * from './AuthenticationProvider';
-export * from './errors';
-export * from './types';
+export * from './AuthenticationProvider.js';
+export * from './errors/index.js';
+export * from './types/index.js';

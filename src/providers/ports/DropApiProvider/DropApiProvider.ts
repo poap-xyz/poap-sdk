@@ -1,5 +1,5 @@
-import { CreateDropInput, UpdateDropInput } from './types/DropInput';
-import { DropResponse } from './types/DropResponse';
+import { CreateDropInput, UpdateDropInput } from './types/DropInput.js';
+import { DropResponse } from './types/DropResponse.js';
 
 /**
  * Provides methods for interacting with a drop API.

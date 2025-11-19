@@ -1,6 +1,6 @@
-import { DropResponse as ProviderDropResponse } from '../../providers/ports/DropApiProvider/types/DropResponse';
-import { DropResponse } from '../types/DropResponse';
-import { DropImage } from './DropImage';
+import { DropResponse as ProviderDropResponse } from '../../providers/ports/DropApiProvider/types/DropResponse.js';
+import { DropResponse } from '../types/DropResponse.js';
+import { DropImage } from './DropImage.js';
 
 export class Drop {
   id: number;

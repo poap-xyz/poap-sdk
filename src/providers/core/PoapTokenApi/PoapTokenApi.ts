@@ -1,15 +1,15 @@
-import { AuthenticationProvider } from '../../ports/AuthenticationProvider/AuthenticationProvider';
-import { MissingAuthenticationProviderError } from '../../ports/AuthenticationProvider/errors/MissingAuthenticationProviderError';
-import { TokensApiProvider } from '../../ports/TokensApiProvider/TokensApiProvider';
-import { MintCodeInput } from '../../ports/TokensApiProvider/types/MintCodeInput';
+import { AuthenticationProvider } from '../../ports/AuthenticationProvider/AuthenticationProvider.js';
+import { MissingAuthenticationProviderError } from '../../ports/AuthenticationProvider/errors/MissingAuthenticationProviderError.js';
+import { TokensApiProvider } from '../../ports/TokensApiProvider/TokensApiProvider.js';
+import { MintCodeInput } from '../../ports/TokensApiProvider/types/MintCodeInput.js';
 import {
   GetMintCodeResponse,
   PostMintCodeResponse,
-} from '../../ports/TokensApiProvider/types/MintCodeResponse';
+} from '../../ports/TokensApiProvider/types/MintCodeResponse.js';
 import {
   Transaction,
   TransactionStatus,
-} from '../../ports/TokensApiProvider/types/Transaction';
+} from '../../ports/TokensApiProvider/types/Transaction.js';
 
 const DEFAULT_DROP_BASE_URL = 'https://api.poap.tech';
 

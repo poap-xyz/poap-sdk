@@ -1,5 +1,5 @@
-import { Chain, Order, PaginationInput } from '../../utils';
-import { PoapsSortFields } from './PoapsSortFields';
+import { Chain, Order, PaginationInput } from '../../utils/index.js';
+import { PoapsSortFields } from './PoapsSortFields.js';
 
 export interface BaseFetchPoapsInput {
   /** Optional filter for the name of a POAP. */

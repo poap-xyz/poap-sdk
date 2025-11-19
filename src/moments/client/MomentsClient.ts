@@ -1,16 +1,16 @@
-import { Moment } from '../domain/Moment';
+import { Moment } from '../domain/Moment.js';
 import {
   MomentsQueryResponse,
   MomentsQueryVariables,
   PAGINATED_MOMENTS_QUERY,
-} from '../queries/PaginatedMoments';
-import { CreateMedia } from './dtos/create/CreateMedia';
-import { CreateMomentInput } from './dtos/create/CreateInput';
-import { CreateSteps } from './dtos/create/CreateSteps';
-import { FetchMomentsInput } from './dtos/fetch/FetchMomentsInput';
-import { MomentsSortFields } from './dtos/fetch/MomentsSortFields';
-import { CreateAndUploadMomentInput } from './dtos/create/CreateAndUploadInput';
-import { CompassProvider, PoapMomentsApi } from '../../providers';
+} from '../queries/PaginatedMoments.js';
+import { CreateMedia } from './dtos/create/CreateMedia.js';
+import { CreateMomentInput } from './dtos/create/CreateInput.js';
+import { CreateSteps } from './dtos/create/CreateSteps.js';
+import { FetchMomentsInput } from './dtos/fetch/FetchMomentsInput.js';
+import { MomentsSortFields } from './dtos/fetch/MomentsSortFields.js';
+import { CreateAndUploadMomentInput } from './dtos/create/CreateAndUploadInput.js';
+import { CompassProvider, PoapMomentsApi } from '../../providers/index.js';
 import {
   createBetweenFilter,
   createEqFilter,
@@ -19,7 +19,7 @@ import {
   createOrderBy,
   nextCursor,
   PaginatedResult,
-} from '../../utils';
+} from '../../utils/index.js';
 
 export class MomentsClient {
   constructor(

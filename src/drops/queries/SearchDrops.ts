@@ -1,5 +1,5 @@
-import { Order, PaginatedVariables } from '../../utils';
-import { DropResponse } from '../types/DropResponse';
+import { Order, PaginatedVariables } from '../../utils/index.js';
+import { DropResponse } from '../types/DropResponse.js';
 
 export const SEARCH_DROPS_QUERY = `
   query SearchDrops(

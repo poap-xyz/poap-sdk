@@ -1,6 +1,6 @@
-import { RetryableTask } from './RetryableTask';
-import { PoapMintStatus } from '../types/PoapMintStatus';
-import { TokensApiProvider } from '../../providers';
+import { RetryableTask } from './RetryableTask.js';
+import { PoapMintStatus } from '../types/PoapMintStatus.js';
+import { TokensApiProvider } from '../../providers/index.js';
 
 /**
  * @class PoapIndexed

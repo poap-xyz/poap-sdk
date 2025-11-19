@@ -1,2 +1,2 @@
-export * from './TokensApiProvider';
-export * from './types';
+export * from './TokensApiProvider.js';
+export * from './types/index.js';

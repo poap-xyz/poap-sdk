@@ -1,5 +1,5 @@
-import { CreateSteps } from './CreateSteps';
-import { CreateMedia } from './CreateMedia';
+import { CreateSteps } from './CreateSteps.js';
+import { CreateMedia } from './CreateMedia.js';
 
 /** Interface representing the input needed to create a moment and upload media in one action. */
 export interface CreateAndUploadMomentInput {

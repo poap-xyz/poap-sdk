@@ -1,5 +1,5 @@
-import { CreateMomentResponse } from '../../providers';
-import { MomentResponse } from '../queries/PaginatedMoments';
+import { CreateMomentResponse } from '../../providers/index.js';
+import { MomentResponse } from '../queries/PaginatedMoments.js';
 
 /**
  * Represents a moment.

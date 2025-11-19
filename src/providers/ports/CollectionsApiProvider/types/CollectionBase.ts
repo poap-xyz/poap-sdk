@@ -1,4 +1,4 @@
-import { CreateOrUpdateSection } from './CreateOrUpdateSection';
+import { CreateOrUpdateSection } from './CreateOrUpdateSection.js';
 
 /**
  * Base interface for collection properties shared across creation and updating processes.

@@ -1,4 +1,4 @@
-import { CollectionResponse } from '../types/CollectionResponse';
+import { CollectionResponse } from '../types/CollectionResponse.js';
 
 export const COLLECTION_QUERY = /* GraphQL */ `
   query Collection($id: bigint!) {

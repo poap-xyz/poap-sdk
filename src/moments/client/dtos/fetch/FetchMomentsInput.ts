@@ -1,4 +1,4 @@
-import { Order, PaginationInput } from '../../../../utils';
+import { Order, PaginationInput } from '../../../../utils/index.js';
 
 /**
  * Interface representing the input needed to fetch moments.

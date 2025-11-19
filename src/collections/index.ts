@@ -1,2 +1,2 @@
-export { CollectionsClient } from './CollectionsClient';
-export { Collection } from './domain/Collection';
+export { CollectionsClient } from './CollectionsClient.js';
+export { Collection } from './domain/Collection.js';

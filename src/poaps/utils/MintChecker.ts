@@ -2,9 +2,9 @@ import {
   TokensApiProvider,
   Transaction,
   TransactionStatus,
-} from '../../providers';
-import { FinishedWithError } from '../errors/FinishedWithError';
-import { RetryableTask } from './RetryableTask';
+} from '../../providers/index.js';
+import { FinishedWithError } from '../errors/FinishedWithError.js';
+import { RetryableTask } from './RetryableTask.js';
 
 /**
  * A utility class designed to continually check the status of a POAP token mint.

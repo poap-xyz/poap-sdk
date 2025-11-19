@@ -1,5 +1,5 @@
-import { Order, PaginationInput } from '../../utils';
-import { DropsSortFields } from './DropsSortFields';
+import { Order, PaginationInput } from '../../utils/index.js';
+import { DropsSortFields } from './DropsSortFields.js';
 
 export type ListDropsInput = PaginationInput & {
   sortField?: DropsSortFields;

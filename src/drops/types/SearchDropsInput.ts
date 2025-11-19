@@ -1,4 +1,4 @@
-import { PaginationInput } from '../../utils';
+import { PaginationInput } from '../../utils/index.js';
 
 export interface SearchDropsInput extends PaginationInput {
   search: string;

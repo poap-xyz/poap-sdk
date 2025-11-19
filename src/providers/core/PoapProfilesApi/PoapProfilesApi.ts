@@ -1,7 +1,7 @@
 import chunk from 'lodash.chunk';
-import { BulkProfilesResponse } from '../../ports/ProfilesApiProvider/types/BulkProfilesResponse';
-import { ProfileResponse } from '../../ports/ProfilesApiProvider/types/ProfileResponse';
-import { ProfilesApiProvider } from '../../ports/ProfilesApiProvider/';
+import { BulkProfilesResponse } from '../../ports/ProfilesApiProvider/types/BulkProfilesResponse.js';
+import { ProfileResponse } from '../../ports/ProfilesApiProvider/types/ProfileResponse.js';
+import { ProfilesApiProvider } from '../../ports/ProfilesApiProvider/index.js';
 
 const DEFAULT_PROFILES_API_URL = 'https://profiles.poap.tech';
 const REQUEST_PARAM_COUNT_LIMIT = 50;
