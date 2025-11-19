@@ -43,7 +43,7 @@ const configs = [
       }),
       typescript({
         tsconfig: path.resolve(process.cwd(), 'tsconfig.json'),
-        useTsconfigDeclarationDir: true,
+        useTsconfigDeclarationDir: false,
       }),
       terser({ sourceMap: true }),
     ],
