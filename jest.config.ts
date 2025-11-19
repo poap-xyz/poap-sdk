@@ -10,14 +10,23 @@ export default {
   coverageDirectory: 'coverage',
   // Indicates which provider should be used to instrument code for coverage
   coverageProvider: 'v8',
+  preset: 'ts-jest/presets/default-esm',
+  extensionsToTreatAsEsm: ['.ts'],
   roots: ['<rootDir>'],
   transform: {
-    '^.+\\.ts?$': 'ts-jest',
+    '^.+\.ts?$': ['ts-jest', {
+      useESM: true,
+      tsconfig: {
+        module: 'nodenext',
+        moduleResolution: 'nodenext'
+      }
+    }],
   },
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.ts?$',
   moduleFileExtensions: ['ts', 'js', 'json', 'node'],
   clearMocks: true,
   moduleNameMapper: {
     '^@poap-xyz/poap-sdk$': '<rootDir>/src',
+    '^(\\.{1,2}/.*)\\.js$': '$1',
   },
 };
