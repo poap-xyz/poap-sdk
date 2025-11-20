@@ -1,2 +1,2 @@
-export * from './PoapMintFinishedWithError';
-export * from './PoapMintPendingError';
+export * from './PoapMintFinishedWithError.js';
+export * from './PoapMintPendingError.js';

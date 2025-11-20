@@ -1,4 +1,4 @@
-export { PoapsClient } from './PoapsClient';
-export * from './types';
-export * from './domain';
-export * from './errors';
+export { PoapsClient } from './PoapsClient.js';
+export * from './types/index.js';
+export * from './domain/index.js';
+export * from './errors/index.js';

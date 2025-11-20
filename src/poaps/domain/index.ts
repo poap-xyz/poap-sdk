@@ -1,2 +1,2 @@
-export * from './POAP';
-export * from './POAPReservation';
+export * from './POAP.js';
+export * from './POAPReservation.js';

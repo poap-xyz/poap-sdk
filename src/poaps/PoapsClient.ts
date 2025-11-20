@@ -7,21 +7,21 @@ import {
   POAPS_COUNT_QUERY,
   PoapsCountResponse,
   PoapsCountVariables,
-} from './queries/PaginatedPoaps';
+} from './queries/PaginatedPoaps.js';
 import {
   FetchPoapsInput,
   FetchPoapsPaginatedInput,
-} from './types/FetchPoapsInput';
-import { PoapsSortFields } from './types/PoapsSortFields';
-import { PoapMintStatus } from './types/PoapMintStatus';
-import { WalletMintInput } from './types/WalletMintInput';
-import { EmailReservationInput } from './types/EmailReservationInput';
-import { PoapMintTransaction } from './types/PoapMintTransaction';
-import { PoapsClientOptions } from './types/PoapsClientOptions';
-import { MintChecker } from './utils/MintChecker';
-import { PoapIndexed } from './utils/PoapIndexed';
-import { PoapMintFinishedWithError } from './errors/PoapMintFinishedWithError';
-import { CompassProvider, TokensApiProvider } from '../providers';
+} from './types/FetchPoapsInput.js';
+import { PoapsSortFields } from './types/PoapsSortFields.js';
+import { PoapMintStatus } from './types/PoapMintStatus.js';
+import { WalletMintInput } from './types/WalletMintInput.js';
+import { EmailReservationInput } from './types/EmailReservationInput.js';
+import { PoapMintTransaction } from './types/PoapMintTransaction.js';
+import { PoapsClientOptions } from './types/PoapsClientOptions.js';
+import { MintChecker } from './utils/MintChecker.js';
+import { PoapIndexed } from './utils/PoapIndexed.js';
+import { PoapMintFinishedWithError } from './errors/PoapMintFinishedWithError.js';
+import { CompassProvider, TokensApiProvider } from '../providers/index.js';
 import {
   createAddressFilter,
   createBetweenFilter,
@@ -33,7 +33,7 @@ import {
   nextCursor,
   Order,
   PaginatedResult,
-} from '../utils';
+} from '../utils/index.js';
 
 /**
  * Represents a client for interacting with POAPs.

@@ -9,12 +9,12 @@ import {
 import {
   Transaction,
   TransactionStatus,
-} from '../../ports/TokensApiProvider/types/Transaction';
-import { AddressAlreadyMintDropError } from '../../ports/TokensApiProvider/errors/AddressAlreadyMintDropError';
-import { MintCodeAlreadyUsedError } from '../../ports/TokensApiProvider/errors/MintCodeAlreadyUsedError';
-import { MintCodeExpiredError } from '../../ports/TokensApiProvider/errors/MintCodeExpiredError';
-import { MintCodeNotFoundError } from '../../ports/TokensApiProvider/errors/MintCodeNotFoundError';
-import { InvalidAddressError } from '../../ports/TokensApiProvider/errors/InvalidAddressError';
+} from '../../ports/TokensApiProvider/types/Transaction.js';
+import { AddressAlreadyMintDropError } from '../../ports/TokensApiProvider/errors/AddressAlreadyMintDropError.js';
+import { MintCodeAlreadyUsedError } from '../../ports/TokensApiProvider/errors/MintCodeAlreadyUsedError.js';
+import { MintCodeExpiredError } from '../../ports/TokensApiProvider/errors/MintCodeExpiredError.js';
+import { MintCodeNotFoundError } from '../../ports/TokensApiProvider/errors/MintCodeNotFoundError.js';
+import { InvalidAddressError } from '../../ports/TokensApiProvider/errors/InvalidAddressError.js';
 
 const DEFAULT_POAPS_BASE_URL = 'https://api.poap.tech';
 
