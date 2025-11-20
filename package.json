@@ -30,15 +30,15 @@
   "homepage": "https://github.com/poap-xyz/poap.js#readme",
   "scripts": {
     "build:js": "rollup -c --bundleConfigAsCjs",
-    "build:types": "tsc -p tsconfig.types.json",
+    "build:types": "tsc -p tsconfig.json",
     "build": "pnpm build:js && pnpm build:types",
     "lint": "eslint './src/**/*.ts' --fix",
     "format": "prettier --write './src/**/*.ts'",
     "publish.sdk": "./scripts/publish-sdk",
     "publish.beta": "./scripts/publish-beta",
     "test": "jest",
-    "type-check:build": "npx tsc -p tsconfig.json --noEmit",
-    "type-check:types": "npx tsc -p tsconfig.types.json --noEmit",
+    "type-check:build": "npx tsc -p tsconfig.build.json --noEmit",
+    "type-check:types": "npx tsc -p tsconfig.json --noEmit",
     "type-check": "pnpm type-check:build && pnpm type-check:types"
   },
   "dependencies": {
