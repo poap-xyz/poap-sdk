@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.shared.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node",
+    "emitDeclarationOnly": false,
+    "outDir": "./dist",
+    "noEmit": true
+  },
+}

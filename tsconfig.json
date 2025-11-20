@@ -1,33 +1,10 @@
 {
+  "extends": "./tsconfig.shared.json",
   "compilerOptions": {
-    "declaration": true,
-    "declarationMap": true,
-    "declarationDir": "./dist/types",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "skipLibCheck": true,
-    "strictNullChecks": true,
-    "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    "sourceMap": true,
-    "baseUrl": ".",
-    "importHelpers": true,
-    "strict": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "composite": true,
-    "target": "es2018",
-    "lib": ["es2018", "dom", "esnext"],
-    "module": "esnext",
-    "moduleResolution": "node",
-    "noEmit": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
-    "downlevelIteration": true,
-    "noImplicitAny": false
-  },
-  "exclude": ["node_modules", "dist"],
-  "include": ["./src/**/*.ts"]
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "emitDeclarationOnly": true,
+    "outDir": "./dist/types",
+    "noEmit": false
+  }
 }
