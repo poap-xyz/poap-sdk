@@ -6,10 +6,10 @@ if [ -z "$1" ]; then
 fi
 
 pkg_name="@poap-xyz/poap-sdk"
-pkg_version="$1"
+pkg_version=$(echo "$1" | cut -d '@' -f2)
 
-if [[ ! $pkg_version =~ ^v[0-9]+\.[0-9]+\.[0-9]+-beta-[0-9]+$ ]]; then
-  echo "Error: Please provide a package BETA version ($pkg_version given)" 1>&2
+if [[ "$pkg_version" != *beta* ]]; then
+  echo "Error: Please provide a package BETA version" 1>&2
   exit 1
 fi
 
