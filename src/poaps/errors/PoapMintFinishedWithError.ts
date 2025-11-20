@@ -1,0 +1,8 @@
+export class PoapMintFinishedWithError extends Error {
+  constructor(
+    public readonly reason: string,
+    public readonly mintCode: string,
+  ) {
+    super(`Mint code '${mintCode}' finished with error: ${reason}`);
+  }
+}

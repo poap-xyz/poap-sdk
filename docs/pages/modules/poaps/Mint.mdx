@@ -24,13 +24,7 @@ await client.waitMintStatus('your_mint_code');
 const { poapId } = await client.waitPoapIndexed('your_mint_code');
 
 // Retrieve the minted POAP.
-const poap: POAP = (
-  await client.fetch({
-    offset: 0,
-    limit: 1,
-    ids: [poapId],
-  })
-).items[0];
+const poap: POAP = await this.client.get(poapId);
 ```
 
 ## Sync
