@@ -5,6 +5,8 @@
     "moduleResolution": "NodeNext",
     "emitDeclarationOnly": true,
     "outDir": "./dist/types",
-    "noEmit": false
+    "declaration": true,
+    "declarationMap": true,
+    "declarationDir": "./dist/types",
   }
 }

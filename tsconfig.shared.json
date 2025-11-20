@@ -1,8 +1,5 @@
 {
   "compilerOptions": {
-    "declaration": true,
-    "declarationMap": true,
-    "declarationDir": "./dist/types",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
@@ -15,7 +12,7 @@
     "importHelpers": true,
     "strict": true,
     "rootDir": "./src",
-    "composite": true,
+    "composite": false,
     "target": "es2018",
     "lib": ["es2018", "dom", "esnext"],
     "esModuleInterop": true,
