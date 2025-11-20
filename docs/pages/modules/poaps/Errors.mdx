@@ -12,8 +12,10 @@ Below example demonstrates how one might use the `PoapsClient` class along with 
 import {
   POAP,
   FinishedWithError,
-  CodeAlreadyMintedError,
-  CodeExpiredError,
+  MintCodeNotFoundError,
+  MintCodeAlreadyUsedError,
+  MintCodeExpiredError,
+  AddressAlreadyMintDropError,
 } from '@poap-xyz/poap-sdk';
 
 try {
@@ -26,12 +28,18 @@ try {
   if (error instanceof FinishedWithError) {
     console.error('Error concluding the mint process', error.message);
     // Action: Notify the user about the error and suggest retrying later.
-  } else if (error instanceof CodeAlreadyMintedError) {
+  } else if (error instanceof MintCodeNotFoundError) {
+    console.error('The mint code does not exists', error.message);
+    // Action: Notify the user that the mint code is non existant.
+  } else if (error instanceof MintCodeAlreadyUsedError) {
     console.error('This mint code has already been used', error.message);
     // Action: Notify the user that the mint code has already been used.
-  } else if (error instanceof CodeExpiredError) {
+  } else if (error instanceof MintCodeExpiredError) {
     console.error('This mint code has expired', error.message);
     // Action: Notify the user that the mint code has expired.
+  } else if (error instanceof AddressAlreadyMintDropError) {
+    console.error('This address already owns a POAP for the same drop');
+    // Action: Can lookup the POAP owned and show that one instead.
   } else {
     console.error('An unknown error occurred', error.message);
     // Action: Log the error and notify the user of a general error.

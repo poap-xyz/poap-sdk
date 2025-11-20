@@ -1,7 +1,7 @@
 import { Chain, Order, PaginationInput } from '../../utils/index.js';
 import { PoapsSortFields } from './PoapsSortFields.js';
 
-export interface BaseFetchPoapsInput {
+export interface FetchPoapsInput {
   /** Optional filter for the name of a POAP. */
   name?: string;
   /** Optional filter for the blockchain chain of a POAP. */
@@ -22,9 +22,17 @@ export interface BaseFetchPoapsInput {
   filterDeadAddress?: boolean;
 }
 
-export interface FetchPoapsInput extends BaseFetchPoapsInput, PaginationInput {
+export interface FetchPoapsPaginatedInput
+  extends FetchPoapsInput,
+    PaginationInput {
   /** Field by which to sort the results. */
   sortField?: PoapsSortFields;
   /** Direction in which to sort the results. */
   sortDir?: Order;
+  /** Include extra info about the token being minted. */
+  withMintingStats?: boolean;
+  /** Include stats about the token collector. */
+  withCollectorStats?: boolean;
+  /** Include the POAP drop stats. */
+  withDropStats?: boolean;
 }

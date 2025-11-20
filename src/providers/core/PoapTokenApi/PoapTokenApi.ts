@@ -9,16 +9,17 @@ import {
 import {
   Transaction,
   TransactionStatus,
-} from '../../ports/TokensApiProvider/types/Transaction.js';
+} from '../../ports/TokensApiProvider/types/Transaction';
+import { AddressAlreadyMintDropError } from '../../ports/TokensApiProvider/errors/AddressAlreadyMintDropError';
+import { MintCodeAlreadyUsedError } from '../../ports/TokensApiProvider/errors/MintCodeAlreadyUsedError';
+import { MintCodeExpiredError } from '../../ports/TokensApiProvider/errors/MintCodeExpiredError';
+import { MintCodeNotFoundError } from '../../ports/TokensApiProvider/errors/MintCodeNotFoundError';
+import { InvalidAddressError } from '../../ports/TokensApiProvider/errors/InvalidAddressError';
 
-const DEFAULT_DROP_BASE_URL = 'https://api.poap.tech';
+const DEFAULT_POAPS_BASE_URL = 'https://api.poap.tech';
 
 /**
  * Represents the main interface to interact with the POAP Drop API.
- *
- * @export
- * @class PoapTokenApi
- * @implements {TokensApiProvider}
  */
 export class PoapTokenApi implements TokensApiProvider {
   private apiKey: string;
@@ -28,15 +29,14 @@ export class PoapTokenApi implements TokensApiProvider {
   /**
    * Constructs a new instance of the `PoapTokenApi` class.
    *
-   * @constructor
-   * @param {PoapTokenApiOptions} options - Configuration options for the API.
-   * @param {string} options.apiKey - The API key for authenticating requests.
-   * @param {string} [options.baseUrl=DEFAULT_DROP_BASE_URL] - The base URL for the API.
-   * @param {AuthenticationProvider} [options.authenticationProvider] - Optional provider for JWT authentication.
+   * @param options - Configuration options for the API.
+   * @param options.apiKey - The API key for authenticating requests.
+   * @param options.baseUrl - The base URL for the API.
+   * @param options.authenticationProvider - Optional provider for JWT authentication.
    */
   constructor({
     apiKey,
-    baseUrl = DEFAULT_DROP_BASE_URL,
+    baseUrl = DEFAULT_POAPS_BASE_URL,
     authenticationProvider,
   }: PoapTokenApiOptions) {
     this.apiKey = apiKey;
@@ -44,18 +44,39 @@ export class PoapTokenApi implements TokensApiProvider {
     this.authenticationProvider = authenticationProvider;
   }
 
+  async checkMintCode(qrHash: string): Promise<void> {
+    const getMintCodeResponse = await this.getMintCode(qrHash);
+
+    if (getMintCodeResponse.claimed) {
+      throw new MintCodeAlreadyUsedError(qrHash);
+    }
+
+    if (!getMintCodeResponse.is_active) {
+      throw new MintCodeExpiredError(qrHash);
+    }
+  }
+
   /**
    * Retrieves the mint code details.
    *
-   * @param {string} code - The unique Mint Code for the mint.
-   * @returns {Promise<GetMintCodeResponse>} Details of the mint code.
+   * @param qrHash - The unique Mint Code for the mint.
+   * @returns Details of the mint code.
    */
-  async getMintCode(code: string): Promise<GetMintCodeResponse> {
+  async getMintCode(qrHash: string): Promise<GetMintCodeResponse> {
     return await this.secureFetch<GetMintCodeResponse>(
-      `${this.baseUrl}/actions/claim-qr?qr_hash=${code}`,
+      `${this.baseUrl}/actions/claim-qr?qr_hash=${qrHash}`,
       {
         method: 'GET',
         headers: {},
+      },
+      async (response: Response): Promise<never> => {
+        if (response.status === 400 || response.status === 404) {
+          throw new MintCodeNotFoundError(qrHash);
+        }
+
+        throw new Error(
+          `Unexpected response ${response.status} while scanning`,
+        );
       },
     );
   }
@@ -63,8 +84,8 @@ export class PoapTokenApi implements TokensApiProvider {
   /**
    * Posts a new mint code to the API.
    *
-   * @param {MintCodeInput} input - The input data for the mint code.
-   * @returns {Promise<PostMintCodeResponse>} Response from the mint code creation.
+   * @param input - The input data for the mint code.
+   * @returns Response from the mint code creation.
    */
   async postMintCode(input: MintCodeInput): Promise<PostMintCodeResponse> {
     return await this.secureFetch<PostMintCodeResponse>(
@@ -76,6 +97,37 @@ export class PoapTokenApi implements TokensApiProvider {
           'Content-Type': 'application/json',
         },
       },
+      // eslint-disable-next-line max-statements, complexity
+      async (response: Response): Promise<never> => {
+        const message = await this.getResponseMessage(
+          response,
+          'Unexpected error',
+        );
+
+        if (response.status === 400) {
+          if (message.includes('Address is not valid')) {
+            throw new InvalidAddressError(input.address);
+          }
+
+          if (message.includes('QR Claim expired')) {
+            throw new MintCodeExpiredError(input.qr_hash);
+          }
+
+          if (message.includes('QR Claim already claimed')) {
+            throw new MintCodeAlreadyUsedError(input.qr_hash);
+          }
+
+          if (message.includes('You already minted a POAP for this drop.')) {
+            throw new AddressAlreadyMintDropError(input.address);
+          }
+        }
+
+        if (response.status === 404) {
+          throw new MintCodeNotFoundError(input.qr_hash);
+        }
+
+        throw new Error(`Unexpected response ${response.status} while minting`);
+      },
     );
   }
 
@@ -84,8 +136,8 @@ export class PoapTokenApi implements TokensApiProvider {
    * The Transaction could change in case of a bump.
    * It returns null if the mint has no transaction associated.
    *
-   * @param {string} qrHash - The qrHash of the mint.
-   * @returns {Promise<Transaction> | null} The Transaction associated with the mint. Null if no transaction is found.
+   * @param qrHash - The qrHash of the mint.
+   * @returns The Transaction associated with the mint. Null if no transaction is found.
    */
   async getMintTransaction(qrHash: string): Promise<Transaction | null> {
     const transactions = await this.secureFetch<{
@@ -111,13 +163,16 @@ export class PoapTokenApi implements TokensApiProvider {
   /**
    * Sends a secure HTTP request to the POAP API with proper headers.
    *
-   * @private
    * @template R - Type of the expected response data.
-   * @param {string} url - The complete URL for the HTTP request.
-   * @param {RequestInit} options - Configuration options for the HTTP request.
-   * @returns {Promise<R>} A promise that resolves with the parsed API response.
+   * @param url - The complete URL for the HTTP request.
+   * @param options - Configuration options for the HTTP request.
+   * @returns A promise that resolves with the parsed API response.
    */
-  private async secureFetch<R>(url: string, options: RequestInit): Promise<R> {
+  private async secureFetch<R>(
+    url: string,
+    options: RequestInit,
+    handleError?: (response: Response) => Promise<never>,
+  ): Promise<R> {
     const headersWithApiKey = {
       ...options.headers,
       'x-api-key': this.apiKey,
@@ -132,15 +187,35 @@ export class PoapTokenApi implements TokensApiProvider {
       signal: AbortSignal.timeout(10000),
     });
 
+    if (!response.ok) {
+      await (handleError ?? this.handleError)(response);
+    }
+
     return await response.json();
+  }
+
+  private async getResponseMessage(
+    response: Response,
+    defaultMessage: string,
+  ): Promise<string> {
+    try {
+      const body = await response.json();
+      return body?.message || defaultMessage;
+    } catch {
+      return defaultMessage;
+    }
+  }
+
+  private async handleError(response: Response): Promise<never> {
+    const message = await this.getResponseMessage(response, 'Unexpected error');
+    throw new Error(`Failed to fetch ${response.url} | ${message}`);
   }
 
   /**
    * Retrieves the authorization token for making authenticated requests.
    *
-   * @private
    * @throws {MissingAuthenticationProviderError} If no authentication provider is provided.
-   * @returns {Promise<string>} The bearer token for authentication.
+   * @returns The bearer token for authentication.
    */
   private async getAuthorizationToken(): Promise<string> {
     if (!this.authenticationProvider) {
@@ -158,11 +233,9 @@ export class PoapTokenApi implements TokensApiProvider {
 /**
  * Represents the configuration options required when instantiating the `PoapTokenApi` class.
  *
- * @export
- * @interface PoapTokenApiOptions
- * @property {string} apiKey - The API key to use for authenticating requests.
- * @property {string} [baseUrl] - The base URL for the API. Defaults to 'https://api.poap.tech'.
- * @property {AuthenticationProvider} [authenticationProvider] - Optional provider for JWT authentication.
+ * @property apiKey - The API key to use for authenticating requests.
+ * @property baseUrl - The base URL for the API. Defaults to 'https://api.poap.tech'.
+ * @property authenticationProvider - Optional provider for JWT authentication.
  */
 export interface PoapTokenApiOptions {
   apiKey: string;
