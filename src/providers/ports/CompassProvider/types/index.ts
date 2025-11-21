@@ -1,2 +1,2 @@
-export * from './CompassError';
-export * from './CompassErrors';
+export * from './CompassError.js';
+export * from './CompassErrors.js';

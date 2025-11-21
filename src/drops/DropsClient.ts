@@ -1,22 +1,22 @@
-import { isFilterValueDefined } from '../utils/validation/isFilterValueDefined';
-import { Drop } from './domain/Drop';
+import { isFilterValueDefined } from '../utils/validation/isFilterValueDefined.js';
+import { Drop } from './domain/Drop.js';
 import {
   PAGINATED_DROPS_QUERY,
   PaginatedDropsResponse,
   PaginatedDropsVariables,
-} from './queries/PaginatedDrop';
+} from './queries/PaginatedDrop.js';
 import {
   SEARCH_DROPS_QUERY,
   SearchDropsResponse,
   SearchDropsVariables,
-} from './queries/SearchDrops';
-import { DropResponse } from './types/DropResponse';
-import { DropsSortFields } from './types/DropsSortFields';
-import { CreateDropsInput } from './types/CreateDropsInput';
-import { UpdateDropsInput } from './types/UpdateDropsInput';
-import { ListDropsInput } from './types/ListDropsInput';
-import { SearchDropsInput } from './types/SearchDropsInput';
-import { CompassProvider, DropApiProvider } from '../providers';
+} from './queries/SearchDrops.js';
+import { DropResponse } from './types/DropResponse.js';
+import { DropsSortFields } from './types/DropsSortFields.js';
+import { CreateDropsInput } from './types/CreateDropsInput.js';
+import { UpdateDropsInput } from './types/UpdateDropsInput.js';
+import { ListDropsInput } from './types/ListDropsInput.js';
+import { SearchDropsInput } from './types/SearchDropsInput.js';
+import { CompassProvider, DropApiProvider } from '../providers/index.js';
 import {
   createBetweenFilter,
   createEqFilter,
@@ -27,7 +27,7 @@ import {
   Order,
   PaginatedResult,
   toPOAPDate,
-} from '../utils';
+} from '../utils/index.js';
 
 /**
  * Represents a client for working with POAP drops.

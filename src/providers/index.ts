@@ -1,2 +1,2 @@
-export * from './ports';
-export * from './core';
+export * from './ports/index.js';
+export * from './core/index.js';

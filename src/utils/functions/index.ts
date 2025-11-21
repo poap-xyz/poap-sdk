@@ -1,1 +1,1 @@
-export * from './nextCursor';
+export * from './nextCursor.js';

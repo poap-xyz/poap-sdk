@@ -1,4 +1,4 @@
-import { CreateSteps } from './CreateSteps';
+import { CreateSteps } from './CreateSteps.js';
 
 /** Interface representing the input needed to create a moment. */
 export interface CreateMomentInput {

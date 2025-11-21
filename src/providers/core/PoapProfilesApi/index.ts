@@ -1,1 +1,1 @@
-export * from './PoapProfilesApi';
+export * from './PoapProfilesApi.js';

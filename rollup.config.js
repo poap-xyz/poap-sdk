@@ -42,8 +42,8 @@ const configs = [
         browser: false,
       }),
       typescript({
-        tsconfig: path.resolve(process.cwd(), 'tsconfig.json'),
-        useTsconfigDeclarationDir: true,
+        tsconfig: path.resolve(process.cwd(), 'tsconfig.build.json'),
+        useTsconfigDeclarationDir: false,
       }),
       terser({ sourceMap: true }),
     ],
@@ -71,7 +71,7 @@ if (enableBrowser) {
         browser: true,
       }),
       typescript({
-        tsconfig: path.resolve(process.cwd(), 'tsconfig.json'),
+        tsconfig: path.resolve(process.cwd(), 'tsconfig.build.json'),
         useTsconfigDeclarationDir: true,
       }),
       terser({ sourceMap: true }),

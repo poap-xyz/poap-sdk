@@ -1,9 +1,9 @@
-import { InvalidMediaError } from '../../ports/MomentsApiProvider/errors/InvalidMediaError';
-import { CreateMomentResponse } from '../../ports/MomentsApiProvider/types/CreateMomentResponse';
-import { CreateMomentInput } from '../../ports/MomentsApiProvider/types/CreateMomentInput';
-import { MomentsApiProvider } from '../../ports/MomentsApiProvider/MomentsApiProvider';
-import { AuthenticationProvider } from '../../ports/AuthenticationProvider/AuthenticationProvider';
-import { MediaStatus } from '../../ports/MomentsApiProvider/types/MediaStatus';
+import { InvalidMediaError } from '../../ports/MomentsApiProvider/errors/InvalidMediaError.js';
+import { CreateMomentResponse } from '../../ports/MomentsApiProvider/types/CreateMomentResponse.js';
+import { CreateMomentInput } from '../../ports/MomentsApiProvider/types/CreateMomentInput.js';
+import { MomentsApiProvider } from '../../ports/MomentsApiProvider/MomentsApiProvider.js';
+import { AuthenticationProvider } from '../../ports/AuthenticationProvider/AuthenticationProvider.js';
+import { MediaStatus } from '../../ports/MomentsApiProvider/types/MediaStatus.js';
 
 const DEFAULT_MOMENTS_BASE_URL = 'https://moments.poap.tech';
 

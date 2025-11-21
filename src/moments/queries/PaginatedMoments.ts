@@ -2,7 +2,7 @@ import {
   FilterVariables,
   OrderByVariables,
   PaginatedVariables,
-} from '../../utils';
+} from '../../utils/index.js';
 
 export const PAGINATED_MOMENTS_QUERY = /* GraphQL */ `
   query PaginatedMoments(

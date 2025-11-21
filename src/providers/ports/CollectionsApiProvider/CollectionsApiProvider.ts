@@ -1,6 +1,6 @@
-import { UpdateCollectionInput } from './types/UpdateCollectionInput';
-import { CreateCollectionInput } from './types/CreateCollectionInput';
-import { CollectionResponse } from './types/CollectionResponse';
+import { UpdateCollectionInput } from './types/UpdateCollectionInput.js';
+import { CreateCollectionInput } from './types/CreateCollectionInput.js';
+import { CollectionResponse } from './types/CollectionResponse.js';
 
 export interface CollectionsApiProvider {
   /**

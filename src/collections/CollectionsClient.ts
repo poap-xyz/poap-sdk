@@ -1,36 +1,36 @@
-import { CompassProvider } from '../providers';
+import { CompassProvider } from '../providers/index.js';
 import {
   createInFilter,
   createOrderBy,
   nextCursor,
   Order,
   PaginatedResult,
-} from '../utils';
+} from '../utils/index.js';
 
-import { Collection } from './domain/Collection';
-import { CollectionResponse } from './types/CollectionResponse';
-import { ListCollectionsInput } from './types/ListCollectionsInput';
+import { Collection } from './domain/Collection.js';
+import { CollectionResponse } from './types/CollectionResponse.js';
+import { ListCollectionsInput } from './types/ListCollectionsInput.js';
 import {
   PAGINATED_COLLECTIONS_QUERY,
   PaginatedCollectionsResponse,
   PaginatedCollectionsVariables,
-} from './queries/PaginatedCollections';
+} from './queries/PaginatedCollections.js';
 import {
   SEARCH_COLLECTIONS_QUERY,
   SearchCollectionsResponse,
   SearchCollectionsVariables,
-} from './queries/SearchCollections';
-import { SearchCollectionsInput } from './types/SearchCollectionsInput';
+} from './queries/SearchCollections.js';
+import { SearchCollectionsInput } from './types/SearchCollectionsInput.js';
 import {
   COLLECTION_DROP_IDS_QUERY,
   CollectionDropIdsResponse,
   CollectionDropIdsVariables,
-} from './queries/CollectionDropIds';
+} from './queries/CollectionDropIds.js';
 import {
   COLLECTION_QUERY,
   CollectionQueryResponse,
   CollectionQueryVariables,
-} from './queries/Collection';
+} from './queries/Collection.js';
 
 export class CollectionsClient {
   constructor(private compassProvider: CompassProvider) {}

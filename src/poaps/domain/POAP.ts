@@ -1,4 +1,4 @@
-import { PoapsResponse } from '../queries/PaginatedPoaps';
+import { PoapsResponse } from '../queries/PaginatedPoaps.js';
 
 export interface POAPMintingStats {
   mintOrder: number;

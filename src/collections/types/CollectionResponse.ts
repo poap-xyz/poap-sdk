@@ -1,4 +1,4 @@
-import { CollectionType } from '../domain/CollectionType';
+import { CollectionType } from '../domain/CollectionType.js';
 
 export interface CollectionResponse {
   id: number;

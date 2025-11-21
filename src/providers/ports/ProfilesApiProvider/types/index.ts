@@ -1,2 +1,2 @@
-export * from './ProfileResponse';
-export * from './ProfilesBulkError';
+export * from './ProfileResponse.js';
+export * from './ProfilesBulkError.js';

@@ -1,1 +1,1 @@
-export * from './toPOAPDate';
+export * from './toPOAPDate.js';

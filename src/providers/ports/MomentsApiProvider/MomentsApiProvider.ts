@@ -1,6 +1,6 @@
-import { CreateMomentInput } from './types/CreateMomentInput';
-import { CreateMomentResponse } from './types/CreateMomentResponse';
-import { MediaStatus } from './types/MediaStatus';
+import { CreateMomentInput } from './types/CreateMomentInput.js';
+import { CreateMomentResponse } from './types/CreateMomentResponse.js';
+import { MediaStatus } from './types/MediaStatus.js';
 
 /**
  * Provides methods for interacting with a moments API.

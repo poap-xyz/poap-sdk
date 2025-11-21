@@ -1,6 +1,6 @@
 {
   "name": "@poap-xyz/poap-sdk",
-  "version": "0.20.0",
+  "version": "0.21.0",
   "description": "SDK for everything POAP",
   "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.mjs",
@@ -29,12 +29,17 @@
   },
   "homepage": "https://github.com/poap-xyz/poap.js#readme",
   "scripts": {
-    "build": "rollup -c --bundleConfigAsCjs",
+    "build:js": "rollup -c --bundleConfigAsCjs",
+    "build:types": "tsc -p tsconfig.json",
+    "build": "pnpm build:js && pnpm build:types",
     "lint": "eslint './src/**/*.ts' --fix",
     "format": "prettier --write './src/**/*.ts'",
     "publish.sdk": "./scripts/publish-sdk",
     "publish.beta": "./scripts/publish-beta",
-    "test": "jest"
+    "test": "jest",
+    "type-check:build": "npx tsc -p tsconfig.build.json --noEmit",
+    "type-check:types": "npx tsc -p tsconfig.json --noEmit",
+    "type-check": "pnpm type-check:build && pnpm type-check:types"
   },
   "dependencies": {
     "lodash.chunk": "^4.2.0",

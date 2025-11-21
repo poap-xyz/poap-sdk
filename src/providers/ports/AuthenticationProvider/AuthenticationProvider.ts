@@ -1,4 +1,4 @@
-import { AuthToken } from './types/AuthToken';
+import { AuthToken } from './types/AuthToken.js';
 
 /**
  * An authentication providers implements a way to connect to an API.

@@ -1,7 +1,7 @@
-import { ProfilesApiProvider } from '../providers';
-import { Profile } from './domain/Profile';
-import { FetchBulkProfilesResponse } from './dtos/FetchBulkProfilesResponse';
-import { ProfilesMapper } from './utils/ProfilesMapper';
+import { ProfilesApiProvider } from '../providers/index.js';
+import { Profile } from './domain/Profile.js';
+import { FetchBulkProfilesResponse } from './dtos/FetchBulkProfilesResponse.js';
+import { ProfilesMapper } from './utils/ProfilesMapper.js';
 
 export class ProfilesClient {
   /**

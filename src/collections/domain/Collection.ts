@@ -1,5 +1,5 @@
-import { CollectionResponse } from '../types/CollectionResponse';
-import { CollectionType } from './CollectionType';
+import { CollectionResponse } from '../types/CollectionResponse.js';
+import { CollectionType } from './CollectionType.js';
 
 export class Collection {
   private static COLLECTIONS_URL_PREFIX = 'https://collections.poap.xyz';

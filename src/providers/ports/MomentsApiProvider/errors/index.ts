@@ -1,1 +1,1 @@
-export * from './InvalidMediaError';
+export * from './InvalidMediaError.js';

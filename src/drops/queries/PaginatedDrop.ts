@@ -2,8 +2,8 @@ import {
   FilterVariables,
   OrderByVariables,
   PaginatedVariables,
-} from '../../utils';
-import { DropResponse } from '../types/DropResponse';
+} from '../../utils/index.js';
+import { DropResponse } from '../types/DropResponse.js';
 
 export const PAGINATED_DROPS_QUERY = `
   query PaginatedDrops(

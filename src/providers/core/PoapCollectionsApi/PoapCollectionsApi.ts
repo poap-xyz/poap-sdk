@@ -1,9 +1,9 @@
-import { UpdateCollectionInput } from '../../ports/CollectionsApiProvider/types/UpdateCollectionInput';
-import { CreateCollectionInput } from '../../ports/CollectionsApiProvider/types/CreateCollectionInput';
-import { CollectionsUnauthorizedError } from '../../ports/CollectionsApiProvider/errors/CollectionsUnauthorizedError';
-import { CollectionsBadRequestError } from '../../ports/CollectionsApiProvider/errors/CollectionsBadRequestError';
-import { CollectionResponse } from '../../ports/CollectionsApiProvider/types/CollectionResponse';
-import { CollectionsApiProvider } from '../../ports/CollectionsApiProvider/CollectionsApiProvider';
+import { UpdateCollectionInput } from '../../ports/CollectionsApiProvider/types/UpdateCollectionInput.js';
+import { CreateCollectionInput } from '../../ports/CollectionsApiProvider/types/CreateCollectionInput.js';
+import { CollectionsUnauthorizedError } from '../../ports/CollectionsApiProvider/errors/CollectionsUnauthorizedError.js';
+import { CollectionsBadRequestError } from '../../ports/CollectionsApiProvider/errors/CollectionsBadRequestError.js';
+import { CollectionResponse } from '../../ports/CollectionsApiProvider/types/CollectionResponse.js';
+import { CollectionsApiProvider } from '../../ports/CollectionsApiProvider/CollectionsApiProvider.js';
 
 const DEFAULT_COLLECTIONS_BASE_URL = 'https://collections.poap.tech';
 /**

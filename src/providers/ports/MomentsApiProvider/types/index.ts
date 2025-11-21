@@ -1,3 +1,3 @@
-export * from './CreateMomentInput';
-export * from './CreateMomentResponse';
-export * from './MediaStatus';
+export * from './CreateMomentInput.js';
+export * from './CreateMomentResponse.js';
+export * from './MediaStatus.js';

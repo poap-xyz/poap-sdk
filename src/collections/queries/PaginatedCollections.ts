@@ -1,9 +1,9 @@
-import { CollectionResponse } from '../types/CollectionResponse';
+import { CollectionResponse } from '../types/CollectionResponse.js';
 import {
   FilterVariables,
   OrderByVariables,
   PaginatedVariables,
-} from '../../utils';
+} from '../../utils/index.js';
 
 export const PAGINATED_COLLECTIONS_QUERY = /* GraphQL */ `
   query PaginatedCollections(

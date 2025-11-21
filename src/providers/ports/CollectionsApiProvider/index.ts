@@ -1,2 +1,2 @@
-export * from './types';
-export * from './CollectionsApiProvider';
+export * from './types/index.js';
+export * from './CollectionsApiProvider.js';

@@ -1,11 +1,11 @@
 import chunk from 'lodash.chunk';
-import { CompassProvider } from '../../ports/CompassProvider/CompassProvider';
-import { CompassErrors } from '../../ports/CompassProvider/types/CompassErrors';
-import { CompassError } from '../../ports/CompassProvider/types/CompassError';
-import { CompassRequestError } from '../../ports/CompassProvider/errors/CompassRequestError';
-import { CompassMissingDataError } from '../../ports/CompassProvider/errors/CompassMissingDataError';
-import { CompassBadRequestError } from '../../ports/CompassProvider/errors/CompassBadRequestError';
-import { CompassUnauthorizedError } from '../../ports/CompassProvider/errors/CompassUnauthorizedError';
+import { CompassProvider } from '../../ports/CompassProvider/CompassProvider.js';
+import { CompassErrors } from '../../ports/CompassProvider/types/CompassErrors.js';
+import { CompassError } from '../../ports/CompassProvider/types/CompassError.js';
+import { CompassRequestError } from '../../ports/CompassProvider/errors/CompassRequestError.js';
+import { CompassMissingDataError } from '../../ports/CompassProvider/errors/CompassMissingDataError.js';
+import { CompassBadRequestError } from '../../ports/CompassProvider/errors/CompassBadRequestError.js';
+import { CompassUnauthorizedError } from '../../ports/CompassProvider/errors/CompassUnauthorizedError.js';
 
 const DEFAULT_COMPASS_BASE_URL = 'https://public.compass.poap.tech/v1/graphql';
 

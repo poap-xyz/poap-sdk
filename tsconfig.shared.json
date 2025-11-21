@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "importHelpers": true,
+    "strict": true,
+    "rootDir": "./src",
+    "composite": false,
+    "target": "es2018",
+    "lib": ["es2018", "dom", "esnext"],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "downlevelIteration": true,
+    "noImplicitAny": false
+  },
+  "exclude": ["node_modules", "dist"],
+  "include": ["./src/**/*.ts"]
+}

@@ -1,4 +1,4 @@
-export { ProfilesClient } from './ProfilesClient';
-export { Profile, SerializableProfile } from './domain/Profile';
-export { ProfileError } from './domain/ProfileError';
-export { FetchBulkProfilesResponse } from './dtos/FetchBulkProfilesResponse';
+export { ProfilesClient } from './ProfilesClient.js';
+export { Profile, SerializableProfile } from './domain/Profile.js';
+export { ProfileError } from './domain/ProfileError.js';
+export { FetchBulkProfilesResponse } from './dtos/FetchBulkProfilesResponse.js';

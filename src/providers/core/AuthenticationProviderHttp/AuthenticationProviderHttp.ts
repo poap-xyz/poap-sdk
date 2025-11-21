@@ -1,6 +1,6 @@
-import { AuthToken } from '../../ports/AuthenticationProvider/types/AuthToken';
-import { AuthenticationProvider } from '../../ports/AuthenticationProvider/AuthenticationProvider';
-import { UnauthorizedClientError } from '../../ports/AuthenticationProvider/errors/UnauthorizedClientError';
+import { AuthToken } from '../../ports/AuthenticationProvider/types/AuthToken.js';
+import { AuthenticationProvider } from '../../ports/AuthenticationProvider/AuthenticationProvider.js';
+import { UnauthorizedClientError } from '../../ports/AuthenticationProvider/errors/UnauthorizedClientError.js';
 
 const DEFAULT_OAUTH_SERVER = 'auth.accounts.poap.xyz';
 

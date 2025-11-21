@@ -1,2 +1,2 @@
-export * from './MissingAuthenticationProviderError';
-export * from './UnauthorizedClientError';
+export * from './MissingAuthenticationProviderError.js';
+export * from './UnauthorizedClientError.js';
