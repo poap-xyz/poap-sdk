@@ -10,6 +10,7 @@ export interface AuthenticationProvider {
    *
    * @param audience The audience of the API
    * @throws {UnauthorizedClientError}
+   * @throws {RateLimitReachedError} when too many tokens are requested
    */
   getAuthToken(audience: string): Promise<AuthToken>;
 }
