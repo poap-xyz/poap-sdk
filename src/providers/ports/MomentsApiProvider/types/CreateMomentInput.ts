@@ -8,4 +8,9 @@ export interface CreateMomentInput {
   mediaKeys: string[];
   /** The description of the Moment (optional) */
   description?: string;
+  /**  Tags to be associated with the moment. Either the address or ens should be provided. */
+  userTags?: (
+    | { address: string; ens?: string }
+    | { address?: string; ens: string }
+  )[];
 }

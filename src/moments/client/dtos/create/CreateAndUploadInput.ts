@@ -17,4 +17,6 @@ export interface CreateAndUploadMomentInput {
   onFileUploadProgress?: (progress: number) => void | Promise<void>;
   /** The media to be uploaded and attached to the Moment. */
   media?: CreateMedia[];
+  /**  Tags to be associated with the moment. Either the address or ens should be provided. */
+  initialTags?: { address?: string; ens?: string }[];
 }

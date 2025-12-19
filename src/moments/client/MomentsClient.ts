@@ -60,6 +60,7 @@ export class MomentsClient {
       author: input.author,
       description: input.description,
       mediaKeys: input.mediaKeys || [],
+      userTags: input.userTags,
     });
     void input.onStepUpdate?.(CreateSteps.FINISHED);
 
