@@ -1,5 +1,5 @@
-import { isValidEnsFormat } from 'src/utils/validation/isValidEnsFormat.js';
-import { isValidEthereumAddressFormat } from 'src/utils/validation/isValidEthereumAddressFormat.js';
+import { isValidEnsFormat } from '../../utils/validation/isValidEnsFormat.js';
+import { isValidEthereumAddressFormat } from '../../utils/validation/isValidEthereumAddressFormat.js';
 
 export class ProfilesQueryNormalizer {
   static normalizeQuery(query: string): string | null {

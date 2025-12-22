@@ -1,8 +1,8 @@
-import { ProfilesQueryNormalizer } from 'src/profiles/utils/ProfileQueryNormalizer.js';
 import { ProfilesApiProvider } from '../providers/index.js';
 import { Profile } from './domain/Profile.js';
 import { FetchBulkProfilesResponse } from './dtos/FetchBulkProfilesResponse.js';
 import { ProfilesMapper } from './utils/ProfilesMapper.js';
+import { ProfilesQueryNormalizer } from './utils/ProfileQueryNormalizer.js';
 
 export class ProfilesClient {
   /**
