@@ -40,5 +40,10 @@ const moment: Moment = await client.createMomentAndUploadMedia({
    * Some text to describe the moment.
    */
   description: 'Look how much fun we were having!',
+
+  /**
+   * Addresses or ENS to be tagged in the moment.
+   */
+  userTags: [{ ens: 'vitalik.eth' }, { address: '0xabc123...' }],
 });
 ```
