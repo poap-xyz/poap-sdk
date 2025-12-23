@@ -1,3 +1,5 @@
+import { UserTag } from 'src/moments/client/dtos/create/UserTag.js';
+
 /** Object describing the input required to create a Moment */
 export interface CreateMomentInput {
   /** The IDs of the Drops to associate with the Moment */
@@ -8,9 +10,6 @@ export interface CreateMomentInput {
   mediaKeys: string[];
   /** The description of the Moment (optional) */
   description?: string;
-  /**  Tags to be associated with the moment. Either the address or ens should be provided. */
-  userTags?: (
-    | { address: string; ens?: string }
-    | { address?: string; ens: string }
-  )[];
+  /**  Tags to be associated with the moment. */
+  userTags?: UserTag[];
 }
