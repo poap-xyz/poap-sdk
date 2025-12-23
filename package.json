@@ -1,6 +1,6 @@
 {
   "name": "@poap-xyz/poap-sdk",
-  "version": "0.21.1",
+  "version": "0.21.2",
   "description": "SDK for everything POAP",
   "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.mjs",
