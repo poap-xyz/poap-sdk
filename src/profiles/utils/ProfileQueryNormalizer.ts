@@ -3,7 +3,7 @@ import { isValidEthereumAddressFormat } from '../../utils/validation/isValidEthe
 
 export class ProfilesQueryNormalizer {
   static normalizeQuery(query: string): string | null {
-    if (!isValidEnsFormat(query) && isValidEthereumAddressFormat(query)) {
+    if (!isValidEnsFormat(query) && !isValidEthereumAddressFormat(query)) {
       return null;
     }
     return query.toLowerCase();
