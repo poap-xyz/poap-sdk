@@ -30,6 +30,10 @@ describe('MomentsClient', () => {
     '45201634-1996-4243-9c24-31da706be427',
     'fbc3cf5f-fd65-4d2f-88fa-7025ebc7d631',
   ];
+  const INITIAL_TAGS = [
+    { address: '0x1234567890abcdef1234567890abcdef12345678' },
+    { ens: 'example.eth' },
+  ];
 
   let poapMomentsAPIMocked: MockProxy<PoapMomentsApi>;
   let compassProviderMocked: MockProxy<PoapCompass>;
@@ -185,6 +189,47 @@ describe('MomentsClient', () => {
       expect(poapMomentsAPIMocked.createMoment).toHaveBeenCalledWith(
         EXPECTED_MOMENT_CREATE_INPUT,
       );
+    });
+
+    it('should create a moment and tag addresses and ens', async () => {
+      // GIVEN
+      const client = new MomentsClient(
+        poapMomentsAPIMocked,
+        compassProviderMocked,
+      );
+      const inputs: CreateMomentInput = {
+        dropIds: DROP_IDS,
+        mediaKeys: MEDIA_KEYS,
+        author: AUTHOR,
+        description: DESCRIPTION,
+        userTags: INITIAL_TAGS,
+      };
+      poapMomentsAPIMocked.createMoment.mockResolvedValue({
+        id: MOMENT_ID,
+        author: AUTHOR,
+        createdOn: new Date().toISOString(),
+        dropIds: DROP_IDS,
+      });
+
+      const EXPECTED_MOMENT_CREATE_INPUT = {
+        dropIds: DROP_IDS,
+        author: AUTHOR,
+        description: DESCRIPTION,
+        mediaKeys: MEDIA_KEYS,
+        userTags: INITIAL_TAGS,
+      };
+
+      // WHEN
+      const moment = await client.createMoment(inputs);
+
+      // THEN
+      expect(moment.id).toBe(MOMENT_ID);
+      expect(moment.author).toBe(AUTHOR);
+      expect(moment.dropIds).toBe(DROP_IDS);
+      expect(poapMomentsAPIMocked.createMoment).toHaveBeenCalledWith(
+        EXPECTED_MOMENT_CREATE_INPUT,
+      );
+      expect(poapMomentsAPIMocked.uploadFile).not.toHaveBeenCalledWith();
     });
   });
 });

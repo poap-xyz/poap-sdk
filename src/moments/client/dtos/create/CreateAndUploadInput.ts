@@ -1,5 +1,6 @@
 import { CreateSteps } from './CreateSteps.js';
 import { CreateMedia } from './CreateMedia.js';
+import { UserTag } from './UserTag.js';
 
 /** Interface representing the input needed to create a moment and upload media in one action. */
 export interface CreateAndUploadMomentInput {
@@ -17,4 +18,6 @@ export interface CreateAndUploadMomentInput {
   onFileUploadProgress?: (progress: number) => void | Promise<void>;
   /** The media to be uploaded and attached to the Moment. */
   media?: CreateMedia[];
+  /**  Tags to be associated with the moment. */
+  userTags?: UserTag[];
 }
