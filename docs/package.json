@@ -28,6 +28,6 @@
     "@svgr/webpack": "^8.1.0",
     "@types/node": "^24.3.0",
     "@types/react": "^19.1.10",
-    "typescript": "^5.3.3"
+    "typescript": "^5.9.3"
   }
 }
