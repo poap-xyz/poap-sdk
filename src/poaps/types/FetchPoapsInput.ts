@@ -23,8 +23,7 @@ export interface FetchPoapsInput {
 }
 
 export interface FetchPoapsPaginatedInput
-  extends FetchPoapsInput,
-    PaginationInput {
+  extends FetchPoapsInput, PaginationInput {
   /** Field by which to sort the results. */
   sortField?: PoapsSortFields;
   /** Direction in which to sort the results. */
