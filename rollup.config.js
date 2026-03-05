@@ -11,7 +11,7 @@ const pkg = require(path.resolve(process.cwd(), 'package.json'));
 const enableBrowser = pkg.browser != undefined;
 
 // List some packages that should not be bundled.
-const external = [/lodash\..*/, 'uuid'];
+const external = [/lodash\..*/];
 
 /**
  * @type {import('rollup').RollupOptions[]}
