@@ -1,5 +1,5 @@
 import { mock, MockProxy } from 'jest-mock-extended';
-import { v4 } from 'uuid';
+import { randomUUID } from 'node:crypto';
 import { CreateAndUploadMomentInput } from '../../../src/moments/client/dtos/create/CreateAndUploadInput.js';
 import { CreateMomentInput } from '../../../src/moments/client/dtos/create/CreateInput.js';
 import { CreateSteps } from '../../../src/moments/client/dtos/create/CreateSteps.js';
@@ -68,7 +68,7 @@ describe('MomentsClient', () => {
       });
       const mediaKeys: string[] = [];
       poapMomentsAPIMocked.getSignedUrl.mockImplementation(async () => {
-        const key = v4();
+        const key = randomUUID();
         mediaKeys.push(key);
         return {
           url: MEDIA_UPLOAD_URL,
