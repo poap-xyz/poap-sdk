@@ -1,4 +1,5 @@
 import { CreateSteps } from './CreateSteps.js';
+import { UserTag } from './UserTag.js';
 
 /** Interface representing the input needed to create a moment. */
 export interface CreateMomentInput {
@@ -14,4 +15,6 @@ export interface CreateMomentInput {
   onStepUpdate?: (step: CreateSteps) => void | Promise<void>;
   /** The media keys previously uploaded to attach to the Moment. */
   mediaKeys?: string[];
+  /**  Tags to be associated with the moment. */
+  userTags?: UserTag[];
 }

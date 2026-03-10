@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
@@ -20,7 +20,7 @@ jobs:
         uses: pnpm/action-setup@v4
 
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: 'pnpm'
@@ -33,6 +33,9 @@ jobs:
 
       - name: Run lint
         run: pnpm lint
+
+      - name: Type check
+        run: pnpm type-check
 
       - name: Run tests
         run: pnpm test

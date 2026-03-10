@@ -2,6 +2,7 @@ import { ProfilesApiProvider } from '../providers/index.js';
 import { Profile } from './domain/Profile.js';
 import { FetchBulkProfilesResponse } from './dtos/FetchBulkProfilesResponse.js';
 import { ProfilesMapper } from './utils/ProfilesMapper.js';
+import { ProfilesQueryNormalizer } from './utils/ProfileQueryNormalizer.js';
 
 export class ProfilesClient {
   /**
@@ -16,7 +17,15 @@ export class ProfilesClient {
    * @returns The profile, or null if not found.
    */
   async fetch(query: string, options?: RequestInit): Promise<Profile | null> {
-    const response = await this.profileApiProvider.getProfile(query, options);
+    const normalizedQuery = ProfilesQueryNormalizer.normalizeQuery(query);
+    if (!normalizedQuery) {
+      return null;
+    }
+
+    const response = await this.profileApiProvider.getProfile(
+      normalizedQuery,
+      options,
+    );
     if (!response) {
       return null;
     }
@@ -49,8 +58,10 @@ export class ProfilesClient {
     queries: string[],
     options?: RequestInit,
   ): Promise<FetchBulkProfilesResponse> {
+    const normalizedQueries = ProfilesQueryNormalizer.normalizeQueries(queries);
+
     const { profiles, errors } = await this.profileApiProvider.getBulkProfiles(
-      queries,
+      normalizedQueries,
       options,
     );
 

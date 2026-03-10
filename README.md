@@ -1,4 +1,4 @@
-> **Warning**
+> [!WARNING]
 >
 > The POAP SDK is still in the active initial development phase. Anything MAY change at any time.
 >
@@ -7,11 +7,11 @@
 >
 > This product is in development and is not intended to be used in a production environment.
 >
-> If you want to collaborate and leave us feedback, you can do so [here](https://github.com/poap-xyz/poap.js/discussions/19)
+> If you want to collaborate and leave us feedback, you can do so [here](https://github.com/poap-xyz/poap-sdk/discussions/19)
 
-# POAP.js
+# POAP SDK
 
-POAP.js is a collection of SDKs and utilities for interacting with the POAP ecosystem. The
+POAP SDK is a collection of SDKs and utilities for interacting with the POAP ecosystem. The
 library provides a set of classes and methods to simplify working with it.
 
 ## Installation
@@ -36,7 +36,7 @@ yarn add @poap-xyz/poap-sdk
 
 ## Table of Contents
 
-- [POAP.js](#poapjs)
+- [POAP SDK](#poap-sdk)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Development](#development)
@@ -85,7 +85,7 @@ To start developing the POAP Package Library, follow these steps:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/poap-xyz/poap.js.git
+git clone https://github.com/poap-xyz/poap-sdk.git
 ```
 
 2. Use node and pnpm:
@@ -115,7 +115,7 @@ pnpm test
 
 ## Documentation
 
-You can find the documentation in this link: [POAP.js Documentation](https://sdk.poap.tech/)
+You can find the documentation in this link: [POAP SDK Documentation](https://sdk.poap.tech/)
 
 The documentation is located in the `docs` folder.
 

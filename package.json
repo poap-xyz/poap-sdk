@@ -1,6 +1,6 @@
 {
   "name": "@poap-xyz/poap-sdk",
-  "version": "0.21.0",
+  "version": "0.22.1",
   "description": "SDK for everything POAP",
   "main": "dist/cjs/index.cjs",
   "module": "dist/esm/index.mjs",
@@ -32,7 +32,8 @@
     "build:js": "rollup -c --bundleConfigAsCjs",
     "build:types": "tsc -p tsconfig.json",
     "build": "pnpm build:js && pnpm build:types",
-    "lint": "eslint './src/**/*.ts' --fix",
+    "lint": "eslint './src/**/*.ts'",
+    "lint:fix": "eslint './src/**/*.ts' --fix",
     "format": "prettier --write './src/**/*.ts'",
     "publish.sdk": "./scripts/publish-sdk",
     "publish.beta": "./scripts/publish-beta",
@@ -42,8 +43,7 @@
     "type-check": "pnpm type-check:build && pnpm type-check:types"
   },
   "dependencies": {
-    "lodash.chunk": "^4.2.0",
-    "uuid": "^9.0.0"
+    "lodash.chunk": "^4.2.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.2.0",
@@ -52,28 +52,27 @@
     "@rollup/plugin-commonjs": "^28.0.3",
     "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-terser": "^0.4.4",
-    "@types/jest": "^29.5.11",
+    "@types/jest": "^30.0.0",
     "@types/lodash.chunk": "^4.2.0",
-    "@types/node": "^22.18.0",
-    "@types/uuid": "^9.0.2",
+    "@types/node": "^25.4.0",
     "@typescript-eslint/eslint-plugin": "^8.16.0",
     "@typescript-eslint/parser": "^8.16.0",
     "eslint": "^9.15.0",
     "eslint-config-airbnb-typescript": "^18.0.0",
-    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "globals": "^15.12.0",
-    "jest": "^29.7.0",
+    "globals": "^17.4.0",
+    "jest": "^30.3.0",
     "jest-fetch-mock": "^3.0.3",
-    "jest-mock-extended": "^3.0.5",
+    "jest-mock-extended": "^4.0.0",
     "prettier": "^3.2.4",
     "rollup": "^4.40.2",
     "rollup-plugin-typescript2": "^0.36.0",
     "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
     "tslib": "^2.8.1",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.3"
   },
   "engines": {
     "node": ">=22"
