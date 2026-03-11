@@ -5,6 +5,10 @@ on:
     tags:
       - 'v*.*.*-beta-*'
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build_and_publish_beta_release:
     runs-on: ubuntu-latest
@@ -27,13 +31,6 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-
-      - name: Configure npm auth
-        run: |
-          npm config set //registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}
-          npm whoami
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish beta release
         run: pnpm publish.beta $GITHUB_REF_NAME
