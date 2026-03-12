@@ -32,5 +32,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Enforce npm v11
+        # TODO: OIDC requires npm >= 11.5.1. Remove when upgrading to Node >= 24.
+        run: npm install -g npm@11
+
       - name: Publish
         run: pnpm publish.sdk
