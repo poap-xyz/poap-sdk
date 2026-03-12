@@ -3,7 +3,7 @@ name: Publish beta release to npm registry
 on:
   push:
     tags:
-      - '^v*.*.*-beta-*'
+      - 'v*.*.*-beta-*'
 
 jobs:
   build_and_publish_beta_release:
