@@ -1,3 +1,5 @@
+# Remember to temporarely switch the accepted github action to "publish_beta.yml"
+# in the npmjs package page settings before publishing a beta version.
 name: Publish beta release to npm registry
 
 on:
