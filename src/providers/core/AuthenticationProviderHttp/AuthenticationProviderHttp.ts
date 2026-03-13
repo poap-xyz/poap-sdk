@@ -1,6 +1,7 @@
 import { AuthToken } from '../../ports/AuthenticationProvider/types/AuthToken.js';
 import { AuthenticationProvider } from '../../ports/AuthenticationProvider/AuthenticationProvider.js';
 import { UnauthorizedClientError } from '../../ports/AuthenticationProvider/errors/UnauthorizedClientError.js';
+import { RateLimitReachedError } from '../../ports/AuthenticationProvider/errors/RateLimitReachedError.js';
 
 const DEFAULT_OAUTH_SERVER = 'auth.accounts.poap.xyz';
 
@@ -138,6 +139,14 @@ export class AuthenticationProviderHttp implements AuthenticationProvider {
       );
     }
 
+    if (this.isRateLimitReachedResponse(responseData)) {
+      throw new RateLimitReachedError(
+        this.clientId,
+        audience,
+        response.headers,
+      );
+    }
+
     if (!this.isErrorResponse(responseData)) {
       throw new Error(
         `Could not authenticate to ${audience}: ` +
@@ -146,6 +155,15 @@ export class AuthenticationProviderHttp implements AuthenticationProvider {
     }
 
     return responseData;
+  }
+
+  private isRateLimitReachedResponse(responseData: unknown): boolean {
+    return (
+      responseData != undefined &&
+      typeof responseData === 'object' &&
+      'error' in responseData &&
+      responseData.error === 'Rate limit reached'
+    );
   }
 
   // eslint-disable-next-line complexity
